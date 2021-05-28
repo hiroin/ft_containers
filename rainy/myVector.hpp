@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <iterator>
 
+namespace ft {
 template < typename T, typename Allocator = std::allocator<T> >
 class vector
 {
@@ -86,7 +87,7 @@ public :
     }
     last = first + r.size();
   }
-  vector & operator =(const vector & x)
+  vector & operator =(const vector & r)
   {
     // 1. 自分自身への代入なら何もしない
     if (this == &r)
@@ -115,7 +116,8 @@ public :
       else
       {
         // 要素をすべて破棄
-        destroy_all() ;
+        // destroy_all();
+        clear();
         // 予約
         reserve(r.size());
         // コピー構築
@@ -407,5 +409,5 @@ public :
       destroy( &*riter );
     }
   }
-
+};
 };
