@@ -34,10 +34,7 @@ private :
 
 public :
   // コンストラクター
-  vector()
-    : alloc_(allocator_type()), first_(NULL), last_(NULL), reserved_last_(NULL)
-  {};
-  vector(const allocator_type & alloc_)
+  vector(const allocator_type & alloc_ = allocator_type())
     : alloc_(alloc_), first_(NULL), last_(NULL), reserved_last_(NULL)
   {};
   vector( size_type size, const allocator_type & alloc_ = allocator_type() )
