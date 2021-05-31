@@ -24,38 +24,38 @@ public :
 
 private :
   // 先頭の要素へのポインター
-  pointer first;
+  pointer first_;
   // 最後の要素の1つ前方のポインター
-  pointer last;
+  pointer last_;
   // 確保したストレージの終端
-  pointer reserved_last;
+  pointer reserved_last_;
   // アロケーターの値
-  allocator_type alloc;
+  allocator_type alloc_;
 
 public :
   // コンストラクター
   vector()
-    : alloc(allocator_type()), first(NULL), last(NULL), reserved_last(NULL)
+    : alloc_(allocator_type()), first_(NULL), last_(NULL), reserved_last_(NULL)
   {};
-  vector(const allocator_type & alloc)
-    : alloc(alloc), first(NULL), last(NULL), reserved_last(NULL)
+  vector(const allocator_type & alloc_)
+    : alloc_(alloc_), first_(NULL), last_(NULL), reserved_last_(NULL)
   {};
-  vector( size_type size, const allocator_type & alloc = allocator_type() )
-    : alloc(alloc), first(NULL), last(NULL), reserved_last(NULL)
+  vector( size_type size, const allocator_type & alloc_ = allocator_type() )
+    : alloc_(alloc_), first_(NULL), last_(NULL), reserved_last_(NULL)
   {
     resize(size);
   }
-  vector( size_type size, const_reference value, const allocator_type & alloc = allocator_type() )
-    : vector( alloc )
+  vector( size_type size, const_reference value, const allocator_type & alloc_ = allocator_type() )
+    : vector( alloc_ )
   {
     resize(size, value);
   }
   template < typename InputIterator >
-  vector(InputIterator first_, InputIterator last_, const Allocator & = Allocator())
-    : first(NULL), last(NULL), reserved_last(NULL)
+  vector(InputIterator first, InputIterator last, const Allocator & = Allocator())
+    : first_(NULL), last_(NULL), reserved_last_(NULL)
   {
-    reserve(std::distance(first_, last_));
-    for (InputIterator i = first_; i != last_ ; i++)
+    reserve(std::distance(first, last));
+    for (InputIterator i = first; i != last ; i++)
     {
       push_back(*i);
     }
@@ -72,19 +72,19 @@ public :
 
   // コピー
   vector(const vector & r)
-    : alloc(r.alloc), first(NULL), last(NULL), reserved_last(NULL)
+    : alloc_(r.alloc_), first_(NULL), last_(NULL), reserved_last_(NULL)
   {
     // コピー元の要素数を保持できるだけのストレージを確保
     reserve(r.size());
     // コピー元の要素をコピー構築
     // destはコピー先
-    // [src, last)はコピー元
-    for (pointer dest = first, src = r.begin(), last = r.end();
-      src != last ; ++dest, ++src)
+    // [src, last_)はコピー元
+    for (pointer dest = first_, src = r.begin(), last_ = r.end();
+      src != last_ ; ++dest, ++src)
     {
       construct(dest, *src);
     }
-    last = first + r.size();
+    last_ = first_ + r.size();
   }
 
   vector & operator =(const vector & r)
@@ -107,9 +107,9 @@ public :
         std::copy(r.begin(), r.begin() + r.size(), begin());
         // 残りはコピー構築
         for (iterator src_iter = r.begin() + r.size(), src_end = r.end();
-          src_iter != src_end ; ++src_iter, ++last )
+          src_iter != src_end ; ++src_iter, ++last_ )
         {
-          construct(last, *src_iter);
+          construct(last_, *src_iter);
         }
       }
       // 4. 予約数が不十分ならば
@@ -122,7 +122,7 @@ public :
         reserve(r.size());
         // コピー構築
         for (iterator src_iter = r.begin(), src_end = r.end(), dest_iter = begin();
-          src_iter != src_end; ++src_iter, ++dest_iter, ++last)
+          src_iter != src_end; ++src_iter, ++dest_iter, ++last_)
         {
           construct(dest_iter, *src_iter);
         }
@@ -142,29 +142,29 @@ public :
   // イテレーターアクセス
   iterator begin()
   {
-    return first;
+    return first_;
   }
   iterator end()
   {
-    return last;
+    return last_;
   }
   iterator begin() const
   {
-    return first;
+    return first_;
   }
   iterator end() const
   {
-    return last;
+    return last_;
   }
   reverse_iterator rbegin()
   {
-    // return reverse_iterator{last};
-    return static_cast<reverse_iterator>(last);
+    // return reverse_iterator{last_};
+    return static_cast<reverse_iterator>(last_);
   }
   reverse_iterator rend()
   {
-    // return reverse_iterator{first};
-    return static_cast<reverse_iterator>(first);
+    // return reverse_iterator{first_};
+    return static_cast<reverse_iterator>(first_);
   }
 
   size_type size() const
@@ -174,7 +174,7 @@ public :
   }
   size_type max_size() const
   {
-    return (alloc.max_size());
+    return (alloc_.max_size());
   }
   bool empty() const
   {
@@ -183,45 +183,45 @@ public :
   }
   size_type capacity() const
   {
-    return reserved_last - first;
+    return reserved_last_ - first_;
   }  
 
   // 要素アクセス
   reference operator [](size_type i)
   {
-    return first[i];
+    return first_[i];
   }
   const_reference operator [](size_type i) const
   {
-    return first[i];
+    return first_[i];
   }
   reference at( size_type i )
   {
     if ( i >= size() )
       throw std::out_of_range( "vector" ) ;
-    return first[i] ;
+    return first_[i] ;
   }
   const_reference at( size_type i ) const
   {
     if ( i >= size() )
       throw std::out_of_range( "vector" ) ;
-    return first[i] ;
+    return first_[i] ;
   }
   reference front()
   {
-    return first;
+    return first_;
   }
   const_reference front() const
   {
-    return first;
+    return first_;
   }
   reference back()
   {
-    return last - 1;
+    return last_ - 1;
   }
   const_reference back() const
   {
-    return last - 1;
+    return last_ - 1;
   }
 
   void reserve(size_type sz)
@@ -234,38 +234,38 @@ public :
     pointer ptr = allocate(sz) ;
 
     // 古いストレージの情報を保存
-    pointer old_first = first;
-    pointer old_last = last;
+    pointer old_first_ = first_;
+    pointer old_last_ = last_;
     size_type old_capacity = capacity();
 
     // 新しいストレージに差し替え
-    first = ptr;
-    last = first;
-    reserved_last = first + sz;
+    first_ = ptr;
+    last_ = first_;
+    reserved_last_ = first_ + sz;
 
     // 例外安全のため
     // 関数を抜けるときに古いストレージを破棄する
     // C++20の機能
     // std::scope_exit e( [&]{
-    //   traits::deallocate(alloc, old_first, old_capacity);
+    //   traits::deallocate(alloc_, old_first_, old_capacity);
     // } );
 
     // 古いストレージから新しいストレージに要素をコピー構築
-    for (iterator old_iter = old_first; old_iter != old_last; ++old_iter, ++last)
+    for (iterator old_iter = old_first_; old_iter != old_last_; ++old_iter, ++last_)
     {
-      // construct(last, std::move(*old_iter)) ;
-      construct(last, *old_iter) ;
+      // construct(last_, std::move(*old_iter)) ;
+      construct(last_, *old_iter) ;
     }
 
     // 新しいストレージにコピーし終えたので
     // 古いストレージの値は破棄
-    for (reverse_iterator riter = reverse_iterator(old_last), rend = reverse_iterator(old_first);
+    for (reverse_iterator riter = reverse_iterator(old_last_), rend = reverse_iterator(old_first_);
           riter != rend ; ++riter)
     {
       destroy(&*riter);
     }
     // ストレージを破棄する
-    alloc.deallocate(old_first, old_capacity);
+    alloc_.deallocate(old_first_, old_capacity);
   }
 
   void resize(size_type sz)
@@ -275,16 +275,16 @@ public :
     {
       size_type diff = size() - sz;
       destroy_until(rbegin() + diff) ;
-      last = first + sz ;
+      last_ = first_ + sz ;
     }
     // 現在の要素数より大きい
     else if ( sz > size() )
     {
       reserve(sz) ;
       // デフォルト構築らしいけどいらないと思う
-      // for (; last != reserved_last ; ++last)
+      // for (; last_ != reserved_last_ ; ++last_)
       // {
-      //   construct(last);
+      //   construct(last_);
       // }
     }
   }
@@ -296,15 +296,15 @@ public :
     {
       size_type diff = size() - sz;
       destroy_until(rbegin() + diff) ;
-      last = first + sz ;
+      last_ = first_ + sz ;
     }
     // 現在の要素数より大きい
     else if ( sz > size() )
     {
       reserve(sz) ;
-      for (; last != reserved_last ; ++last)
+      for (; last_ != reserved_last_ ; ++last_)
       {
-        construct(last, value);
+        construct(last_, value);
       }
     }
   }
@@ -324,13 +324,13 @@ public :
             c *= 2 ;
         reserve(c) ;
     }
-    construct(last, value);
-    ++last;
+    construct(last_, value);
+    ++last_;
   }
 
   // ここから作る
   template <class InputIterator>
-  void assign(InputIterator first, InputIterator last)
+  void assign(InputIterator first_, InputIterator last_)
   {
 
   }
@@ -351,7 +351,7 @@ public :
 
   }
   template <class InputIterator>
-  void insert(iterator position, InputIterator first, InputIterator last)
+  void insert(iterator position, InputIterator first_, InputIterator last_)
   {
 
   }
@@ -359,7 +359,7 @@ public :
   {
 
   }
-  iterator erase(iterator first, iterator last)
+  iterator erase(iterator first_, iterator last_)
   {
 
   }
@@ -369,7 +369,7 @@ public :
   }
   allocator_type get_allocator() const
   {
-    return alloc;
+    return alloc_;
   }
   void clear()
   {
@@ -379,40 +379,40 @@ public :
  private :
   pointer allocate(size_type n)
   {
-    // return traits::allocate(alloc, n);
-    return alloc.allocate(n);
+    // return traits::allocate(alloc_, n);
+    return alloc_.allocate(n);
   }
   void deallocate()
   {
     if (capacity() > 0)
-      // traits::deallocate(alloc, first, capacity());
-      alloc.deallocate(first, capacity());
+      // traits::deallocate(alloc_, first_, capacity());
+      alloc_.deallocate(first_, capacity());
   }
   // この関数いるのかな…
   void construct(pointer ptr)
   {
-    // traits::construct(alloc, ptr);
-    alloc.construct(ptr);
+    // traits::construct(alloc_, ptr);
+    alloc_.construct(ptr);
   }
   void construct(pointer ptr, const_reference value)
   {
-    // traits::construct(alloc, ptr, value);
-    alloc.construct(ptr, value);
+    // traits::construct(alloc_, ptr, value);
+    alloc_.construct(ptr, value);
   }
   // ムーブ用
   // c++11の機能
   // void construct(pointer ptr, value_type && value)
   // {
-  //   traits::construct(alloc, ptr, std::move(value));
+  //   traits::construct(alloc_, ptr, std::move(value));
   // }
   void destroy(pointer ptr)
   {
-    // traits::destroy(alloc, ptr);
-    alloc.destroy(ptr);
+    // traits::destroy(alloc_, ptr);
+    alloc_.destroy(ptr);
    }
   void destroy_until(reverse_iterator rend)
   {
-    for (reverse_iterator riter = rbegin(); riter != rend; ++riter, --last)
+    for (reverse_iterator riter = rbegin(); riter != rend; ++riter, --last_)
     {
       // 簡易vector<T>のiteratorは単なるT *だが、
       // riterはリバースイテレーターなのでポインターではない。
