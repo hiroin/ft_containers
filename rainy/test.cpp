@@ -11,7 +11,8 @@ int main()
   v2.push_back(1);
   v2.push_back(2);
 
-  std::cout << std::equal(v1.begin(), v1.end(), v2.begin()) << std::endl;
-
+  // std::cout << std::equal(v1.begin(), v1.end(), v2.begin()) << std::endl;
+  std::cout << v1[0] << std::endl;
+  v1[0] = 2;
   return 0;
 }

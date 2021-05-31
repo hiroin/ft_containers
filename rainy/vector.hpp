@@ -9,18 +9,18 @@ template < typename T, typename Allocator = std::allocator<T> >
 class vector
 {
 public :
-  using value_type      = T ;
-  using pointer         = T *;
-  using const_pointer   = const pointer;
-  using reference       = value_type &;
-  using const_reference = const value_type &;
-  using allocator_type  = Allocator ;
-  using size_type       = std::size_t ;
-  using difference_type = std::ptrdiff_t ;
-  using iterator        = pointer ;
-  using const_iterator  = const_pointer ;
-  using reverse_iterator       = std::reverse_iterator<iterator> ;
-  using const_reverse_iterator = std::reverse_iterator<const_iterator> ;
+  typedef T value_type;
+  typedef T* pointer;
+  typedef const pointer const_pointer;
+  typedef value_type& reference;
+  typedef const value_type& const_reference;
+  typedef Allocator allocator_type;
+  typedef std::size_t size_type;
+  typedef std::ptrdiff_t difference_type;
+  typedef pointer iterator;
+  typedef const_pointer const_iterator;
+  typedef std::reverse_iterator<iterator> reverse_iterator;
+  typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
 private :
   // 先頭の要素へのポインター
@@ -35,9 +35,9 @@ private :
 public :
   // コンストラクター
   vector()
-    : vector(allocator_type())
+    : alloc(allocator_type()), first(NULL), last(NULL), reserved_last(NULL)
   {};
-  vector(const allocator_type & alloc) noexcept
+  vector(const allocator_type & alloc)
     : alloc(alloc), first(NULL), last(NULL), reserved_last(NULL)
   {};
   vector( size_type size, const allocator_type & alloc = allocator_type() )
@@ -79,7 +79,7 @@ public :
     // コピー元の要素をコピー構築
     // destはコピー先
     // [src, last)はコピー元
-    for (auto dest = first, src = r.begin(), last = r.end();
+    for (pointer dest = first, src = r.begin(), last = r.end();
       src != last ; ++dest, ++src)
     {
       construct(dest, *src);
@@ -106,7 +106,7 @@ public :
         // 有効な要素はコピー
         std::copy(r.begin(), r.begin() + r.size(), begin());
         // 残りはコピー構築
-        for (auto src_iter = r.begin() + r.size(), src_end = r.end();
+        for (iterator src_iter = r.begin() + r.size(), src_end = r.end();
           src_iter != src_end ; ++src_iter, ++last )
         {
           construct(last, *src_iter);
@@ -121,7 +121,7 @@ public :
         // 予約
         reserve(r.size());
         // コピー構築
-        for (auto src_iter = r.begin(), src_end = r.end(), dest_iter = begin();
+        for (iterator src_iter = r.begin(), src_end = r.end(), dest_iter = begin();
           src_iter != src_end; ++src_iter, ++dest_iter, ++last)
         {
           construct(dest_iter, *src_iter);
@@ -140,46 +140,48 @@ public :
   }
 
   // イテレーターアクセス
-  iterator begin() noexcept
+  iterator begin()
   {
     return first;
   }
-  iterator end() noexcept
+  iterator end()
   {
     return last;
   }
-  iterator begin() const noexcept
+  iterator begin() const
   {
     return first;
   }
-  iterator end() const noexcept
+  iterator end() const
   {
     return last;
   }
-  reverse_iterator rbegin() noexcept
+  reverse_iterator rbegin()
   {
-    return reverse_iterator{last};
+    // return reverse_iterator{last};
+    return static_cast<reverse_iterator>(last);
   }
-  reverse_iterator rend() noexcept
+  reverse_iterator rend()
   {
-    return reverse_iterator{first};
+    // return reverse_iterator{first};
+    return static_cast<reverse_iterator>(first);
   }
 
-  size_type size() const noexcept
+  size_type size() const
   {
     return end() - begin();
     // return std::distance(begin(), end());
   }
-  size_type max_size() const noexcept
+  size_type max_size() const
   {
     return (alloc.max_size());
   }
-  bool empty() const noexcept
+  bool empty() const
   {
     return size() == 0;
     // return begin() == end();
   }
-  size_type capacity() const noexcept
+  size_type capacity() const
   {
     return reserved_last - first;
   }  
@@ -229,12 +231,12 @@ public :
       return ;
 
     // 動的メモリー確保をする
-    auto ptr = allocate(sz) ;
+    pointer ptr = allocate(sz) ;
 
     // 古いストレージの情報を保存
-    auto old_first = first;
-    auto old_last = last;
-    auto old_capacity = capacity();
+    pointer old_first = first;
+    pointer old_last = last;
+    size_type old_capacity = capacity();
 
     // 新しいストレージに差し替え
     first = ptr;
@@ -249,24 +251,21 @@ public :
     // } );
 
     // 古いストレージから新しいストレージに要素をコピー構築
-    // 実際にはムーブ構築
-    for (auto old_iter = old_first; old_iter != old_last; ++old_iter, ++last)
+    for (iterator old_iter = old_first; old_iter != old_last; ++old_iter, ++last)
     {
-      // このコピーの理解にはムーブセマンティクスの理解が必要
-      // C++11の機能
-      construct(last, std::move(*old_iter)) ;
+      // construct(last, std::move(*old_iter)) ;
+      construct(last, *old_iter) ;
     }
 
     // 新しいストレージにコピーし終えたので
     // 古いストレージの値は破棄
-    for (auto riter = reverse_iterator(old_last), rend = reverse_iterator(old_first);
+    for (reverse_iterator riter = reverse_iterator(old_last), rend = reverse_iterator(old_first);
           riter != rend ; ++riter)
     {
       destroy(&*riter);
     }
-    // scope_exitによって自動的にストレージが破棄される
-    // → C++20の機能なので、自分で破棄する
-    traits::deallocate(alloc, old_first, old_capacity);
+    // ストレージを破棄する
+    alloc.deallocate(old_first, old_capacity);
   }
 
   void resize(size_type sz)
@@ -274,7 +273,7 @@ public :
     // 現在の要素数より少ない
     if (sz < size())
     {
-      auto diff = size() - sz;
+      size_type diff = size() - sz;
       destroy_until(rbegin() + diff) ;
       last = first + sz ;
     }
@@ -294,7 +293,7 @@ public :
     // 現在の要素数より少ない
     if (sz < size())
     {
-      auto diff = size() - sz;
+      size_type diff = size() - sz;
       destroy_until(rbegin() + diff) ;
       last = first + sz ;
     }
@@ -315,7 +314,7 @@ public :
     if (size() + 1 > capacity())
     {
         // 現在のストレージサイズ
-        auto c = size();
+        size_type c = size();
         // 0の場合は1に
         if (c == 0)
             c = 1 ;
@@ -371,45 +370,47 @@ public :
   {
     return alloc;
   }
-  void clear() noexcept
+  void clear()
   {
     destroy_until(rend());
   }
 
  private :
-  // アロケーターはallocator_traitsを経由して使う
-  // allocator_traitsはc++11で使えないので書き換える必要がある
-  using traits = std::allocator_traits<allocator_type>;
-
   pointer allocate(size_type n)
   {
-    return traits::allocate(alloc, n);
+    // return traits::allocate(alloc, n);
+    return alloc.allocate(n);
   }
   void deallocate()
   {
     if (capacity() > 0)
-      traits::deallocate(alloc, first, capacity());
+      // traits::deallocate(alloc, first, capacity());
+      alloc.deallocate(first, capacity());
   }
   void construct(pointer ptr)
   {
-    traits::construct(alloc, ptr);
+    // traits::construct(alloc, ptr);
+    alloc.construct(ptr);
   }
   void construct(pointer ptr, const_reference value)
   {
-    traits::construct(alloc, ptr, value);
+    // traits::construct(alloc, ptr, value);
+    alloc.construct(ptr, value);
   }
   // ムーブ用
-  void construct(pointer ptr, value_type && value)
-  {
-    traits::construct(alloc, ptr, std::move(value));
-  }
+  // c++11の機能
+  // void construct(pointer ptr, value_type && value)
+  // {
+  //   traits::construct(alloc, ptr, std::move(value));
+  // }
   void destroy(pointer ptr)
   {
-    traits::destroy(alloc, ptr);
-  }
+    // traits::destroy(alloc, ptr);
+    alloc.destroy(ptr);
+   }
   void destroy_until(reverse_iterator rend)
   {
-    for (auto riter = rbegin(); riter != rend; ++riter, --last)
+    for (reverse_iterator riter = rbegin(); riter != rend; ++riter, --last)
     {
       // 簡易vector<T>のiteratorは単なるT *だが、
       // riterはリバースイテレーターなのでポインターではない。
