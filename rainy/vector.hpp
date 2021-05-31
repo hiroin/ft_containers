@@ -41,7 +41,7 @@ public :
     : alloc(alloc), first(NULL), last(NULL), reserved_last(NULL)
   {};
   vector( size_type size, const allocator_type & alloc = allocator_type() )
-    : vector( alloc )
+    : alloc(alloc), first(NULL), last(NULL), reserved_last(NULL)
   {
     resize(size);
   }
@@ -281,10 +281,11 @@ public :
     else if ( sz > size() )
     {
       reserve(sz) ;
-      for (; last != reserved_last ; ++last)
-      {
-        construct(last);
-      }
+      // デフォルト構築らしいけどいらないと思う
+      // for (; last != reserved_last ; ++last)
+      // {
+      //   construct(last);
+      // }
     }
   }
 
@@ -387,6 +388,7 @@ public :
       // traits::deallocate(alloc, first, capacity());
       alloc.deallocate(first, capacity());
   }
+  // この関数いるのかな…
   void construct(pointer ptr)
   {
     // traits::construct(alloc, ptr);
