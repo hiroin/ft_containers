@@ -51,12 +51,13 @@ public :
     resize(size, value);
   }
   template < typename InputIterator >
-  vector(InputIterator first, InputIterator last, const Allocator & = Allocator())
+  vector(InputIterator first_, InputIterator last_, const Allocator & = Allocator())
+    : first(NULL), last(NULL), reserved_last(NULL)
   {
-    reserve(std::distance(first, last));
-    for (auto i = first; i != last ; ++i)
+    reserve(std::distance(first_, last_));
+    for (InputIterator i = first_; i != last_ ; i++)
     {
-        push_back(*i);
+      push_back(*i);
     }
   }
 
@@ -71,9 +72,7 @@ public :
 
   // コピー
   vector(const vector & r)
-    // アロケーターのコピー
-    // アロケーターをコピーすべきかどうかは、アロケーターの実装が選べるようになっている
-    : alloc(traits::select_on_container_copy_construction(r.alloc))
+    : alloc(r.alloc), first(NULL), last(NULL), reserved_last(NULL)
   {
     // コピー元の要素数を保持できるだけのストレージを確保
     reserve(r.size());
@@ -87,6 +86,7 @@ public :
     }
     last = first + r.size();
   }
+
   vector & operator =(const vector & r)
   {
     // 1. 自分自身への代入なら何もしない
@@ -129,6 +129,15 @@ public :
       }
     return *this ;
   }
+  bool operator==(const vector<T, Allocator>& r)
+  {
+    return (this->size() == r.size()
+      && std::equal(this->begin(), this->end(), r.begin()));
+  }
+  bool operator!=(const vector<T, Allocator>& r)
+  {
+    return !(*this == r);
+  }
 
   // イテレーターアクセス
   iterator begin() noexcept
@@ -161,10 +170,9 @@ public :
     return end() - begin();
     // return std::distance(begin(), end());
   }
-  // 実装する
   size_type max_size() const noexcept
   {
-    return reserved_last - first;
+    return (alloc.max_size());
   }
   bool empty() const noexcept
   {
@@ -188,13 +196,13 @@ public :
   reference at( size_type i )
   {
     if ( i >= size() )
-      throw std::out_of_range( "index is out of range." ) ;
+      throw std::out_of_range( "vector" ) ;
     return first[i] ;
   }
   const_reference at( size_type i ) const
   {
     if ( i >= size() )
-      throw std::out_of_range( "index is out of range." ) ;
+      throw std::out_of_range( "vector" ) ;
     return first[i] ;
   }
   reference front()
@@ -379,7 +387,8 @@ public :
   }
   void deallocate()
   {
-    traits::deallocate(alloc, first, capacity());
+    if (capacity() > 0)
+      traits::deallocate(alloc, first, capacity());
   }
   void construct(pointer ptr)
   {
