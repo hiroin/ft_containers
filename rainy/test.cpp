@@ -1,10 +1,18 @@
+#include "test.hpp"
 #include "vector.hpp"
 #include <algorithm>
 #include <iostream>
 
 int main()
 {
-  ft::vector<int> v4(1, 1);
+  func(1);
+  func("a");
+
+  ft::vector<int> v4(2, 1);
+  std::cout << v4[0] << std::endl;
+  std::cout << v4[1] << std::endl;
+
+  ft::vector<int> v5(v4.begin(), v4.end());
 
   // ft::vector<int> v3(10);
   // v3[0] = 0;
