@@ -6,6 +6,8 @@
 #include <iostream>
 #include <algorithm>
 #include <iterator>
+#include "ft_enable_if.hpp"
+#include "ft_is_integral.hpp"
 
 namespace ft {
 
@@ -184,10 +186,11 @@ public :
   {
     resize(size, value);
   }
-  template < typename InputIterator,
-    typename std::enable_if< !std::is_integral<InputIterator>::value, std::nullptr_t>::type = nullptr >
-  // template < typename InputIterator >
-  vector(InputIterator first, InputIterator last, const Allocator & = Allocator())
+  // template < typename InputIterator,
+  //   typename std::enable_if< !std::is_integral<InputIterator>::value, std::nullptr_t>::type = nullptr >
+  template <typename InputIterator>
+  vector(InputIterator first,
+    typename ft_enable_if<!ft_is_integral<InputIterator>::value, InputIterator>::type last, const Allocator & = Allocator())
     : first_(NULL), last_(NULL), reserved_last_(NULL)
   {
     reserve(std::distance(first, last));

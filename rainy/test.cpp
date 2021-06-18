@@ -1,18 +1,26 @@
-#include "test.hpp"
 #include "vector.hpp"
+#include "ft_enable_if.hpp"
+#include "ft_is_integral.hpp"
 #include <algorithm>
 #include <iostream>
 
 int main()
 {
-  func(1);
-  func("a");
+  test_ft_is_integral(1);
+  test_ft_is_integral("a");
 
   ft::vector<int> v4(2, 1);
   std::cout << v4[0] << std::endl;
   std::cout << v4[1] << std::endl;
 
+  // ft::vector<int> v4;
+  // v4.push_back(1);
+  // v4.push_back(2);
   ft::vector<int> v5(v4.begin(), v4.end());
+  std::cout << v5[0] << std::endl;
+  std::cout << v5[1] << std::endl;  
+
+
 
   // ft::vector<int> v3(10);
   // v3[0] = 0;
