@@ -5,7 +5,6 @@
 #include <memory>
 #include <iostream>
 #include <algorithm>
-#include <iterator>
 #include "ft_enable_if.hpp"
 #include "ft_is_integral.hpp"
 
@@ -182,12 +181,10 @@ public :
     resize(size);
   }
   vector( size_type size, const_reference value, const allocator_type & alloc_ = allocator_type() )
-    : vector( alloc_ )
+    : alloc_(alloc_), first_(NULL), last_(NULL), reserved_last_(NULL)
   {
     resize(size, value);
   }
-  // template < typename InputIterator,
-  //   typename std::enable_if< !std::is_integral<InputIterator>::value, std::nullptr_t>::type = nullptr >
   template <typename InputIterator>
   vector(InputIterator first,
     typename ft_enable_if<!ft_is_integral<InputIterator>::value, InputIterator>::type last, const Allocator & = Allocator())
@@ -287,11 +284,11 @@ public :
   {
     return last_;
   }
-  iterator begin() const
+  const_iterator begin() const
   {
     return first_;
   }
-  iterator end() const
+  const_iterator end() const
   {
     return last_;
   }

@@ -24,13 +24,13 @@ int main()
   std::cout << " => OK :)" << std::endl;
 
   // あとで実装
-  // putTestInfo(test_no, "vector: fill construction with 42, 42");
-  // try {
-  //   ft::vector<int> vec(42, 42);
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error("failed");
-  // }
-  // std::cout << " => OK :)" << std::endl;
+  putTestInfo(test_no, "vector: fill construction with 42, 42");
+  try {
+    ft::vector<int> vec(42, 42);
+  } catch (std::exception& e) {
+    throw std::runtime_error("failed");
+  }
+  std::cout << " => OK :)" << std::endl;
 
   putTestInfo(test_no, "vector: copy construction with default");
   try {
@@ -48,52 +48,52 @@ int main()
   std::cout << " => OK :)" << std::endl;
 
   // あとで実装
-  // putTestInfo(test_no, "vector: copy construction with vec(42,42)");
-  // try {
-  //   std::vector<int> vec_std1(42, 42);
-  //   std::vector<int> vec_std2(vec_std1);
-  //   ft::vector<int> vec_ft1(42, 42);
-  //   ft::vector<int> vec_ft2(vec_ft1);
-  //   std::vector<int>::iterator itr_std;
-  //   ft::vector<int>::iterator itr_ft;
-  //   for (itr_std = vec_std2.begin(), itr_ft = vec_ft2.begin();
-  //   itr_std != vec_std2.end(); ++itr_std, ++itr_ft) {
-  //     if (*itr_std != *itr_ft) {
-  //       throw std::runtime_error("failed");
-  //     }
-  //   }
-  //   std::vector<int>::const_iterator citr_std;
-  //   ft::vector<int>::const_iterator citr_ft;
-  //   for (citr_std = vec_std2.begin(), citr_ft = vec_ft2.begin();
-  //   citr_std != vec_std2.end(); ++citr_std, ++citr_ft) {
-  //     if (*citr_std != *citr_ft) {
-  //       throw std::runtime_error("failed");
-  //     }
-  //   }
-  //   std::vector<int>::reverse_iterator ritr_std;
-  //   ft::vector<int>::reverse_iterator ritr_ft;
-  //   for (ritr_std = vec_std2.rbegin(), ritr_ft = vec_ft2.rbegin();
-  //   ritr_std != vec_std2.rend(); ++ritr_std, ++ritr_ft) {
-  //     if (*ritr_std != *ritr_ft) {
-  //       throw std::runtime_error("failed");
-  //     }
-  //   }
-  //   std::vector<int>::const_reverse_iterator rcitr_std;
-  //   ft::vector<int>::const_reverse_iterator rcitr_ft;
-  //   for (rcitr_std = vec_std2.rbegin(), rcitr_ft = vec_ft2.rbegin();
-  //   rcitr_std != vec_std2.rend(); ++rcitr_std, ++rcitr_ft) {
-  //     if (*rcitr_std != *rcitr_ft) {
-  //       throw std::runtime_error("failed");
-  //     }
-  //   }
-  //   if (vec_ft1 != vec_ft2 || vec_ft2.capacity() != vec_std2.capacity() ||
-  //       vec_ft2.size() != vec_std2.size()) {
-  //     throw std::runtime_error("failed");
-  //   }
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error("failed");
-  // }
-  // std::cout << " => OK :)" << std::endl;
+  putTestInfo(test_no, "vector: copy construction with vec(42,42)");
+  try {
+    std::vector<int> vec_std1(42, 42);
+    std::vector<int> vec_std2(vec_std1);
+    ft::vector<int> vec_ft1(42, 42);
+    ft::vector<int> vec_ft2(vec_ft1);
+    std::vector<int>::iterator itr_std;
+    ft::vector<int>::iterator itr_ft;
+    for (itr_std = vec_std2.begin(), itr_ft = vec_ft2.begin();
+    itr_std != vec_std2.end(); ++itr_std, ++itr_ft) {
+      if (*itr_std != *itr_ft) {
+        throw std::runtime_error("failed");
+      }
+    }
+    std::vector<int>::const_iterator citr_std;
+    ft::vector<int>::const_iterator citr_ft;
+    // for (citr_std = vec_std2.begin(), citr_ft = vec_ft2.begin();
+    // citr_std != vec_std2.end(); ++citr_std, ++citr_ft) {
+    //   if (*citr_std != *citr_ft) {
+    //     throw std::runtime_error("failed");
+    //   }
+    // }
+    // std::vector<int>::reverse_iterator ritr_std;
+    // ft::vector<int>::reverse_iterator ritr_ft;
+    // for (ritr_std = vec_std2.rbegin(), ritr_ft = vec_ft2.rbegin();
+    // ritr_std != vec_std2.rend(); ++ritr_std, ++ritr_ft) {
+    //   if (*ritr_std != *ritr_ft) {
+    //     throw std::runtime_error("failed");
+    //   }
+    // }
+    // std::vector<int>::const_reverse_iterator rcitr_std;
+    // ft::vector<int>::const_reverse_iterator rcitr_ft;
+    // for (rcitr_std = vec_std2.rbegin(), rcitr_ft = vec_ft2.rbegin();
+    // rcitr_std != vec_std2.rend(); ++rcitr_std, ++rcitr_ft) {
+    //   if (*rcitr_std != *rcitr_ft) {
+    //     throw std::runtime_error("failed");
+    //   }
+    // }
+    // if (vec_ft1 != vec_ft2 || vec_ft2.capacity() != vec_std2.capacity() ||
+    //     vec_ft2.size() != vec_std2.size()) {
+    //   throw std::runtime_error("failed");
+    // }
+  } catch (std::exception& e) {
+    throw std::runtime_error("failed");
+  }
+  std::cout << " => OK :)" << std::endl;
 
   putTestInfo(test_no,
               "vector: range construction with iterator of vec(42,42)");
