@@ -63,7 +63,7 @@ int main()
       }
     }
     std::vector<int>::const_iterator citr_std;
-    ft::vector<int>::const_iterator citr_ft;
+    // ft::vector<int>::const_iterator citr_ft;
     // for (citr_std = vec_std2.begin(), citr_ft = vec_ft2.begin();
     // citr_std != vec_std2.end(); ++citr_std, ++citr_ft) {
     //   if (*citr_std != *citr_ft) {
