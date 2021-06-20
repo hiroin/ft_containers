@@ -155,9 +155,10 @@ class vector
   typedef Allocator allocator_type;
   typedef std::size_t size_type;
   typedef std::ptrdiff_t difference_type;
-  typedef pointer iterator;
+  // typedef pointer iterator;
+  typedef vectorIterator<T> iterator;
   typedef const_pointer const_iterator;
-  typedef std::reverse_iterator<iterator> reverse_iterator;
+  typedef std::reverse_iterator<pointer> reverse_iterator;
   typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
 private :
@@ -387,7 +388,8 @@ public :
     // } );
 
     // 古いストレージから新しいストレージに要素をコピー構築
-    for (iterator old_iter = old_first_; old_iter != old_last_; ++old_iter, ++last_)
+    for (iterator old_iter = old_first_, old_end_ = old_last_;
+      old_iter != old_end_; ++old_iter, ++last_)
     {
       // construct(last_, std::move(*old_iter)) ;
       construct(last_, *old_iter) ;
