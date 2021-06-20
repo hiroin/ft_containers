@@ -63,21 +63,21 @@ int main()
       }
     }
     std::vector<int>::const_iterator citr_std;
-    // ft::vector<int>::const_iterator citr_ft;
-    // for (citr_std = vec_std2.begin(), citr_ft = vec_ft2.begin();
-    // citr_std != vec_std2.end(); ++citr_std, ++citr_ft) {
-    //   if (*citr_std != *citr_ft) {
-    //     throw std::runtime_error("failed");
-    //   }
-    // }
-    // std::vector<int>::reverse_iterator ritr_std;
-    // ft::vector<int>::reverse_iterator ritr_ft;
-    // for (ritr_std = vec_std2.rbegin(), ritr_ft = vec_ft2.rbegin();
-    // ritr_std != vec_std2.rend(); ++ritr_std, ++ritr_ft) {
-    //   if (*ritr_std != *ritr_ft) {
-    //     throw std::runtime_error("failed");
-    //   }
-    // }
+    ft::vector<int>::const_iterator citr_ft;
+    for (citr_std = vec_std2.begin(), citr_ft = vec_ft2.begin();
+    citr_std != vec_std2.end(); ++citr_std, ++citr_ft) {
+      if (*citr_std != *citr_ft) {
+        throw std::runtime_error("failed");
+      }
+    }
+    std::vector<int>::reverse_iterator ritr_std;
+    ft::vector<int>::reverse_iterator ritr_ft;
+    for (ritr_std = vec_std2.rbegin(), ritr_ft = vec_ft2.rbegin();
+    ritr_std != vec_std2.rend(); ++ritr_std, ++ritr_ft) {
+      if (*ritr_std != *ritr_ft) {
+        throw std::runtime_error("failed");
+      }
+    }
     // std::vector<int>::const_reverse_iterator rcitr_std;
     // ft::vector<int>::const_reverse_iterator rcitr_ft;
     // for (rcitr_std = vec_std2.rbegin(), rcitr_ft = vec_ft2.rbegin();
@@ -110,6 +110,11 @@ int main()
     }
     if (std_vec.size() != ft_vec.size() ||
         std_vec.capacity() != ft_vec.capacity()) {
+          std::cout << std::endl;
+          std::cout << "std_vec.size() : " << std_vec.size() << std::endl;
+          std::cout << "ft_vec.size()  : " << ft_vec.size() << std::endl;
+          std::cout << "std_vec.capacity() : " << std_vec.capacity() << std::endl;
+          std::cout << "ft_vec.capacity()  : " << ft_vec.capacity() << std::endl;
       throw std::runtime_error("size or capacity");
     }
   } catch (std::exception& e) {
