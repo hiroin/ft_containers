@@ -28,8 +28,10 @@ class vector
   typedef vectorIterator<T> iterator;
   // typedef const_pointer const_iterator;
   typedef vectorConstIterator<T> const_iterator;
-  typedef std::reverse_iterator<pointer> reverse_iterator;
-  typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+  // typedef std::reverse_iterator<pointer> reverse_iterator;
+  typedef reverseIterator<iterator> reverse_iterator;
+  // typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+  typedef reverseIterator<const_iterator> const_reverse_iterator;
 
 private :
   // 先頭の要素へのポインター
