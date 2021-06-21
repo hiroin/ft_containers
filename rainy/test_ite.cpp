@@ -1,10 +1,14 @@
-#include "test.hpp"
-#include "vector.hpp"
 #include <vector>
 #include <algorithm>
 #include <iostream>
 #include <sstream>
 #include <iomanip>
+#include <iterator>
+#include "iterator.hpp"
+#include "vectorIterator.hpp"
+#include "vectorConstIterator.hpp"
+#include "vector.hpp"
+
 
 struct Test
 {

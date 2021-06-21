@@ -7,141 +7,10 @@
 #include <algorithm>
 #include "ft_enable_if.hpp"
 #include "ft_is_integral.hpp"
+#include "vectorIterator.hpp"
+#include "vectorConstIterator.hpp"
 
 namespace ft {
-
-struct input_iterator_tag { };
-struct output_iterator_tag { };
-struct forward_iterator_tag : public input_iterator_tag { };
-struct bidirectional_iterator_tag : public forward_iterator_tag { };
-struct random_access_iterator_tag : public bidirectional_iterator_tag { };
-
-template < typename T>
-class vectorIterator
-{
- public:
-  typedef std::ptrdiff_t difference_type;
-  typedef T value_type;
-  typedef value_type& reference;
-  typedef value_type* pointer;
-  typedef random_access_iterator_tag iterator_category;
-
-  pointer ptr_;
-
-  vectorIterator() : ptr_(NULL){};
-  vectorIterator(pointer ptr) : ptr_(ptr){};
-  // vectorIterator(const vectorIterator& x) : ptr_(x.ptr_) {} //謎
-  ~vectorIterator(){};
-
-  vectorIterator& operator=(const vectorIterator& x)
-  {
-    if (this == &x)
-      return *this;
-    ptr_ = x.ptr_;
-    return *this;
-  }
-
-  reference operator *() const
-  {
-    return *ptr_;
-  }
-
-  pointer operator->() const
-  {
-    return ptr_;
-  }
-
-  vectorIterator& operator++()
-  {
-    ++ptr_;
-    return *this;
-  }
-
-  vectorIterator operator++(int)
-  {
-    return vectorIterator(ptr_++);
-  }
-
-  vectorIterator& operator--()
-  {
-    --ptr_;
-    return *this;
-  }
-
-  vectorIterator operator--(int)
-  {
-    return vectorIterator(ptr_--);
-  }
-
-  reference operator[](difference_type n) const
-  {
-    return ptr_[n];
-  }
-
-  vectorIterator& operator+=(difference_type n)
-  {
-    ptr_ += n;
-    return *this;
-  }
-
-  vectorIterator operator+(difference_type n)
-  {
-    return vectorIterator(ptr_ + n);
-  }
-
-  vectorIterator& operator-=(difference_type n)
-  {
-    ptr_ -= n;
-    return *this;
-  }
-
-  vectorIterator operator-(difference_type n)
-  {
-    return vectorIterator(ptr_ - n);
-  }
-};
-
-template < typename T>
-bool operator==(const vectorIterator<T>& lhs, const vectorIterator<T>& rhs)
-{
-  return lhs.ptr_ == rhs.ptr_;
-}
-
-template < typename T>
-bool operator!=(const vectorIterator<T>& lhs, const vectorIterator<T>& rhs)
-{
-  return lhs.ptr_ != rhs.ptr_;
-}
-
-template < typename T>
-bool operator<(const vectorIterator<T>& lhs, const vectorIterator<T>& rhs)
-{
-  return lhs.ptr_ < rhs.ptr_;
-}
-
-template < typename T>
-bool operator>(const vectorIterator<T>& lhs, const vectorIterator<T>& rhs)
-{
-  return lhs.ptr_ > rhs.ptr_;
-}
-
-template < typename T>
-bool operator<=(const vectorIterator<T>& lhs, const vectorIterator<T>& rhs)
-{
-  return lhs.ptr_ <= rhs.ptr_;
-}
-
-template < typename T>
-bool operator>=(const vectorIterator<T>& lhs, const vectorIterator<T>& rhs)
-{
-  return lhs.ptr_ >= rhs.ptr_;
-}
-
-template < typename T>
-bool operator-(const vectorIterator<T>& lhs, const vectorIterator<T>& rhs)
-{
-  return lhs.ptr_ - rhs.ptr_;
-}
 
 template < typename T, typename Allocator = std::allocator<T> >
 class vector
@@ -155,10 +24,14 @@ class vector
   typedef Allocator allocator_type;
   typedef std::size_t size_type;
   typedef std::ptrdiff_t difference_type;
-  typedef pointer iterator;
-  typedef const_pointer const_iterator;
-  typedef std::reverse_iterator<iterator> reverse_iterator;
-  typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+  // typedef pointer iterator;
+  typedef vectorIterator<T> iterator;
+  // typedef const_pointer const_iterator;
+  typedef vectorConstIterator<T> const_iterator;
+  // typedef std::reverse_iterator<pointer> reverse_iterator;
+  typedef reverseIterator<iterator> reverse_iterator;
+  // typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+  typedef reverseIterator<const_iterator> const_reverse_iterator;
 
 private :
   // 先頭の要素へのポインター
@@ -215,7 +88,8 @@ public :
     // コピー元の要素をコピー構築
     // destはコピー先
     // [src, last_)はコピー元
-    for (pointer dest = first_, src = r.begin(), last_ = r.end();
+    pointer dest = first_;
+    for (const_iterator src = r.begin(), last_ = r.end();
       src != last_ ; ++dest, ++src)
     {
       construct(dest, *src);
@@ -278,35 +152,40 @@ public :
   // イテレーターアクセス
   iterator begin()
   {
-    return first_;
+    return iterator(first_);
   }
   iterator end()
   {
-    return last_;
+    return iterator(last_);
   }
   const_iterator begin() const
   {
-    return first_;
+    return const_iterator(first_);
   }
   const_iterator end() const
   {
-    return last_;
+    return const_iterator(last_);
   }
   reverse_iterator rbegin()
   {
-    // return reverse_iterator{last_};
-    return static_cast<reverse_iterator>(last_);
+    return reverse_iterator(end());
   }
   reverse_iterator rend()
   {
-    // return reverse_iterator{first_};
-    return static_cast<reverse_iterator>(first_);
+    return reverse_iterator(begin());
+  }
+  const_reverse_iterator rbegin() const
+  {
+    return const_reverse_iterator(end());
+  }
+   const_reverse_iterator rend() const
+  {
+    return const_reverse_iterator(begin());
   }
 
   size_type size() const
   {
     return end() - begin();
-    // return std::distance(begin(), end());
   }
   size_type max_size() const
   {
@@ -387,7 +266,8 @@ public :
     // } );
 
     // 古いストレージから新しいストレージに要素をコピー構築
-    for (iterator old_iter = old_first_; old_iter != old_last_; ++old_iter, ++last_)
+    for (iterator old_iter = old_first_, old_end_ = old_last_;
+      old_iter != old_end_; ++old_iter, ++last_)
     {
       // construct(last_, std::move(*old_iter)) ;
       construct(last_, *old_iter) ;
