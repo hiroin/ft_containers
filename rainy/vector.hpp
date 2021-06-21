@@ -116,7 +116,7 @@ public :
         // 有効な要素はコピー
         std::copy(r.begin(), r.begin() + r.size(), begin());
         // 残りはコピー構築
-        for (iterator src_iter = r.begin() + r.size(), src_end = r.end();
+        for (const_iterator src_iter = r.begin() + r.size(), src_end = r.end();
           src_iter != src_end ; ++src_iter, ++last_ )
         {
           construct(last_, *src_iter);
@@ -131,11 +131,13 @@ public :
         // 予約
         reserve(r.size());
         // コピー構築
-        for (iterator src_iter = r.begin(), src_end = r.end(), dest_iter = begin();
+        iterator dest_iter = begin();
+        for (const_iterator src_iter = r.begin(), src_end = r.end();
           src_iter != src_end; ++src_iter, ++dest_iter, ++last_)
         {
-          construct(dest_iter, *src_iter);
+          construct(&*dest_iter, *src_iter);
         }
+        std::cout << "OK" << std::endl;
       }
     return *this ;
   }
