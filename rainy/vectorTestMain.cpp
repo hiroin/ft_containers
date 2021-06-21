@@ -334,34 +334,39 @@ int main()
   }
   std::cout << " => OK :)" << std::endl;
 
-  // putTestInfo(test_no, "vector: check vec1 = vec2(42,42) with 84 capacity");
-  // try {
-  //   ft::vector<int> vec1;
-  //   ft::vector<int> vec2(42, 42);
-  //   vec2.reserve(84);
-  //   vec1 = vec2;
-  //   // std::cout << "\nvec1.capacity() = " << vec1.capacity() << std::endl;
-  //   // std::cout << "vec2.capacity() = " << vec2.capacity() << std::endl;
-  //   if (vec1 != vec2) {
-  //     throw std::runtime_error("should not be equal");
-  //   }
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error("failed");
-  // }
-  // std::cout << " => OK :)" << std::endl;
+  putTestInfo(test_no, "vector: check vec1 = vec2(42,42) with 84 capacity");
+  try {
+    ft::vector<int> vec1;
+    ft::vector<int> vec2(42, 42);
+    vec2.reserve(84);
+    vec1 = vec2;
+    // std::cout << "\nvec1.capacity() = " << vec1.capacity() << std::endl;
+    // std::cout << "vec2.capacity() = " << vec2.capacity() << std::endl;
+    if (vec1 != vec2) {
+      throw std::runtime_error("should not be equal");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error("failed");
+  }
+  std::cout << " => OK :)" << std::endl;
 
-  // putTestInfo(test_no, "vector: check vec1(42, 42) = vec2");
-  // try {
-  //   ft::vector<int> vec1(42, 42);
-  //   ft::vector<int> vec2;
-  //   vec1 = vec2;
-  //   if (!(vec1 == vec2)) {
-  //     throw std::runtime_error("should be equal");
-  //   }
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error("failed");
-  // }
-  // std::cout << " => OK :)" << std::endl;
+  putTestInfo(test_no, "vector: check vec1(42, 42) = vec2");
+  try {
+    ft::vector<int> vec1(2, 42);
+    ft::vector<int> vec2;
+    vec1 = vec2;
+    if (!(vec1 == vec2)) {
+      std::cout << std::endl;
+      std::cout << "vec1[0] : " << vec1[0] << std::endl;
+      std::cout << "vec1[1] : " << vec1[1] << std::endl;
+      std::cout << "vec2[0] : " << vec2[0] << std::endl;
+      std::cout << "vec2[1] : " << vec2[1] << std::endl;
+      throw std::runtime_error("should be equal");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error("failed");
+  }
+  std::cout << " => OK :)" << std::endl;
 
   putTestInfo(test_no, "vector: size() of empty vector construct with default");
   try {

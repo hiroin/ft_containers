@@ -106,21 +106,61 @@ public :
     // 2. 要素数が同じならば
     if (size() == r.size())
     {   // 要素ごとにコピー代入
-      std::copy(r.begin(), r.end(), begin()) ;
+      // std::copy(r.begin(), r.end(), begin()) ;
+      iterator dest_iter = begin();
+      for (const_iterator src_iter = r.begin(), src_end = r.end();
+        src_iter != src_end; ++src_iter, ++dest_iter, ++last_)
+      {
+        *dest_iter = *src_iter;
+      }      
     }
     // 3. それ以外の場合で
     else 
       // 予約数が十分ならば、
       if (capacity() >= r.size())
       {
-        // 有効な要素はコピー
-        std::copy(r.begin(), r.begin() + r.size(), begin());
-        // 残りはコピー構築
-        for (const_iterator src_iter = r.begin() + r.size(), src_end = r.end();
-          src_iter != src_end ; ++src_iter, ++last_ )
+        iterator dest_iter;
+        iterator dest_end = end();
+        const_iterator src_iter;
+        const_iterator src_end = r.end();
+        for (dest_iter = begin() + r.size(), dest_end = end();
+          dest_iter != dest_end;
+          ++dest_iter)
         {
-          construct(last_, *src_iter);
+          destroy(&*dest_iter);
         }
+        last_ = first_;
+        if (size() >= r.size())
+        {
+          for (src_iter = r.begin(), dest_iter = begin();
+            src_iter != src_end;
+            ++src_iter, ++dest_iter, last_++)
+          {
+            *dest_iter = *src_iter;
+          }
+        }
+        else
+        {
+          for (src_iter = r.begin(), dest_iter = begin();
+            dest_iter != dest_end;
+            ++src_iter, ++dest_iter, last_++)
+          {
+            *dest_iter = *src_iter;
+          }
+          for (src_end = r.end();
+            src_iter != src_end;
+            ++src_iter, ++dest_iter, ++last_)
+          {
+            construct(&*dest_iter, *src_iter);
+          }
+        }
+        // clear();
+        // iterator dest_iter = begin();
+        // for (const_iterator src_iter = r.begin(), src_end = r.end();
+        //   src_iter != src_end; ++src_iter, ++dest_iter, ++last_)
+        // {
+        //   construct(&*dest_iter, *src_iter);
+        // }
       }
       // 4. 予約数が不十分ならば
       else
@@ -137,7 +177,6 @@ public :
         {
           construct(&*dest_iter, *src_iter);
         }
-        std::cout << "OK" << std::endl;
       }
     return *this ;
   }
