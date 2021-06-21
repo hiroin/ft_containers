@@ -35,9 +35,7 @@ public:
 */
   reverseIterator(const reverseIterator &x) : current(x.current) {}
   template <class Itr>
-  reverseIterator(const reverseIterator<Itr>& x) : current(x.base()) {
-    std::cout << "copy" << std::endl;
-  }
+  reverseIterator(const reverseIterator<Itr>& x) : current(x.base()) {}
 
   ~reverseIterator(){};
 

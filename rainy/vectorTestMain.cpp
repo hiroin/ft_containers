@@ -234,29 +234,28 @@ int main()
   }
   std::cout << " => OK :)" << std::endl;
 
-  // あとで実装
-  // putTestInfo(test_no,
-  //             "vector: copy construction with vec(42,42) with cap(84)");
-  // try {
-  //   std::vector<int> vec_std1(42, 42);
-  //   vec_std1.reserve(84);
-  //   std::vector<int> vec_std2(vec_std1);
-  //   ft::vector<int> vec_ft1(42, 42);
-  //   vec_ft1.reserve(84);
-  //   ft::vector<int> vec_ft2(vec_ft1);
-  //   for (size_t idx = 0; idx < vec_std2.size(); idx++) {
-  //     if (vec_std2[idx] != vec_ft2[idx]) {
-  //       throw std::runtime_error("failed");
-  //     }
-  //   }
-  //   if (vec_ft1 != vec_ft2 || vec_ft2.capacity() != vec_std2.capacity() ||
-  //       vec_ft2.size() != vec_std2.size()) {
-  //     throw std::runtime_error("failed");
-  //   }
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error("failed");
-  // }
-  // std::cout << " => OK :)" << std::endl;
+  putTestInfo(test_no,
+              "vector: copy construction with vec(42,42) with cap(84)");
+  try {
+    std::vector<int> vec_std1(42, 42);
+    vec_std1.reserve(84);
+    std::vector<int> vec_std2(vec_std1);
+    ft::vector<int> vec_ft1(42, 42);
+    vec_ft1.reserve(84);
+    ft::vector<int> vec_ft2(vec_ft1);
+    for (size_t idx = 0; idx < vec_std2.size(); idx++) {
+      if (vec_std2[idx] != vec_ft2[idx]) {
+        throw std::runtime_error("failed");
+      }
+    }
+    if (vec_ft1 != vec_ft2 || vec_ft2.capacity() != vec_std2.capacity() ||
+        vec_ft2.size() != vec_std2.size()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error("failed");
+  }
+  std::cout << " => OK :)" << std::endl;
 
   putTestInfo(test_no, "vector: check vec1 == vec2 (default construction");
   try {
@@ -270,71 +269,70 @@ int main()
   }
   std::cout << " => OK :)" << std::endl;
 
-  // あとで実装
-  // putTestInfo(test_no, "vector: check vec1(42,42) == vec2(42,42)");
-  // try {
-  //   ft::vector<int> vec1(42, 42);
-  //   ft::vector<int> vec2(42, 42);
-  //   if (!(vec1 == vec2)) {
-  //     throw std::runtime_error("should be true");
-  //   }
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error(e.what());
-  // }
-  // std::cout << " => OK :)" << std::endl;
+  putTestInfo(test_no, "vector: check vec1(42,42) == vec2(42,42)");
+  try {
+    ft::vector<int> vec1(42, 42);
+    ft::vector<int> vec2(42, 42);
+    if (!(vec1 == vec2)) {
+      throw std::runtime_error("should be true");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
 
-  // putTestInfo(test_no, "vector: check vec1(42,42) == vec2(21,42)");
-  // try {
-  //   ft::vector<int> vec1(42, 42);
-  //   ft::vector<int> vec2(21, 42);
-  //   if (vec1 == vec2) {
-  //     throw std::runtime_error("should not be true");
-  //   }
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error(e.what());
-  // }
-  // std::cout << " => OK :)" << std::endl;
+  putTestInfo(test_no, "vector: check vec1(42,42) == vec2(21,42)");
+  try {
+    ft::vector<int> vec1(42, 42);
+    ft::vector<int> vec2(21, 42);
+    if (vec1 == vec2) {
+      throw std::runtime_error("should not be true");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
 
-  // putTestInfo(test_no, "vector: check vec1(42,42) == vec2(42,21)");
-  // try {
-  //   ft::vector<int> vec1(42, 42);
-  //   ft::vector<int> vec2(42, 21);
-  //   if (vec1 == vec2) {
-  //     throw std::runtime_error("should not be true");
-  //   }
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error(e.what());
-  // }
-  // std::cout << " => OK :)" << std::endl;
+  putTestInfo(test_no, "vector: check vec1(42,42) == vec2(42,21)");
+  try {
+    ft::vector<int> vec1(42, 42);
+    ft::vector<int> vec2(42, 21);
+    if (vec1 == vec2) {
+      throw std::runtime_error("should not be true");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
 
-  // putTestInfo(test_no, "vector: vec1(42,42) == vec2(42,42) but capacity diffs");
-  // try {
-  //   ft::vector<int> vec1(42, 42);
-  //   ft::vector<int> vec2(42, 42);
-  //   vec2.reserve(84);
-  //   // std::cout << "\nvec1.capacity() = " << vec1.capacity() << std::endl;
-  //   // std::cout << "vec2.capacity() = " << vec2.capacity() << std::endl;
-  //   // std::cout << "vec1 == vec2: " << (vec1 == vec2) << std::endl;
-  //   if (vec1 != vec2) {
-  //     throw std::runtime_error("should be true");
-  //   }
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error(e.what());
-  // }
-  // std::cout << " => OK :)" << std::endl;
+  putTestInfo(test_no, "vector: vec1(42,42) == vec2(42,42) but capacity diffs");
+  try {
+    ft::vector<int> vec1(42, 42);
+    ft::vector<int> vec2(42, 42);
+    vec2.reserve(84);
+    // std::cout << "\nvec1.capacity() = " << vec1.capacity() << std::endl;
+    // std::cout << "vec2.capacity() = " << vec2.capacity() << std::endl;
+    // std::cout << "vec1 == vec2: " << (vec1 == vec2) << std::endl;
+    if (vec1 != vec2) {
+      throw std::runtime_error("should be true");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
 
-  // putTestInfo(test_no, "vector: check vec1 = vec2(42,42)");
-  // try {
-  //   ft::vector<int> vec1;
-  //   ft::vector<int> vec2(42, 42);
-  //   vec1 = vec2;
-  //   if (vec1 != vec2) {
-  //     throw std::runtime_error("should not be equal");
-  //   }
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error("failed");
-  // }
-  // std::cout << " => OK :)" << std::endl;
+  putTestInfo(test_no, "vector: check vec1 = vec2(42,42)");
+  try {
+    ft::vector<int> vec1;
+    ft::vector<int> vec2(42, 42);
+    vec1 = vec2;
+    if (vec1 != vec2) {
+      throw std::runtime_error("should not be equal");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error("failed");
+  }
+  std::cout << " => OK :)" << std::endl;
 
   // putTestInfo(test_no, "vector: check vec1 = vec2(42,42) with 84 capacity");
   // try {
