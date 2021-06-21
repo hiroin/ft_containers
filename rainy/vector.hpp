@@ -168,20 +168,24 @@ public :
   }
   reverse_iterator rbegin()
   {
-    // return reverse_iterator{last_};
-    return static_cast<reverse_iterator>(last_);
+    return reverse_iterator(end());
   }
   reverse_iterator rend()
   {
-    // return reverse_iterator{first_};
-    return static_cast<reverse_iterator>(first_);
+    return reverse_iterator(begin());
+  }
+  const_reverse_iterator rbegin() const
+  {
+    return const_reverse_iterator(end());
+  }
+   const_reverse_iterator rend() const
+  {
+    return const_reverse_iterator(begin());
   }
 
   size_type size() const
   {
-    return last_ - first_;
-    // return end() - begin();
-    // return std::distance(begin(), end());
+    return end() - begin();
   }
   size_type max_size() const
   {

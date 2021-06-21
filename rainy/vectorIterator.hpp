@@ -25,7 +25,8 @@ class vectorIterator
 
   vectorIterator() : ptr_(NULL){};
   vectorIterator(pointer ptr) : ptr_(ptr){};
-  // vectorIterator(const vectorIterator& x) : ptr_(x.ptr_) {} //謎
+  vectorIterator(vectorIterator& x) : ptr_(x.ptr_) {};
+  vectorIterator(const vectorIterator& x) : ptr_(x.ptr_) {};
   ~vectorIterator(){};
 
   vectorIterator& operator=(const vectorIterator& x)
@@ -133,7 +134,8 @@ bool operator>=(const vectorIterator<T>& lhs, const vectorIterator<T>& rhs)
 }
 
 template < typename T>
-bool operator-(const vectorIterator<T>& lhs, const vectorIterator<T>& rhs)
+typename vectorIterator<T>::difference_type operator-(
+  const vectorIterator<T>& lhs, const vectorIterator<T>& rhs)
 {
   return lhs.ptr_ - rhs.ptr_;
 }

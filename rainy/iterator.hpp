@@ -34,12 +34,24 @@ public:
  *  copy constructor
 */
   reverseIterator(const reverseIterator &x) : current(x.current) {}
+  template <class Itr>
+  reverseIterator(const reverseIterator<Itr>& x) : current(x.base()) {
+    std::cout << "copy" << std::endl;
+  }
 
   ~reverseIterator(){};
 
   Iterator base() const
   {
     return current;
+  }
+
+  reverseIterator& operator=(const reverseIterator& x)
+  {
+    if (this == &x)
+      return *this;
+    current = x.current;
+    return *this;
   }
 
   reference operator*() const

@@ -78,18 +78,18 @@ int main()
         throw std::runtime_error("failed");
       }
     }
-    // std::vector<int>::const_reverse_iterator rcitr_std;
-    // ft::vector<int>::const_reverse_iterator rcitr_ft;
-    // for (rcitr_std = vec_std2.rbegin(), rcitr_ft = vec_ft2.rbegin();
-    // rcitr_std != vec_std2.rend(); ++rcitr_std, ++rcitr_ft) {
-    //   if (*rcitr_std != *rcitr_ft) {
-    //     throw std::runtime_error("failed");
-    //   }
-    // }
-    // if (vec_ft1 != vec_ft2 || vec_ft2.capacity() != vec_std2.capacity() ||
-    //     vec_ft2.size() != vec_std2.size()) {
-    //   throw std::runtime_error("failed");
-    // }
+    std::vector<int>::const_reverse_iterator rcitr_std;
+    ft::vector<int>::const_reverse_iterator rcitr_ft;
+    for (rcitr_std = vec_std2.rbegin(), rcitr_ft = vec_ft2.rbegin();
+    rcitr_std != vec_std2.rend(); ++rcitr_std, ++rcitr_ft) {
+      if (*rcitr_std != *rcitr_ft) {
+        throw std::runtime_error("failed");
+      }
+    }
+    if (vec_ft1 != vec_ft2 || vec_ft2.capacity() != vec_std2.capacity() ||
+        vec_ft2.size() != vec_std2.size()) {
+      throw std::runtime_error("failed");
+    }
   } catch (std::exception& e) {
     throw std::runtime_error("failed");
   }
