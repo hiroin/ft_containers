@@ -25,13 +25,11 @@ class vectorIterator
   typedef value_type& reference;
   typedef value_type* pointer;
   typedef random_access_iterator_tag iterator_category;
-  typedef std::size_t size_type;
 
   pointer ptr_;
-  size_type index_;
 
-  vectorIterator() : ptr_(NULL), index_(0){};
-  vectorIterator(pointer ptr) : ptr_(ptr), index_(0){};
+  vectorIterator() : ptr_(NULL){};
+  vectorIterator(pointer ptr) : ptr_(ptr){};
   // vectorIterator(const vectorIterator& x) : ptr_(x.ptr_) {} //謎
   ~vectorIterator(){};
 
@@ -39,44 +37,40 @@ class vectorIterator
   {
     if (this == &x)
       return *this;
-    ptr_[index_] = x.ptr_[index_];
+    ptr_ = x.ptr_;
     return *this;
   }
 
   reference operator *() const
   {
-    return ptr_[index_];
+    return *ptr_;
   }
 
   pointer operator->() const
   {
-    return &ptr_[index_];
+    return ptr_;
   }
 
   vectorIterator& operator++()
   {
-    ++index_;
+    ++ptr_;
     return *this;
   }
 
   vectorIterator operator++(int)
   {
-    vectorIterator tmp = *this;
-    ++index_;
-    return tmp;
+    return vectorIterator(ptr_++);
   }
 
   vectorIterator& operator--()
   {
-    --index_;
+    --ptr_;
     return *this;
   }
 
   vectorIterator operator--(int)
   {
-    vectorIterator tmp = *this;
-    --index_;
-    return tmp;
+    return vectorIterator(ptr_--);
   }
 
   reference operator[](difference_type n) const
@@ -86,35 +80,31 @@ class vectorIterator
 
   vectorIterator& operator+=(difference_type n)
   {
-    index_ += n;
+    ptr_ += n;
     return *this;
   }
 
   vectorIterator operator+(difference_type n)
   {
-    vectorIterator tmp = *this;
-    tmp += n;
-    return vectorIterator(tmp);
+    return vectorIterator(ptr_ + n);
   }
 
   vectorIterator& operator-=(difference_type n)
   {
-    index_ -= n;
+    ptr_ -= n;
     return *this;
   }
 
   vectorIterator operator-(difference_type n)
   {
-    vectorIterator tmp = *this;
-    tmp -= n;
-    return vectorIterator(tmp);
+    return vectorIterator(ptr_ - n);
   }
 };
 
 template < typename T>
 bool operator==(const vectorIterator<T>& lhs, const vectorIterator<T>& rhs)
 {
-  return lhs.index_ == rhs.index_;
+  return lhs.ptr_ == rhs.ptr_;
 }
 
 template < typename T>
@@ -126,31 +116,31 @@ bool operator!=(const vectorIterator<T>& lhs, const vectorIterator<T>& rhs)
 template < typename T>
 bool operator<(const vectorIterator<T>& lhs, const vectorIterator<T>& rhs)
 {
-  return lhs.index_ < rhs.index_;
+  return lhs.ptr_ < rhs.ptr_;
 }
 
 template < typename T>
 bool operator>(const vectorIterator<T>& lhs, const vectorIterator<T>& rhs)
 {
-  return lhs.index_ > rhs.index_;
+  return lhs.ptr_ > rhs.ptr_;
 }
 
 template < typename T>
 bool operator<=(const vectorIterator<T>& lhs, const vectorIterator<T>& rhs)
 {
-  return lhs.index_ <= rhs.index_;
+  return lhs.ptr_ <= rhs.ptr_;
 }
 
 template < typename T>
 bool operator>=(const vectorIterator<T>& lhs, const vectorIterator<T>& rhs)
 {
-  return lhs.index_ >= rhs.index_;
+  return lhs.ptr_ >= rhs.ptr_;
 }
 
 template < typename T>
 bool operator-(const vectorIterator<T>& lhs, const vectorIterator<T>& rhs)
 {
-  return lhs.index_ - rhs.index_;
+  return lhs.ptr_ - rhs.ptr_;
 }
 
 template < typename T, typename Allocator = std::allocator<T> >
