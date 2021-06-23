@@ -358,11 +358,16 @@ public :
     // 現在の要素数より大きい
     else if ( sz > size() )
     {
-      reserve(sz) ;
-      for (; last_ != reserved_last_ ; ++last_)
+      // insertの処理と一緒 ( https://cpprefjp.github.io/reference/vector/vector/resize.html )
+      reserve(sz);
+      for (size_t i = 0; sz - size(); ++i, ++last_)
       {
         construct(last_, value);
       }
+      // for (; last_ != reserved_last_ ; ++last_)
+      // {
+      //   construct(last_, value);
+      // }
     }
   }
 
