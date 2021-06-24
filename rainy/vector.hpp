@@ -234,8 +234,8 @@ public :
   }
   bool empty() const
   {
-    return size() == 0;
-    // return begin() == end();
+    // return size() == 0;
+    return begin() == end();
   }
   size_type capacity() const
   {
@@ -265,19 +265,26 @@ public :
   }
   reference front()
   {
-    return first_;
+    return *begin();
   }
   const_reference front() const
   {
-    return first_;
+    return *begin();
   }
   reference back()
   {
-    return last_ - 1;
+    iterator tmp = end();
+    --tmp;
+    return *tmp;
+    // return last_ - 1;
+
   }
   const_reference back() const
   {
-    return last_ - 1;
+    const_iterator tmp = end();
+    --tmp;
+    return *tmp;
+    // return last_ - 1;
   }
 
   void reserve(size_type sz)
@@ -402,7 +409,11 @@ public :
   }
   void pop_back()
   {
-
+    if (empty() == false)
+    {
+      last_--;
+      destroy(last_);
+    }
   }
   iterator insert(iterator position, const T& x)
   {
@@ -427,7 +438,16 @@ public :
   }
   void swap(vector& x)
   {
+    pointer first = x.first_;
+    pointer last = x.last_;
+    pointer reserved_last = x.reserved_last_;
 
+    x.first_ = this->first_;
+    x.last_ = this->last_;
+    x.reserved_last_ = this->reserved_last_;
+    this->first_ = first;
+    this->last_ = last;
+    this->reserved_last_ = reserved_last;
   }
   allocator_type get_allocator() const
   {
