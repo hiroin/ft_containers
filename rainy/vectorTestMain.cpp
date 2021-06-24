@@ -1986,8 +1986,6 @@ int main()
   }
   std::cout << " => OK :)" << std::endl;
 
-  exit(0);
-
   putTestInfo(test_no, "assign(42, 21) to vec()");
   flg = 0;
   try {
@@ -2033,10 +2031,10 @@ int main()
   putTestInfo(test_no, "assign(42, 21) to vec(84, 42)");
   flg = 0;
   try {
-    std::vector<int> std_vec(84, 42);
-    ft::vector<int> ft_vec(84, 42);
-    std_vec.assign(42, 21);
-    ft_vec.assign(42, 21);
+    std::vector<int> std_vec(4, 2);
+    ft::vector<int> ft_vec(4, 2);
+    std_vec.assign(2, 1);
+    ft_vec.assign(2, 1);
     for (size_t idx = 0; idx < std_vec.size(); ++idx) {
       if (std_vec[idx] != ft_vec[idx]) {
         throw std::runtime_error("failed");
@@ -2056,7 +2054,7 @@ int main()
   putTestInfo(test_no, "assign vec(42, 21) to vec() by iter");
   flg = 0;
   try {
-    std::vector<int> src_vec(42, 21);
+    std::vector<int> src_vec(4, 2);
     std::vector<int> std_vec;
     ft::vector<int> ft_vec;
     std_vec.assign(src_vec.begin(), src_vec.end());

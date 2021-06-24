@@ -129,9 +129,9 @@ public :
         {
           destroy(&*dest_iter);
         }
-        last_ = first_;
         if (size() >= r.size())
         {
+          last_ = first_;
           for (src_iter = r.begin(), dest_iter = begin();
             src_iter != src_end;
             ++src_iter, ++dest_iter, last_++)
@@ -141,6 +141,7 @@ public :
         }
         else
         {
+          last_ = first_;
           for (src_iter = r.begin(), dest_iter = begin();
             dest_iter != dest_end;
             ++src_iter, ++dest_iter, last_++)
@@ -397,16 +398,20 @@ public :
     ++last_;
   }
 
-  // ここから作る
   template <class InputIterator>
-  void assign(InputIterator first_, InputIterator last_)
+  void assign(InputIterator first,
+    typename ft_enable_if<!ft_is_integral<InputIterator>::value, InputIterator>::type last)
   {
-
+    vector<T> tmp(first, last);
+    *this = tmp;
   }
+
   void assign(size_type n, const T& u)
   {
-
+    vector<T> tmp(n, u);
+    *this = tmp;
   }
+
   void pop_back()
   {
     if (empty() == false)
