@@ -140,6 +140,13 @@ typename vectorIterator<T>::difference_type operator-(
   return lhs.ptr_ - rhs.ptr_;
 }
 
+template < typename T>
+vectorIterator<T> operator+(typename vectorIterator<T>::difference_type n, const vectorIterator<T>& rhs)
+{
+  return vectorIterator<T>(rhs.ptr_ + n);
+}
+
+
 }; // namespace ft
 
 #endif /* VECTOR_HPP */

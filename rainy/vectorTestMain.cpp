@@ -1338,7 +1338,1955 @@ int main()
   }
   std::cout << " => OK :)" << std::endl;
 
+  putTestInfo(test_no, "swap vec(21, 21) and vec()");
+  flg = 0;
+  try {
+    std::vector<int> std_vec1(21, 21);
+    std::vector<int> std_vec2;
+    ft::vector<int> ft_vec1(21, 21);
+    ft::vector<int> ft_vec2;
+    std_vec1.swap(std_vec2);
+    ft_vec1.swap(ft_vec2);
+    for (size_t idx = 0; idx < std_vec1.size(); idx++) {
+      if (std_vec1[idx] != ft_vec1[idx]) {
+        throw std::runtime_error("failed");
+      }
+    }
+    for (size_t idx = 0; idx < std_vec2.size(); idx++) {
+      if (std_vec2[idx] != ft_vec2[idx]) {
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec1.capacity() != ft_vec1.capacity() ||
+        std_vec1.size() != ft_vec1.size() ||
+        std_vec2.capacity() != ft_vec2.capacity() ||
+        std_vec2.size() != ft_vec2.size()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
 
+  putTestInfo(test_no, "swap vec(42, 42) and vec(21, 21)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec1(42, 42);
+    std::vector<int> std_vec2(21, 21);
+    ft::vector<int> ft_vec1(42, 42);
+    ft::vector<int> ft_vec2(21, 21);
+    std_vec1.swap(std_vec2);
+    ft_vec1.swap(ft_vec2);
+    for (size_t idx = 0; idx < std_vec1.size(); idx++) {
+      if (std_vec1[idx] != ft_vec1[idx]) {
+        throw std::runtime_error("failed");
+      }
+    }
+    for (size_t idx = 0; idx < std_vec2.size(); idx++) {
+      if (std_vec2[idx] != ft_vec2[idx]) {
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec1.capacity() != ft_vec1.capacity() ||
+        std_vec1.size() != ft_vec1.size() ||
+        std_vec2.capacity() != ft_vec2.capacity() ||
+        std_vec2.size() != ft_vec2.size()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+  /* */
+  putTestInfo(test_no, "clear with vec()");
+  flg = 0;
+  try {
+    std::vector<int> std_vec;
+    ft::vector<int> ft_vec;
+    std_vec.clear();
+    ft_vec.clear();
+    // std::cout << std::endl;
+    // std::cout << "size = " << std_vec.size() << std::endl;
+    // std::cout << "capacity = " << std_vec.capacity() << std::endl;
+    if (std_vec.capacity() != ft_vec.capacity() ||
+        std_vec.size() != ft_vec.size()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "clear with vec(42,42)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 42);
+    ft::vector<int> ft_vec(42, 42);
+    std_vec.clear();
+    ft_vec.clear();
+    // std::cout << std::endl;
+    // std::cout << "size = " << std_vec.size() << std::endl;
+    // std::cout << "capacity = " << std_vec.capacity() << std::endl;
+    if (std_vec.capacity() != ft_vec.capacity() ||
+        std_vec.size() != ft_vec.size()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "clear with vec(1,42)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(1, 42);
+    ft::vector<int> ft_vec(1, 42);
+    std_vec.clear();
+    ft_vec.clear();
+    if (std_vec.capacity() != ft_vec.capacity() ||
+        std_vec.size() != ft_vec.size()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  // this case passed but takes minutes of time
+  // putTestInfo(test_no, "clear with vec(1234567890,42)");
+
+  putTestInfo(test_no, "clear with vec(12345, 42)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(12345, 42);
+    ft::vector<int> ft_vec(12345, 42);
+    std_vec.clear();
+    ft_vec.clear();
+    if (std_vec.capacity() != ft_vec.capacity() ||
+        std_vec.size() != ft_vec.size()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "itarator of vec(42,42)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 42);
+    ft::vector<int> ft_vec(42, 42);
+    std::vector<int>::iterator std_iter = std_vec.begin();
+    ft::vector<int>::iterator ft_iter = ft_vec.begin();
+    while (ft_iter != ft_vec.end()) {
+      if (*std_iter != *ft_iter) {
+        throw std::runtime_error("iter.begin not match");
+      }
+      ++std_iter;
+      ++ft_iter;
+    }
+    if (std_iter != std_vec.end()) {
+      throw std::runtime_error("iter.end not match");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "itarator of vec(), cmp with std");
+  flg = 0;
+  try {
+    std::vector<int> std_vec;
+    ft::vector<int> ft_vec;
+    std::vector<int>::iterator std_iter = std_vec.begin();
+    ft::vector<int>::iterator ft_iter = ft_vec.begin();
+    while (ft_iter != ft_vec.end()) {
+      if (*std_iter != *ft_iter) {
+        throw std::runtime_error("iter.begin not match");
+      }
+      ++std_iter;
+      ++ft_iter;
+    }
+    if (std_iter != std_vec.end()) {
+      throw std::runtime_error("iter.end not match");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "itarator of vec(42,42), set seq and cmp with std");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 42);
+    ft::vector<int> ft_vec(42, 42);
+    std::vector<int>::iterator std_iter = std_vec.begin();
+    ft::vector<int>::iterator ft_iter = ft_vec.begin();
+    int i = 0;
+    while (ft_iter != ft_vec.end()) {
+      if (*std_iter != *ft_iter) {
+        throw std::runtime_error("iter.begin not match");
+      }
+      *std_iter = i;
+      *ft_iter = i;
+      std_iter++;
+      ft_iter++;
+      i++;
+    }
+    if (std_iter != std_vec.end()) {
+      throw std::runtime_error("iter.end not match");
+    }
+    std_iter = std_vec.begin();
+    ft_iter = ft_vec.begin();
+    while (ft_iter != ft_vec.end()) {
+      if (*std_iter != *ft_iter) {
+        throw std::runtime_error("iter.begin not match");
+      }
+      ++std_iter;
+      ++ft_iter;
+    }
+    if (std_iter != std_vec.end()) {
+      throw std::runtime_error("iter.end not match");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no,
+              "itarator of vec(42,42), cmp with std (use operator+ and -)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 42);
+    ft::vector<int> ft_vec(42, 42);
+    std::vector<int>::iterator std_iter;
+    ft::vector<int>::iterator ft_iter;
+    if (ft_vec.end() - ft_vec.begin() != std_vec.end() - std_vec.begin()) {
+      throw std::runtime_error("error operator- iter2 - iter1");
+    }
+    std_iter = std_vec.begin();
+    ft_iter = ft_vec.begin();
+    while (ft_iter != ft_vec.end()) {
+      if (*std_iter != *ft_iter) {
+        throw std::runtime_error("iter.begin not match");
+      }
+      std_iter = std_iter + 2;
+      ft_iter = ft_iter + 2;
+    }
+    if (std_iter != std_vec.end()) {
+      throw std::runtime_error("iter.end not match");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no,
+              "itarator of vec(42,42), cmp with std (use operator+ and -)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 42);
+    ft::vector<int> ft_vec(42, 42);
+    std::vector<int>::iterator std_iter;
+    ft::vector<int>::iterator ft_iter;
+    if (ft_vec.begin() - ft_vec.end() != std_vec.begin() - std_vec.end()) {
+      throw std::runtime_error("error operator- iter2 - iter1");
+    }
+    std_iter = std_vec.begin();
+    ft_iter = ft_vec.begin();
+    while (ft_iter != ft_vec.end()) {
+      if (*std_iter != *ft_iter) {
+        throw std::runtime_error("iter.begin not match");
+      }
+      std_iter = 2 + std_iter;
+      ft_iter = 2 + ft_iter;
+    }
+    if (std_iter != std_vec.end()) {
+      throw std::runtime_error("iter.end not match");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "itarator of vec(42,42), cmp with std (use operator+=)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 42);
+    ft::vector<int> ft_vec(42, 42);
+    std::vector<int>::iterator std_iter;
+    ft::vector<int>::iterator ft_iter;
+    std_iter = std_vec.begin();
+    ft_iter = ft_vec.begin();
+    while (ft_iter != ft_vec.end()) {
+      if (*std_iter != *ft_iter) {
+        throw std::runtime_error("iter.begin not match");
+      }
+      std_iter += 2;
+      ft_iter += 2;
+    }
+    if (std_iter != std_vec.end()) {
+      throw std::runtime_error("iter.end not match");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "itarator of vec(42,42), cmp with std (use operator-)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 42);
+    ft::vector<int> ft_vec(42, 42);
+    std::vector<int>::iterator std_iter;
+    ft::vector<int>::iterator ft_iter;
+    std_iter = std_vec.end();
+    ft_iter = ft_vec.end();
+    while (ft_iter != ft_vec.begin()) {
+      if (*(std_iter - 1) != *(ft_iter - 1)) {
+        throw std::runtime_error("iter.begin not match");
+      }
+      std_iter = std_iter - 2;
+      ft_iter = ft_iter - 2;
+    }
+    if (std_iter != std_vec.begin()) {
+      throw std::runtime_error("iter.end not match");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "itarator of vec(42,42), cmp with std (use operator-=)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 42);
+    ft::vector<int> ft_vec(42, 42);
+    std::vector<int>::iterator std_iter;
+    ft::vector<int>::iterator ft_iter;
+    std_iter = std_vec.end();
+    ft_iter = ft_vec.end();
+    while (ft_iter != ft_vec.begin()) {
+      if (*(std_iter - 1) != *(ft_iter - 1)) {
+        throw std::runtime_error("iter.begin not match");
+      }
+      std_iter -= 2;
+      ft_iter -= 2;
+    }
+    if (std_iter != std_vec.begin()) {
+      throw std::runtime_error("iter.end not match");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+#ifdef ALLOW_USE_CPP03
+  putTestInfo(test_no,
+              "itarator of vec(42,42), set 21 using for_each algorithm and "
+              "cmp with std");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 42);
+    ft::vector<int> ft_vec(42, 42);
+    std::for_each(std_vec.begin(), std_vec.end(), divByTwo<int>);
+    std::for_each(ft_vec.begin(), ft_vec.end(), divByTwo<int>);
+    std::vector<int>::iterator std_iter = std_vec.begin();
+    ft::vector<int>::iterator ft_iter = ft_vec.begin();
+    std_iter = std_vec.begin();
+    ft_iter = ft_vec.begin();
+    while (ft_iter != ft_vec.end()) {
+      if (*std_iter != *ft_iter) {
+        throw std::runtime_error("iter.begin not match");
+      }
+      ++std_iter;
+      ++ft_iter;
+    }
+    if (std_iter != std_vec.end()) {
+      throw std::runtime_error("iter.end not match");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+#endif /* ALLOW_USE_CPP03 */
+
+  putTestInfo(test_no, "reverse itarator of vec(42,42), cmp with std");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 42);
+    ft::vector<int> ft_vec(42, 42);
+    std::vector<int>::reverse_iterator std_riter = std_vec.rbegin();
+    ft::vector<int>::reverse_iterator ft_riter = ft_vec.rbegin();
+    while (ft_riter != ft_vec.rend()) {
+      if (*std_riter != *ft_riter) {
+        throw std::runtime_error("riter.begin not match");
+      }
+      ++std_riter;
+      ++ft_riter;
+    }
+    if (std_riter != std_vec.rend()) {
+      throw std::runtime_error("riter.end not match");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "reverse itarator of vec(), cmp with std");
+  flg = 0;
+  try {
+    std::vector<int> std_vec;
+    ft::vector<int> ft_vec;
+    std::vector<int>::reverse_iterator std_riter = std_vec.rbegin();
+    ft::vector<int>::reverse_iterator ft_riter = ft_vec.rbegin();
+    while (ft_riter != ft_vec.rend()) {
+      if (*std_riter != *ft_riter) {
+        throw std::runtime_error("riter.begin not match");
+      }
+      ++std_riter;
+      ++ft_riter;
+    }
+    if (std_riter != std_vec.rend()) {
+      throw std::runtime_error("riter.end not match");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no,
+              "reverse itarator of vec(42,42), set inverse, cmp with std");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 42);
+    ft::vector<int> ft_vec(42, 42);
+    std::vector<int>::iterator std_iter = std_vec.begin();
+    ft::vector<int>::iterator ft_iter = ft_vec.begin();
+    std::vector<int>::reverse_iterator std_riter = std_vec.rbegin();
+    ft::vector<int>::reverse_iterator ft_riter = ft_vec.rbegin();
+    int i = 0;
+    while (ft_iter != ft_vec.end()) {
+      if (*std_iter != *ft_iter) {
+        throw std::runtime_error("iter.begin not match");
+      }
+      *std_iter = i;
+      *ft_iter = i;
+      std_iter++;
+      ft_iter++;
+      i++;
+    }
+    if (std_iter != std_vec.end()) {
+      throw std::runtime_error("iter.end not match");
+    }
+    while (ft_riter != ft_vec.rend()) {
+      if (*std_riter != *ft_riter) {
+        throw std::runtime_error("riter.begin not match");
+      }
+      ++std_riter;
+      ++ft_riter;
+    }
+    if (std_riter != std_vec.rend()) {
+      throw std::runtime_error("riter.end not match");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no,
+              "reverse itarator of vec(42,42), set inverse seq, cmp with std");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 42);
+    ft::vector<int> ft_vec(42, 42);
+    std::vector<int>::reverse_iterator std_riter = std_vec.rbegin();
+    ft::vector<int>::reverse_iterator ft_riter = ft_vec.rbegin();
+    int i = 0;
+    while (ft_riter != ft_vec.rend()) {
+      if (*std_riter != *ft_riter) {
+        throw std::runtime_error("iter.begin not match");
+      }
+      *std_riter = i;
+      *ft_riter = i;
+      std_riter++;
+      ft_riter++;
+      i++;
+    }
+    if (std_riter != std_vec.rend()) {
+      throw std::runtime_error("riter.end not match");
+    }
+    while (ft_riter != ft_vec.rend()) {
+      if (*std_riter != *ft_riter) {
+        throw std::runtime_error("riter.begin not match");
+      }
+      ++std_riter;
+      ++ft_riter;
+    }
+    if (std_riter != std_vec.rend()) {
+      throw std::runtime_error("riter.end not match");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+#ifdef ALLOW_USE_CPP03
+  putTestInfo(test_no,
+              "reverse itarator of vec(42,42), set 21 using for_each algorithm "
+              "and cmp with std");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 42);
+    ft::vector<int> ft_vec(42, 42);
+    std::vector<int>::iterator std_iter = std_vec.begin();
+    ft::vector<int>::iterator ft_iter = ft_vec.begin();
+    while (ft_iter != ft_vec.end()) {
+      if (*std_iter != *ft_iter) {
+        throw std::runtime_error("iter.begin not match");
+      }
+      ++std_iter;
+      ++ft_iter;
+    }
+    if (std_iter != std_vec.end()) {
+      throw std::runtime_error("iter.end not match");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+#endif /* ALLOW_USE_CPP03 */
+
+  putTestInfo(
+      test_no,
+      "reverse itarator of vec(42,42), cmp with std (use operator+ and -)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 42);
+    ft::vector<int> ft_vec(42, 42);
+    std::vector<int>::reverse_iterator std_iter;
+    ft::vector<int>::reverse_iterator ft_iter;
+    if (ft_vec.rend() - ft_vec.rbegin() != std_vec.rend() - std_vec.rbegin()) {
+      throw std::runtime_error("error operator- iter2 - iter1");
+    }
+    std_iter = std_vec.rbegin();
+    ft_iter = ft_vec.rbegin();
+    while (ft_iter != ft_vec.rend()) {
+      if (*std_iter != *ft_iter) {
+        throw std::runtime_error("iter.rbegin not match");
+      }
+      std_iter = std_iter + 2;
+      ft_iter = ft_iter + 2;
+    }
+    if (std_iter != std_vec.rend()) {
+      throw std::runtime_error("iter.rend not match");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no,
+              "itarator of vec(42,42), cmp with std (use operator+ and -)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 42);
+    ft::vector<int> ft_vec(42, 42);
+    std::vector<int>::reverse_iterator std_iter;
+    ft::vector<int>::reverse_iterator ft_iter;
+    if (ft_vec.rbegin() - ft_vec.rend() != std_vec.rbegin() - std_vec.rend()) {
+      throw std::runtime_error("error operator- iter2 - iter1");
+    }
+    std_iter = std_vec.rbegin();
+    ft_iter = ft_vec.rbegin();
+    while (ft_iter != ft_vec.rend()) {
+      if (*std_iter != *ft_iter) {
+        throw std::runtime_error("iter.rbegin not match");
+      }
+      std_iter = 2 + std_iter;
+      ft_iter = 2 + ft_iter;
+    }
+    if (std_iter != std_vec.rend()) {
+      throw std::runtime_error("iter.rend not match");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "itarator of vec(42,42), cmp with std (use operator+=)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 42);
+    ft::vector<int> ft_vec(42, 42);
+    std::vector<int>::reverse_iterator std_iter;
+    ft::vector<int>::reverse_iterator ft_iter;
+    std_iter = std_vec.rbegin();
+    ft_iter = ft_vec.rbegin();
+    while (ft_iter != ft_vec.rend()) {
+      if (*std_iter != *ft_iter) {
+        throw std::runtime_error("iter.rbegin not match");
+      }
+      std_iter += 2;
+      ft_iter += 2;
+    }
+    if (std_iter != std_vec.rend()) {
+      throw std::runtime_error("iter.rend not match");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "itarator of vec(42,42), cmp with std (use operator-)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 42);
+    ft::vector<int> ft_vec(42, 42);
+    std::vector<int>::reverse_iterator std_iter;
+    ft::vector<int>::reverse_iterator ft_iter;
+    std_iter = std_vec.rend();
+    ft_iter = ft_vec.rend();
+    while (ft_iter != ft_vec.rbegin()) {
+      if (*(std_iter - 1) != *(ft_iter - 1)) {
+        throw std::runtime_error("iter.rbegin not match");
+      }
+      std_iter = std_iter - 2;
+      ft_iter = ft_iter - 2;
+    }
+    if (std_iter != std_vec.rbegin()) {
+      throw std::runtime_error("iter.rend not match");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "itarator of vec(42,42), cmp with std (use operator-=)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 42);
+    ft::vector<int> ft_vec(42, 42);
+    std::vector<int>::reverse_iterator std_iter;
+    ft::vector<int>::reverse_iterator ft_iter;
+    std_iter = std_vec.rend();
+    ft_iter = ft_vec.rend();
+    while (ft_iter != ft_vec.rbegin()) {
+      if (*(std_iter - 1) != *(ft_iter - 1)) {
+        throw std::runtime_error("iter.rbegin not match");
+      }
+      std_iter -= 2;
+      ft_iter -= 2;
+    }
+    if (std_iter != std_vec.rbegin()) {
+      throw std::runtime_error("iter.rend not match");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  exit(0);
+
+  putTestInfo(test_no, "assign(42, 21) to vec()");
+  flg = 0;
+  try {
+    std::vector<int> std_vec;
+    ft::vector<int> ft_vec;
+    std_vec.assign(42, 21);
+    ft_vec.assign(42, 21);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "assign(84, 42) to vec(42, 21)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 21);
+    ft::vector<int> ft_vec(42, 21);
+    std_vec.assign(84, 42);
+    ft_vec.assign(84, 42);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "assign(42, 21) to vec(84, 42)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(84, 42);
+    ft::vector<int> ft_vec(84, 42);
+    std_vec.assign(42, 21);
+    ft_vec.assign(42, 21);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      std::cout << "\ncapacity = " << std_vec.capacity() << std::endl;
+      std::cout << "capacity = " << ft_vec.capacity() << std::endl;
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "assign vec(42, 21) to vec() by iter");
+  flg = 0;
+  try {
+    std::vector<int> src_vec(42, 21);
+    std::vector<int> std_vec;
+    ft::vector<int> ft_vec;
+    std_vec.assign(src_vec.begin(), src_vec.end());
+    ft_vec.assign(src_vec.begin(), src_vec.end());
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      std::cout << "\ncapacity = " << std_vec.capacity() << std::endl;
+      std::cout << "capacity = " << ft_vec.capacity() << std::endl;
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "assign vec(42, 21) to vec() by list_iter");
+  flg = 0;
+  try {
+    std::list<int> src_lst(42, 21);
+    std::vector<int> std_vec;
+    ft::vector<int> ft_vec;
+    std_vec.assign(src_lst.begin(), src_lst.end());
+    ft_vec.assign(src_lst.begin(), src_lst.end());
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      std::cout << "\ncapacity = " << std_vec.capacity() << std::endl;
+      std::cout << "capacity = " << ft_vec.capacity() << std::endl;
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "assign vec(42, 21) to vec() by list_iter");
+  flg = 0;
+  try {
+    std::list<int> src_lst(42, 21);
+    std::vector<int> std_vec;
+    ft::vector<int> ft_vec;
+    std_vec.assign(src_lst.end(), src_lst.begin());
+    ft_vec.assign(src_lst.end(), src_lst.begin());
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      std::cout << "\ncapacity = " << std_vec.capacity() << std::endl;
+      std::cout << "capacity = " << ft_vec.capacity() << std::endl;
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  // std::forward_listはC++11
+  // putTestInfo(test_no, "assign vec(42, 21) to vec() by forwardlist_iter");
+  // flg = 0;
+  // try {
+  //   std::forward_list<int> src_lst(42, 21);
+  //   std::vector<int> std_vec;
+  //   ft::vector<int> ft_vec;
+  //   std_vec.assign(src_lst.begin(), src_lst.end());
+  //   ft_vec.assign(src_lst.begin(), src_lst.end());
+  //   for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+  //     if (std_vec[idx] != ft_vec[idx]) {
+  //       throw std::runtime_error("failed");
+  //     }
+  //   }
+  //   if (std_vec.size() != ft_vec.size() ||
+  //       std_vec.capacity() != ft_vec.capacity()) {
+  //     std::cout << "\ncapacity = " << std_vec.capacity() << std::endl;
+  //     std::cout << "capacity = " << ft_vec.capacity() << std::endl;
+  //     throw std::runtime_error("failed");
+  //   }
+  // } catch (std::exception& e) {
+  //   throw std::runtime_error(e.what());
+  // }
+  // std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "assign vec(42, 21) to vec() by int array pointer");
+  flg = 0;
+  try {
+    int array[42] = {21};
+    std::vector<int> std_vec;
+    ft::vector<int> ft_vec;
+    std_vec.assign(&array[0], &array[41]);
+    ft_vec.assign(&array[0], &array[41]);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      std::cout << "\ncapacity = " << std_vec.capacity() << std::endl;
+      std::cout << "capacity = " << ft_vec.capacity() << std::endl;
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(begin(), 42), to vec()");
+  flg = 0;
+  try {
+    std::vector<int> std_vec;
+    ft::vector<int> ft_vec;
+    if (*std_vec.insert(std_vec.begin(), 42) !=
+        *ft_vec.insert(ft_vec.begin(), 42)) {
+      throw std::runtime_error("return value");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(end(), 42), to vec()");
+  flg = 0;
+  try {
+    std::vector<int> std_vec;
+    ft::vector<int> ft_vec;
+    if (*std_vec.insert(std_vec.end(), 42) !=
+        *ft_vec.insert(ft_vec.end(), 42)) {
+      throw std::runtime_error("return value");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(begin(), 42), to vec(1, 24)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(1, 24);
+    ft::vector<int> ft_vec(1, 24);
+    if (*std_vec.insert(std_vec.begin(), 42) !=
+        *ft_vec.insert(ft_vec.begin(), 42)) {
+      throw std::runtime_error("return value");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ", val = " << ft_vec[idx] << ", "
+                  << std_vec[idx] << std::endl;
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(end(), 42), to vec(1, 24)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(1, 24);
+    ft::vector<int> ft_vec(1, 24);
+    if (*std_vec.insert(std_vec.end(), 42) !=
+        *ft_vec.insert(ft_vec.end(), 42)) {
+      throw std::runtime_error("return value");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ", val = " << ft_vec[idx] << ", "
+                  << std_vec[idx] << std::endl;
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(begin(), 42), to vec(2, 24)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(2, 24);
+    ft::vector<int> ft_vec(2, 24);
+    if (*std_vec.insert(std_vec.begin(), 42) !=
+        *ft_vec.insert(ft_vec.begin(), 42)) {
+      throw std::runtime_error("return value");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ", val = " << ft_vec[idx] << ", "
+                  << std_vec[idx] << std::endl;
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(begin() + 1, 42), to vec(2, 24)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(2, 24);
+    ft::vector<int> ft_vec(2, 24);
+    if (*std_vec.insert(std_vec.begin() + 1, 42) !=
+        *ft_vec.insert(ft_vec.begin() + 1, 42)) {
+      throw std::runtime_error("return value");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ", val = " << ft_vec[idx] << ", "
+                  << std_vec[idx] << std::endl;
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(end(), 42), to vec(2, 24)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(2, 24);
+    ft::vector<int> ft_vec(2, 24);
+    if (*std_vec.insert(std_vec.end(), 42) !=
+        *ft_vec.insert(ft_vec.end(), 42)) {
+      throw std::runtime_error("return value");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ", val = " << ft_vec[idx] << ", "
+                  << std_vec[idx] << std::endl;
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(begin(), 42), to vec(42, 24)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 24);
+    ft::vector<int> ft_vec(42, 24);
+    if (*std_vec.insert(std_vec.begin(), 42) !=
+        *ft_vec.insert(ft_vec.begin(), 42)) {
+      throw std::runtime_error("return value");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ", val = " << ft_vec[idx] << ", "
+                  << std_vec[idx] << std::endl;
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(begin() + 1, 42), to vec(42, 24)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 24);
+    ft::vector<int> ft_vec(42, 24);
+    if (*std_vec.insert(std_vec.begin() + 1, 42) !=
+        *ft_vec.insert(ft_vec.begin() + 1, 42)) {
+      throw std::runtime_error("return value");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ", val = " << ft_vec[idx] << ", "
+                  << std_vec[idx] << std::endl;
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(begin() + 20, 42), to vec(42, 24)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 24);
+    ft::vector<int> ft_vec(42, 24);
+    if (*std_vec.insert(std_vec.begin() + 20, 42) !=
+        *ft_vec.insert(ft_vec.begin() + 20, 42)) {
+      throw std::runtime_error("return value");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ", val = " << ft_vec[idx] << ", "
+                  << std_vec[idx] << std::endl;
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(begin() + 41, 42), to vec(42, 24)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 24);
+    ft::vector<int> ft_vec(42, 24);
+    if (*std_vec.insert(std_vec.begin() + 41, 42) !=
+        *ft_vec.insert(ft_vec.begin() + 41, 42)) {
+      throw std::runtime_error("return value");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ", val = " << ft_vec[idx] << ", "
+                  << std_vec[idx] << std::endl;
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(begin() + 42, 42), to vec(42, 24)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 24);
+    ft::vector<int> ft_vec(42, 24);
+    if (*std_vec.insert(std_vec.begin() + 42, 42) !=
+        *ft_vec.insert(ft_vec.begin() + 42, 42)) {
+      throw std::runtime_error("return value");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      std::cout << "size: " << std_vec.size() << ": " << ft_vec.size()
+                << std::endl;
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(end(), 42), to vec(2, 24)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 24);
+    ft::vector<int> ft_vec(42, 24);
+    if (*std_vec.insert(std_vec.end(), 42) !=
+        *ft_vec.insert(ft_vec.end(), 42)) {
+      throw std::runtime_error("return value");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ", val = " << ft_vec[idx] << ", "
+                  << std_vec[idx] << std::endl;
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(begin(), 21, 42), to vec()");
+  flg = 0;
+  try {
+    std::vector<int> std_vec;
+    ft::vector<int> ft_vec;
+    std_vec.insert(std_vec.begin(), 21, 42);
+    ft_vec.insert(ft_vec.begin(), 21, 42);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(end(), 21, 42), to vec()");
+  flg = 0;
+  try {
+    std::vector<int> std_vec;
+    ft::vector<int> ft_vec;
+    std_vec.insert(std_vec.end(), 21, 42);
+    ft_vec.insert(ft_vec.end(), 21, 42);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("failed");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("failed");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(begin(), 21, 42), to vec(42, 21)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 21);
+    ft::vector<int> ft_vec(42, 21);
+    std_vec.insert(std_vec.begin(), 21, 42);
+    ft_vec.insert(ft_vec.begin(), 21, 42);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
+                  << ft_vec[idx] << std::endl;
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(begin(), 42, 42), to vec(42, 21)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 21);
+    ft::vector<int> ft_vec(42, 21);
+    std_vec.insert(std_vec.begin(), 42, 42);
+    ft_vec.insert(ft_vec.begin(), 42, 42);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
+                  << ft_vec[idx] << std::endl;
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(begin(), 43, 42), to vec(42, 21)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 21);
+    ft::vector<int> ft_vec(42, 21);
+    std_vec.insert(std_vec.begin(), 43, 42);
+    ft_vec.insert(ft_vec.begin(), 43, 42);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
+                  << ft_vec[idx] << std::endl;
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(begin(), 100, 42), to vec(42, 21)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 21);
+    ft::vector<int> ft_vec(42, 21);
+    std_vec.insert(std_vec.begin(), 100, 42);
+    ft_vec.insert(ft_vec.begin(), 100, 42);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(begin(), 1000, 42), to vec(42, 21)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 21);
+    ft::vector<int> ft_vec(42, 21);
+    std_vec.insert(std_vec.begin(), 1000, 42);
+    ft_vec.insert(ft_vec.begin(), 1000, 42);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(begin(), 0, 42), to vec(42, 21)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 21);
+    ft::vector<int> ft_vec(42, 21);
+    std_vec.insert(std_vec.begin(), 0, 42);
+    ft_vec.insert(ft_vec.begin(), 0, 42);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(begin() + 20, 21, 42), to vec(42, 21)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 21);
+    ft::vector<int> ft_vec(42, 21);
+    std_vec.insert(std_vec.begin() + 20, 21, 42);
+    ft_vec.insert(ft_vec.begin() + 20, 21, 42);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
+                  << ft_vec[idx] << std::endl;
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(begin() + 42, 21, 42), to vec(42, 21)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 21);
+    ft::vector<int> ft_vec(42, 21);
+    std_vec.insert(std_vec.begin() + 42, 21, 42);
+    ft_vec.insert(ft_vec.begin() + 42, 21, 42);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
+                  << ft_vec[idx] << std::endl;
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert(end(), 21, 42), to vec(42, 21)");
+  flg = 0;
+  try {
+    std::vector<int> std_vec(42, 21);
+    ft::vector<int> ft_vec(42, 21);
+    std_vec.insert(std_vec.end(), 21, 42);
+    ft_vec.insert(ft_vec.end(), 21, 42);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
+                  << ft_vec[idx] << std::endl;
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert vec() by iter at begin() of vec()");
+  flg = 0;
+  try {
+    std::vector<int> src;
+    std::vector<int> std_vec;
+    ft::vector<int> ft_vec;
+    std_vec.insert(std_vec.begin(), src.begin(), src.end());
+    ft_vec.insert(ft_vec.begin(), src.begin(), src.end());
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
+                  << ft_vec[idx] << std::endl;
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert vec(42, 21) by iter at begin() of vec()");
+  flg = 0;
+  try {
+    std::vector<int> src(42, 21);
+    std::vector<int> std_vec;
+    ft::vector<int> ft_vec;
+    std_vec.insert(std_vec.begin(), src.begin(), src.end());
+    ft_vec.insert(ft_vec.begin(), src.begin(), src.end());
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
+                  << ft_vec[idx] << std::endl;
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert vec(42, 21) by iter at end() of vec()");
+  flg = 0;
+  try {
+    std::vector<int> src(42, 21);
+    std::vector<int> std_vec;
+    ft::vector<int> ft_vec;
+    std_vec.insert(std_vec.end(), src.begin(), src.end());
+    ft_vec.insert(ft_vec.end(), src.begin(), src.end());
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
+                  << ft_vec[idx] << std::endl;
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  // とりあえずこのエラー処理はあとまわし
+  // putTestInfo(test_no, "insert(end(), begin(), end()), to vec()");
+  // flg = 0;
+  // try {
+  //   std::vector<int> src(42, 21);
+  //   std::vector<int> std_vec;
+  //   ft::vector<int> ft_vec;
+  //   std_vec.insert(std_vec.end(), src.end(), src.begin());
+  //   ft_vec.insert(ft_vec.end(), src.end(), src.begin());
+  //   std::cout << std::endl;
+  //   std::cout << std_vec.size() << ": " << ft_vec.size() << std::endl;
+  //   for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+  //     if (std_vec[idx] != ft_vec[idx]) {
+  //       std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": " <<
+  //       ft_vec[idx] << std::endl; throw std::runtime_error("value");
+  //     }
+  //   }
+  //   if (std_vec.size() != ft_vec.size() ||
+  //       std_vec.capacity() != ft_vec.capacity()) {
+  //     throw std::runtime_error("size or capacity");
+  //   }
+  // } catch (std::exception& e) {
+  //   throw std::runtime_error(e.what());
+  // }
+  // std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert vec(42, 21) by iter at begin() of vec(21, 42)");
+  flg = 0;
+  try {
+    std::vector<int> src(42, 21);
+    std::vector<int> std_vec(21, 42);
+    ft::vector<int> ft_vec(21, 42);
+    std_vec.insert(std_vec.begin(), src.begin(), src.end());
+    ft_vec.insert(ft_vec.begin(), src.begin(), src.end());
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
+                  << ft_vec[idx] << std::endl;
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert vec(42, 21) by iter at end() of vec(21, 42)");
+  flg = 0;
+  try {
+    std::vector<int> src(42, 21);
+    std::vector<int> std_vec(21, 42);
+    ft::vector<int> ft_vec(21, 42);
+    std_vec.insert(std_vec.end(), src.begin(), src.end());
+    ft_vec.insert(ft_vec.end(), src.begin(), src.end());
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
+                  << ft_vec[idx] << std::endl;
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no,
+              "insert vec(42, 21) by iter at begin() + 20 of vec(21, 42)");
+  flg = 0;
+  try {
+    std::vector<int> src(42, 21);
+    std::vector<int> std_vec(21, 42);
+    ft::vector<int> ft_vec(21, 42);
+    std_vec.insert(std_vec.begin() + 20, src.begin(), src.end());
+    ft_vec.insert(ft_vec.begin() + 20, src.begin(), src.end());
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
+                  << ft_vec[idx] << std::endl;
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(
+      test_no,
+      "insert partial vec(42, 21) by iter at begin() + 20 of vec(21, 42)");
+  flg = 0;
+  try {
+    std::vector<int> src(42, 21);
+    std::vector<int> std_vec(21, 42);
+    ft::vector<int> ft_vec(21, 42);
+    std_vec.insert(std_vec.begin() + 20, src.begin() + 10, src.end() - 10);
+    ft_vec.insert(ft_vec.begin() + 20, src.begin() + 10, src.end() - 10);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
+                  << ft_vec[idx] << std::endl;
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert lst(42, 21) by iter at begin() of vec(21, 42)");
+  flg = 0;
+  try {
+    std::list<int> src(42, 21);
+    std::vector<int> std_vec(21, 42);
+    ft::vector<int> ft_vec(21, 42);
+    std_vec.insert(std_vec.begin(), src.begin(), src.end());
+    ft_vec.insert(ft_vec.begin(), src.begin(), src.end());
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
+                  << ft_vec[idx] << std::endl;
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert lst(42, 21) by iter at end() of vec(21, 42)");
+  flg = 0;
+  try {
+    std::list<int> src(42, 21);
+    std::vector<int> std_vec(21, 42);
+    ft::vector<int> ft_vec(21, 42);
+    std_vec.insert(std_vec.end(), src.begin(), src.end());
+    ft_vec.insert(ft_vec.end(), src.begin(), src.end());
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
+                  << ft_vec[idx] << std::endl;
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  // std::forward_listはC++11
+  // putTestInfo(test_no, "insert flst(42, 21) by iter at begin() of vec(21, 42)");
+  // flg = 0;
+  // try {
+  //   std::forward_list<int> src(42, 21);
+  //   std::vector<int> std_vec(21, 42);
+  //   ft::vector<int> ft_vec(21, 42);
+  //   std_vec.insert(std_vec.begin(), src.begin(), src.end());
+  //   ft_vec.insert(ft_vec.begin(), src.begin(), src.end());
+  //   for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+  //     if (std_vec[idx] != ft_vec[idx]) {
+  //       std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
+  //                 << ft_vec[idx] << std::endl;
+  //       throw std::runtime_error("value");
+  //     }
+  //   }
+  //   if (std_vec.size() != ft_vec.size() ||
+  //       std_vec.capacity() != ft_vec.capacity()) {
+  //     throw std::runtime_error("size or capacity");
+  //   }
+  // } catch (std::exception& e) {
+  //   throw std::runtime_error(e.what());
+  // }
+  // std::cout << " => OK :)" << std::endl;
+
+  // std::forward_listはC++11
+  // putTestInfo(test_no, "insert flst(42, 21) by iter at end() of vec(21, 42)");
+  // flg = 0;
+  // try {
+  //   std::forward_list<int> src(42, 21);
+  //   std::vector<int> std_vec(21, 42);
+  //   ft::vector<int> ft_vec(21, 42);
+  //   std_vec.insert(std_vec.end(), src.begin(), src.end());
+  //   ft_vec.insert(ft_vec.end(), src.begin(), src.end());
+  //   for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+  //     if (std_vec[idx] != ft_vec[idx]) {
+  //       std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
+  //                 << ft_vec[idx] << std::endl;
+  //       throw std::runtime_error("value");
+  //     }
+  //   }
+  //   if (std_vec.size() != ft_vec.size() ||
+  //       std_vec.capacity() != ft_vec.capacity()) {
+  //     throw std::runtime_error("size or capacity");
+  //   }
+  // } catch (std::exception& e) {
+  //   throw std::runtime_error(e.what());
+  // }
+  // std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert ary[10] by iter at end() of vec(21, 42)");
+  flg = 0;
+  try {
+    int src[10] = {0, 1, 2, 3, 42, 5, 6, 7, 8, 9};
+    std::vector<int> std_vec(21, 42);
+    ft::vector<int> ft_vec(21, 42);
+    std_vec.insert(std_vec.end(), src, &src[10]);
+    ft_vec.insert(ft_vec.end(), src, &src[10]);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
+                  << ft_vec[idx] << std::endl;
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "insert empty by iter at end() of vec(21, 42)");
+  flg = 0;
+  try {
+    int src[10] = {0, 1, 2, 3, 42, 5, 6, 7, 8, 9};
+    std::vector<int> std_vec(21, 42);
+    ft::vector<int> ft_vec(21, 42);
+    std_vec.insert(std_vec.end(), src + 3, src + 3);
+    ft_vec.insert(ft_vec.end(), src + 3, src + 3);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
+                  << ft_vec[idx] << std::endl;
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector: erase begin() from vec({0..9}");
+  try {
+    int src[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::vector<int> std_vec(src, src + 10);
+    ft::vector<int> ft_vec(src, src + 10);
+    std_vec.erase(std_vec.begin());
+    ft_vec.erase(ft_vec.begin());
+    // std::cout << std::endl;
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      // std::cout << std_vec[idx] << ": " << ft_vec[idx] << std::endl;
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector: erase begin() + 1 from vec({0..9}");
+  try {
+    int src[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::vector<int> std_vec(src, src + 10);
+    ft::vector<int> ft_vec(src, src + 10);
+    std_vec.erase(std_vec.begin() + 1);
+    ft_vec.erase(ft_vec.begin() + 1);
+    // std::cout << std::endl;
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      // std::cout << std_vec[idx] << ": " << ft_vec[idx] << std::endl;
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector: erase begin() + 5 from vec({0..9}");
+  try {
+    int src[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::vector<int> std_vec(src, src + 10);
+    ft::vector<int> ft_vec(src, src + 10);
+    std_vec.erase(std_vec.begin() + 5);
+    ft_vec.erase(ft_vec.begin() + 5);
+    // std::cout << std::endl;
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      // std::cout << std_vec[idx] << ": " << ft_vec[idx] << std::endl;
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector: erase begin() + 9 from vec({0..9}");
+  try {
+    int src[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::vector<int> std_vec(src, src + 10);
+    ft::vector<int> ft_vec(src, src + 10);
+    std_vec.erase(std_vec.begin() + 9);
+    ft_vec.erase(ft_vec.begin() + 9);
+    // std::cout << std::endl;
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      // std::cout << std_vec[idx] << ": " << ft_vec[idx] << std::endl;
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector: erase 2 ~ 8 from vec({0..9}");
+  try {
+    int src[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::vector<int> std_vec(src, src + 10);
+    ft::vector<int> ft_vec(src, src + 10);
+    std_vec.erase(std_vec.begin() + 2, std_vec.begin() + 8);
+    ft_vec.erase(ft_vec.begin() + 2, ft_vec.begin() + 8);
+    // std::cout << std::endl;
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      // std::cout << std_vec[idx] << ": " << ft_vec[idx] << std::endl;
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector: erase begin ~ 8 from vec({0..9}");
+  try {
+    int src[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::vector<int> std_vec(src, src + 10);
+    ft::vector<int> ft_vec(src, src + 10);
+    std_vec.erase(std_vec.begin(), std_vec.begin() + 8);
+    ft_vec.erase(ft_vec.begin(), ft_vec.begin() + 8);
+    // std::cout << std::endl;
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      // std::cout << std_vec[idx] << ": " << ft_vec[idx] << std::endl;
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector: erase begin ~ end from vec({0..9}");
+  try {
+    int src[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::vector<int> std_vec(src, src + 10);
+    ft::vector<int> ft_vec(src, src + 10);
+    std_vec.erase(std_vec.begin(), std_vec.end());
+    ft_vec.erase(ft_vec.begin(), ft_vec.end());
+    // std::cout << std::endl;
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      // std::cout << std_vec[idx] << ": " << ft_vec[idx] << std::endl;
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector: erase begin ~ begin from vec({0..9}");
+  try {
+    int src[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::vector<int> std_vec(src, src + 10);
+    ft::vector<int> ft_vec(src, src + 10);
+    std_vec.erase(std_vec.begin(), std_vec.begin());
+    ft_vec.erase(ft_vec.begin(), ft_vec.begin());
+    // std::cout << std::endl;
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      // std::cout << std_vec[idx] << ": " << ft_vec[idx] << std::endl;
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector: erase end ~ end from vec({0..9}");
+  try {
+    int src[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::vector<int> std_vec(src, src + 10);
+    ft::vector<int> ft_vec(src, src + 10);
+    std_vec.erase(std_vec.end(), std_vec.end());
+    ft_vec.erase(ft_vec.end(), ft_vec.end());
+    // std::cout << std::endl;
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      // std::cout << std_vec[idx] << ": " << ft_vec[idx] << std::endl;
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
 
   return 0;
 }

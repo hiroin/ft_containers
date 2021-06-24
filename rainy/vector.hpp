@@ -417,7 +417,7 @@ public :
   }
   iterator insert(iterator position, const T& x)
   {
-
+    return position;
   }
   void insert(iterator position, size_type n, const T& x)
   {
@@ -430,11 +430,11 @@ public :
   }
   iterator erase(iterator position)
   {
-
+    return position;
   }
   iterator erase(iterator first_, iterator last_)
   {
-
+    return first_;
   }
   void swap(vector& x)
   {
