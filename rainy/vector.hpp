@@ -346,11 +346,10 @@ public :
     else if ( sz > size() )
     {
       reserve(sz) ;
-      // デフォルト構築らしいけどいらないと思う
-      // for (; last_ != reserved_last_ ; ++last_)
-      // {
-      //   construct(last_);
-      // }
+      for (; last_ != reserved_last_ ; ++last_)
+      {
+        construct(last_);
+      }
     }
   }
 
@@ -420,19 +419,51 @@ public :
       destroy(last_);
     }
   }
+
   iterator insert(iterator position, const T& x)
   {
-    return position;
+    if (position == iterator(NULL))
+    {
+      assign(1, x);
+      return begin();
+    }
+    else if
+    (position == end())
+    {
+      push_back(x);
+      return end() - 1;
+    }
+    const size_type index = position - begin();
+    const size_type numOfMove = end() - position;
+    if (size() + 1 > capacity())
+    {
+        size_type c = size();
+        if (c == 0)
+            c = 1 ;
+        else
+            c *= 2 ;
+        reserve(c) ;
+    }
+    for (size_t i = 0; i < numOfMove; ++i)
+    {
+      *(end() - i) = *(end() - i - 1);
+    }
+    first_[index] = x;
+    last_++;  
+    return iterator(&first_[index]);
   }
+
   void insert(iterator position, size_type n, const T& x)
   {
 
   }
+
   template <class InputIterator>
   void insert(iterator position, InputIterator first_, InputIterator last_)
   {
 
   }
+
   iterator erase(iterator position)
   {
     return position;

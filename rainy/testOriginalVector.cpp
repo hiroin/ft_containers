@@ -4,17 +4,15 @@
 
 int main()
 {
-    std::vector<int> v1 = {1,2,3,4,5} ;
-    std::vector<int> v2 = {1,2,3,4,5} ;
+  std::vector<int> v1 = {1,2,3,4,5} ;
+  std::vector<int> v2 = {1,2,3,4,5} ;
+  v1.reserve(10);
+  std::cout << v1.size() << std::endl;
 
-    auto x = std::begin(v1) ;
-    auto y = std::begin(v2) ;
+  v1.insert(v1.begin() + 10, 10);
+  std::cout << *v1.begin() << std::endl;
+  std::cout << *(v1.end() - 1) << std::endl;
 
-    // x, yは0番目の要素を指す
-
-    bool b1 = (x == y) ; // true
-    bool b2 = (x != y) ; // false
-    std::cout << b1 << std::endl;
-    std::cout << b2 << std::endl;
+  std::cout << v1.size() << std::endl;
 
 }

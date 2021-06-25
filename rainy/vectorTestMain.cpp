@@ -2231,14 +2231,17 @@ int main()
       if (std_vec[idx] != ft_vec[idx]) {
         std::cout << "\nidx = " << idx << ", val = " << ft_vec[idx] << ", "
                   << std_vec[idx] << std::endl;
-        throw std::runtime_error("failed");
+        throw std::runtime_error("failed1");
       }
     }
     if (std_vec.size() != ft_vec.size() ||
         std_vec.capacity() != ft_vec.capacity()) {
-      throw std::runtime_error("failed");
+          std::cout << std_vec.capacity() << std::endl;
+          std::cout << ft_vec.capacity() << std::endl;
+      throw std::runtime_error("failed2");
     }
   } catch (std::exception& e) {
+    std::cout << e.what() << std::endl;
     throw std::runtime_error(e.what());
   }
   std::cout << " => OK :)" << std::endl;
@@ -2256,14 +2259,15 @@ int main()
       if (std_vec[idx] != ft_vec[idx]) {
         std::cout << "\nidx = " << idx << ", val = " << ft_vec[idx] << ", "
                   << std_vec[idx] << std::endl;
-        throw std::runtime_error("failed");
+        throw std::runtime_error("failed1");
       }
     }
     if (std_vec.size() != ft_vec.size() ||
         std_vec.capacity() != ft_vec.capacity()) {
-      throw std::runtime_error("failed");
+      throw std::runtime_error("failed2");
     }
   } catch (std::exception& e) {
+    std::cout << e.what() << std::endl;
     throw std::runtime_error(e.what());
   }
   std::cout << " => OK :)" << std::endl;
@@ -2281,14 +2285,17 @@ int main()
       if (std_vec[idx] != ft_vec[idx]) {
         std::cout << "\nidx = " << idx << ", val = " << ft_vec[idx] << ", "
                   << std_vec[idx] << std::endl;
-        throw std::runtime_error("failed");
+        throw std::runtime_error("failed1");
       }
     }
     if (std_vec.size() != ft_vec.size() ||
         std_vec.capacity() != ft_vec.capacity()) {
-      throw std::runtime_error("failed");
+          std::cout << std_vec.capacity() << std::endl;
+          std::cout << ft_vec.capacity() << std::endl;
+      throw std::runtime_error("failed2");
     }
   } catch (std::exception& e) {
+    std::cout << e.what() << std::endl;
     throw std::runtime_error(e.what());
   }
   std::cout << " => OK :)" << std::endl;
