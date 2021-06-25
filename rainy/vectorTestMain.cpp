@@ -2505,8 +2505,8 @@ int main()
   try {
     std::vector<int> std_vec;
     ft::vector<int> ft_vec;
-    std_vec.insert(std_vec.begin(), 21, 42);
-    ft_vec.insert(ft_vec.begin(), 21, 42);
+    std_vec.insert(std_vec.begin(), 2, 4);
+    ft_vec.insert(ft_vec.begin(), 2, 4);
     for (size_t idx = 0; idx < std_vec.size(); ++idx) {
       if (std_vec[idx] != ft_vec[idx]) {
         throw std::runtime_error("failed");
@@ -2545,10 +2545,10 @@ int main()
   putTestInfo(test_no, "insert(begin(), 21, 42), to vec(42, 21)");
   flg = 0;
   try {
-    std::vector<int> std_vec(42, 21);
-    ft::vector<int> ft_vec(42, 21);
-    std_vec.insert(std_vec.begin(), 21, 42);
-    ft_vec.insert(ft_vec.begin(), 21, 42);
+    std::vector<int> std_vec(4, 2);
+    ft::vector<int> ft_vec(4, 2);
+    std_vec.insert(std_vec.begin(), 2, 7);
+    ft_vec.insert(ft_vec.begin(), 2, 7);
     for (size_t idx = 0; idx < std_vec.size(); ++idx) {
       if (std_vec[idx] != ft_vec[idx]) {
         std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
@@ -2558,6 +2558,8 @@ int main()
     }
     if (std_vec.size() != ft_vec.size() ||
         std_vec.capacity() != ft_vec.capacity()) {
+        std::cout << std_vec.capacity() << std::endl;
+        std::cout << ft_vec.capacity() << std::endl;
       throw std::runtime_error("size or capacity");
     }
   } catch (std::exception& e) {
@@ -2568,10 +2570,10 @@ int main()
   putTestInfo(test_no, "insert(begin(), 42, 42), to vec(42, 21)");
   flg = 0;
   try {
-    std::vector<int> std_vec(42, 21);
-    ft::vector<int> ft_vec(42, 21);
-    std_vec.insert(std_vec.begin(), 42, 42);
-    ft_vec.insert(ft_vec.begin(), 42, 42);
+    std::vector<int> std_vec(4, 2);
+    ft::vector<int> ft_vec(4, 2);
+    std_vec.insert(std_vec.begin(), 4, 1);
+    ft_vec.insert(ft_vec.begin(), 4, 1);
     for (size_t idx = 0; idx < std_vec.size(); ++idx) {
       if (std_vec[idx] != ft_vec[idx]) {
         std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
@@ -2591,10 +2593,10 @@ int main()
   putTestInfo(test_no, "insert(begin(), 43, 42), to vec(42, 21)");
   flg = 0;
   try {
-    std::vector<int> std_vec(42, 21);
-    ft::vector<int> ft_vec(42, 21);
-    std_vec.insert(std_vec.begin(), 43, 42);
-    ft_vec.insert(ft_vec.begin(), 43, 42);
+    std::vector<int> std_vec(4, 2);
+    ft::vector<int> ft_vec(4, 2);
+    std_vec.insert(std_vec.begin(), 5, 4);
+    ft_vec.insert(ft_vec.begin(), 5, 4);
     for (size_t idx = 0; idx < std_vec.size(); ++idx) {
       if (std_vec[idx] != ft_vec[idx]) {
         std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "

@@ -455,11 +455,38 @@ public :
 
   void insert(iterator position, size_type n, const T& x)
   {
-
+    if (position == iterator(NULL))
+    {
+      assign(n, x);
+      return;
+    }
+    size_type index = position - begin();
+    size_type numOfMove = end() - position;
+    if (size() + n > capacity())
+    {
+        size_type c = size();
+        if (c == 0)
+          c = n ;
+        else if(size() + n < c * 2)
+          c *= 2;
+        else
+          c = size() + n;
+        reserve(c) ;
+    }
+    for (size_t i = 0; i < numOfMove; ++i)
+    {
+      *(end() + n - 1 - i) = *(end() - 1 - i);
+    }
+    for (size_t i = 0; i < n; ++i)
+    {
+      first_[index++] = x;
+      last_++;
+    }
   }
 
   template <class InputIterator>
-  void insert(iterator position, InputIterator first_, InputIterator last_)
+  void insert(iterator position,
+    typename ft_enable_if<!ft_is_integral<InputIterator>::value, InputIterator>::type first_, InputIterator last_)
   {
 
   }
