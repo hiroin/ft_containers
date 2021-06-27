@@ -30,8 +30,6 @@ int main()
     ft::vector<Hoge> ft_vec(1, hoge[2]);
     std_vec = std_vec_src;
     ft_vec = ft_vec_src;
-    std::cout << (ft_vec != ft_vec_src) << std::endl;
-    std::cout << (ft_vec == ft_vec_src) << std::endl;;
     if ((ft_vec != ft_vec_src || !(ft_vec == ft_vec_src)) !=
         (std_vec != std_vec_src || !(std_vec == std_vec_src))) {
       throw std::runtime_error("assignation");

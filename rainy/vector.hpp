@@ -109,7 +109,7 @@ public :
       // std::copy(r.begin(), r.end(), begin()) ;
       iterator dest_iter = begin();
       for (const_iterator src_iter = r.begin(), src_end = r.end();
-        src_iter != src_end; ++src_iter, ++dest_iter, ++last_)
+        src_iter != src_end; ++src_iter, ++dest_iter)
       {
         *dest_iter = *src_iter;
       }      
@@ -364,7 +364,7 @@ public :
   //   }
   // }
 
-  void resize(size_type sz, const_reference value)
+  void resize(size_type sz, const_reference value = value_type())
   {
     // 現在の要素数より少ない
     if (sz < size())
