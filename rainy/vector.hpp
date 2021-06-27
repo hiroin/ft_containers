@@ -464,14 +464,14 @@ public :
     size_type numOfMove = end() - position;
     if (size() + n > capacity())
     {
-        size_type c = size();
-        if (c == 0)
-          c = n ;
-        else if(size() + n < c * 2)
-          c *= 2;
-        else
-          c = size() + n;
-        reserve(c) ;
+      size_type c = size();
+      if (c == 0)
+        c = n ;
+      else if(size() + n < c * 2)
+        c *= 2;
+      else
+        c = size() + n;
+      reserve(c) ;
     }
     for (size_t i = 0; i < numOfMove; ++i)
     {
@@ -485,10 +485,51 @@ public :
   }
 
   template <class InputIterator>
-  void insert(iterator position,
-    typename ft_enable_if<!ft_is_integral<InputIterator>::value, InputIterator>::type first_, InputIterator last_)
+  size_t getSizeFromIterator(InputIterator first, InputIterator last)
   {
+    InputIterator iter = first;
+    size_type n = 0;
+    while (iter != last)
+    {
+      ++iter;
+      ++n;
+    }
+    return n;
+  }
 
+  template <class InputIterator>
+  void insert(iterator position,
+    typename ft_enable_if<!ft_is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last)
+  {
+    if (position == iterator(NULL))
+    {
+      assign(first, last);
+      return;
+    }
+    size_type index = position - begin();
+    size_type numOfMove = end() - position;
+    size_type n = getSizeFromIterator(first, last);
+    if (size() + n > capacity())
+    {
+      size_type c = size();
+      if (c == 0)
+        c = n ;
+      else if(size() + n < c * 2)
+        c *= 2;
+      else
+        c = size() + n;
+      reserve(c) ;
+    }
+    for (size_t i = 0; i < numOfMove; ++i)
+    {
+      *(end() + n - 1 - i) = *(end() - 1 - i);
+    }
+    for (size_t i = 0; i < n; ++i)
+    {
+      first_[index++] = *first;
+      first++;
+      last_++;
+    }
   }
 
   iterator erase(iterator position)
