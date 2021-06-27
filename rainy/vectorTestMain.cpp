@@ -3,6 +3,7 @@
 #include <list>
 // #include <forward_list>
 #include <string.h>
+#include "Hoge.hpp"
 
 void putTestInfo(int& test_no, const std::string& outline)
 {
@@ -3290,6 +3291,754 @@ int main()
     }
     if (std_vec.size() != ft_vec.size() ||
         std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector: begin + 1 ~ begin + 2 from vec({0..9}");
+  try {
+    int src[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::vector<int> std_vec(src, src + 10);
+    src[1] = 42;
+    ft::vector<int> ft_vec(src, src + 10);
+    std_vec.erase(std_vec.begin() + 1, std_vec.begin() + 2);
+    ft_vec.erase(ft_vec.begin() + 1, ft_vec.begin() + 2);
+    // std::cout << std::endl;
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      // std::cout << std_vec[idx] << ": " << ft_vec[idx] << std::endl;
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector: begin + 1 ~ begin + 1 from vec({0..9}");
+  try {
+    int src[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::vector<int> std_vec(src, src + 10);
+    ft::vector<int> ft_vec(src, src + 10);
+    std_vec.erase(std_vec.begin() + 1, std_vec.begin() + 2);
+    ft_vec.erase(ft_vec.begin() + 1, ft_vec.begin() + 2);
+    // std::cout << std::endl;
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      // std::cout << std_vec[idx] << ": " << ft_vec[idx] << std::endl;
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  // case segv
+  // putTestInfo(test_no, "vector: erase begin() + 10 from vec({0..9}");
+
+  /*** test using hoge ***/
+  Hoge hoge[10] = {Hoge(0, 0), Hoge(1, 1), Hoge(2, 2), Hoge(3, 3), Hoge(4, 4),
+                   Hoge(5, 5), Hoge(6, 6), Hoge(7, 7), Hoge(8, 8), Hoge(9, 9)};
+  std::vector<Hoge> hoge_vec(hoge, &hoge[10]);
+  std::list<Hoge> hoge_lst(hoge, &hoge[10]);
+  // std::forward_list<Hoge> hoge_flst(hoge, &hoge[10]);
+
+  putTestInfo(test_no, "vector<Hoge>: default construction");
+  try {
+    std::vector<Hoge> std_vec;
+    ft::vector<Hoge> ft_vec;
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.empty() != ft_vec.empty()) {
+      throw std::runtime_error("empty");
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: construct vec(0)");
+  try {
+    std::vector<Hoge> std_vec(0);
+    ft::vector<Hoge> ft_vec(0);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: construct vec(1)");
+  try {
+    std::vector<Hoge> std_vec(1);
+    ft::vector<Hoge> ft_vec(1);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.empty() != ft_vec.empty()) {
+      throw std::runtime_error("empty");
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: construct vec(42)");
+  try {
+    std::vector<Hoge> std_vec(42);
+    ft::vector<Hoge> ft_vec(42);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.empty() != ft_vec.empty()) {
+      throw std::runtime_error("empty");
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: construct vec(0, Hoge(42,42))");
+  try {
+    std::vector<Hoge> std_vec(0, Hoge(42, 42));
+    ft::vector<Hoge> ft_vec(0, Hoge(42, 42));
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.empty() != ft_vec.empty()) {
+      throw std::runtime_error("empty");
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: construct vec(1, Hoge(42,42))");
+  try {
+    std::vector<Hoge> std_vec(1, Hoge(42, 42));
+    ft::vector<Hoge> ft_vec(1, Hoge(42, 42));
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.empty() != ft_vec.empty()) {
+      throw std::runtime_error("empty");
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: construct vec(42, Hoge(42,42))");
+  try {
+    std::vector<Hoge> std_vec(1, Hoge(42, 42));
+    ft::vector<Hoge> ft_vec(1, Hoge(42, 42));
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.empty() != ft_vec.empty()) {
+      throw std::runtime_error("empty");
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: fill construct with array");
+  try {
+    std::vector<Hoge> std_vec(hoge, hoge + 9);
+    ft::vector<Hoge> ft_vec(hoge, hoge + 9);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.empty() != ft_vec.empty()) {
+      throw std::runtime_error("empty");
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: fill construct with vector");
+  try {
+    std::vector<Hoge> std_vec(hoge_vec.begin(), hoge_vec.end());
+    ft::vector<Hoge> ft_vec(hoge_vec.begin(), hoge_vec.end());
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.empty() != ft_vec.empty()) {
+      throw std::runtime_error("empty");
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: fill construct with list");
+  try {
+    std::vector<Hoge> std_vec(hoge_lst.begin(), hoge_lst.end());
+    ft::vector<Hoge> ft_vec(hoge_lst.begin(), hoge_lst.end());
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.empty() != ft_vec.empty()) {
+      throw std::runtime_error("empty");
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  // putTestInfo(test_no, "vector<Hoge>: fill construct with flist");
+  // try {
+  //   std::vector<Hoge> std_vec(hoge_flst.begin(), hoge_flst.end());
+  //   ft::vector<Hoge> ft_vec(hoge_flst.begin(), hoge_flst.end());
+  //   for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+  //     if (std_vec[idx] != ft_vec[idx]) {
+  //       throw std::runtime_error("value");
+  //     }
+  //   }
+  //   if (std_vec.empty() != ft_vec.empty()) {
+  //     throw std::runtime_error("empty");
+  //   }
+  //   if (std_vec.size() != ft_vec.size() ||
+  //       std_vec.capacity() != ft_vec.capacity()) {
+  //     throw std::runtime_error("size or capacity");
+  //   }
+  // } catch (std::exception& e) {
+  //   throw std::runtime_error(e.what());
+  // }
+  // std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: copy construct empty one");
+  try {
+    std::vector<Hoge> std_vec_src;
+    ft::vector<Hoge> ft_vec_src;
+    std::vector<Hoge> std_vec(std_vec_src);
+    ft::vector<Hoge> ft_vec(ft_vec_src);
+    if ((ft_vec != ft_vec_src || !(ft_vec == ft_vec_src)) !=
+        (std_vec != std_vec_src || !(std_vec == std_vec_src))) {
+      throw std::runtime_error("assignation");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: copy construct with filled with one");
+  try {
+    std::vector<Hoge> std_vec_src(1, hoge[0]);
+    ft::vector<Hoge> ft_vec_src(1, hoge[0]);
+    std::vector<Hoge> std_vec(std_vec_src);
+    ft::vector<Hoge> ft_vec(ft_vec_src);
+    if ((ft_vec != ft_vec_src || !(ft_vec == ft_vec_src)) !=
+        (std_vec != std_vec_src || !(std_vec == std_vec_src))) {
+      throw std::runtime_error("assignation");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: copy construct with filled one");
+  try {
+    std::vector<Hoge> std_vec_src(hoge_vec.begin(), hoge_vec.end());
+    ft::vector<Hoge> ft_vec_src(hoge_vec.begin(), hoge_vec.end());
+    std::vector<Hoge> std_vec(std_vec_src);
+    ft::vector<Hoge> ft_vec(ft_vec_src);
+    if ((ft_vec != ft_vec_src || !(ft_vec == ft_vec_src)) !=
+        (std_vec != std_vec_src || !(std_vec == std_vec_src))) {
+      throw std::runtime_error("assignation");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: vec() = vec()");
+  try {
+    std::vector<Hoge> std_vec_src;
+    ft::vector<Hoge> ft_vec_src;
+    std::vector<Hoge> std_vec;
+    ft::vector<Hoge> ft_vec;
+    std_vec = std_vec_src;
+    ft_vec = ft_vec_src;
+    if ((ft_vec != ft_vec_src || !(ft_vec == ft_vec_src)) !=
+        (std_vec != std_vec_src || !(std_vec == std_vec_src))) {
+      throw std::runtime_error("assignation");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: vec(filled with one) = vec()");
+  try {
+    std::vector<Hoge> std_vec_src;
+    ft::vector<Hoge> ft_vec_src;
+    std::vector<Hoge> std_vec(1, hoge[2]);
+    ft::vector<Hoge> ft_vec(1, hoge[2]);
+    std_vec = std_vec_src;
+    ft_vec = ft_vec_src;
+    if ((ft_vec != ft_vec_src || !(ft_vec == ft_vec_src)) !=
+        (std_vec != std_vec_src || !(std_vec == std_vec_src))) {
+      throw std::runtime_error("assignation");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      std::cout << std::endl;
+      std::cout << "std: size = " << std_vec.size() << ", "
+                << "capacity = " << std_vec.capacity() << std::endl;
+      std::cout << "ft: size = " << ft_vec.size() << ", "
+                << "capacity = " << ft_vec.capacity() << std::endl;
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: vec(filled with 10) = vec()");
+  try {
+    std::vector<Hoge> std_vec_src;
+    ft::vector<Hoge> ft_vec_src;
+    std::vector<Hoge> std_vec(hoge_vec.begin(), hoge_vec.end());
+    ft::vector<Hoge> ft_vec(hoge_vec.begin(), hoge_vec.end());
+    std_vec = std_vec_src;
+    ft_vec = ft_vec_src;
+    if ((ft_vec != ft_vec_src || !(ft_vec == ft_vec_src)) !=
+        (std_vec != std_vec_src || !(std_vec == std_vec_src))) {
+      throw std::runtime_error("assignation");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      std::cout << std::endl;
+      std::cout << "std: size = " << std_vec.size() << ", "
+                << "capacity = " << std_vec.capacity() << std::endl;
+      std::cout << "ft: size = " << ft_vec.size() << ", "
+                << "capacity = " << ft_vec.capacity() << std::endl;
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: vec(1) = vec(1)");
+  try {
+    std::vector<Hoge> std_vec_src(1, hoge[2]);
+    ft::vector<Hoge> ft_vec_src(1, hoge[2]);
+    std::vector<Hoge> std_vec(1, hoge[2]);
+    ft::vector<Hoge> ft_vec(1, hoge[2]);
+    std_vec = std_vec_src;
+    ft_vec = ft_vec_src;
+    if ((ft_vec != ft_vec_src || !(ft_vec == ft_vec_src)) !=
+        (std_vec != std_vec_src || !(std_vec == std_vec_src))) {
+      throw std::runtime_error("assignation");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      std::cout << std::endl;
+      std::cout << "std: size = " << std_vec.size() << ", "
+                << "capacity = " << std_vec.capacity() << std::endl;
+      std::cout << "ft: size = " << ft_vec.size() << ", "
+                << "capacity = " << ft_vec.capacity() << std::endl;
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: vec(10) = vec(1)");
+  try {
+    std::vector<Hoge> std_vec_src(1, hoge[2]);
+    ft::vector<Hoge> ft_vec_src(1, hoge[2]);
+    std::vector<Hoge> std_vec(hoge_vec.begin(), hoge_vec.end());
+    ft::vector<Hoge> ft_vec(hoge_vec.begin(), hoge_vec.end());
+    std_vec = std_vec_src;
+    ft_vec = ft_vec_src;
+    if ((ft_vec != ft_vec_src || !(ft_vec == ft_vec_src)) !=
+        (std_vec != std_vec_src || !(std_vec == std_vec_src))) {
+      throw std::runtime_error("assignation");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      std::cout << std::endl;
+      std::cout << "std: size = " << std_vec.size() << ", "
+                << "capacity = " << std_vec.capacity() << std::endl;
+      std::cout << "ft: size = " << ft_vec.size() << ", "
+                << "capacity = " << ft_vec.capacity() << std::endl;
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: vec(1) = vec(10)");
+  try {
+    std::vector<Hoge> std_vec_src(hoge_vec.begin(), hoge_vec.end());
+    ft::vector<Hoge> ft_vec_src(hoge_vec.begin(), hoge_vec.end());
+    std::vector<Hoge> std_vec(1, hoge[2]);
+    ft::vector<Hoge> ft_vec(1, hoge[2]);
+    std_vec = std_vec_src;
+    ft_vec = ft_vec_src;
+    if ((ft_vec != ft_vec_src || !(ft_vec == ft_vec_src)) !=
+        (std_vec != std_vec_src || !(std_vec == std_vec_src))) {
+      throw std::runtime_error("assignation");
+    }
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      std::cout << std::endl;
+      std::cout << "std: size = " << std_vec.size() << ", "
+                << "capacity = " << std_vec.capacity() << std::endl;
+      std::cout << "ft: size = " << ft_vec.size() << ", "
+                << "capacity = " << ft_vec.capacity() << std::endl;
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: vec(10) = vec(10)");
+  try {
+    std::vector<Hoge> std_vec_src(hoge_vec.begin(), hoge_vec.end());
+    ft::vector<Hoge> ft_vec_src(hoge_vec.begin(), hoge_vec.end());
+    std::vector<Hoge> std_vec(hoge_vec.rbegin(), hoge_vec.rend());
+    ft::vector<Hoge> ft_vec(hoge_vec.rbegin(), hoge_vec.rend());
+    std_vec = std_vec_src;
+    ft_vec = ft_vec_src;
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      std::cout << std::endl;
+      std::cout << "std: size = " << std_vec.size() << ", "
+                << "capacity = " << std_vec.capacity() << std::endl;
+      std::cout << "ft: size = " << ft_vec.size() << ", "
+                << "capacity = " << ft_vec.capacity() << std::endl;
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: vec(10) = vec(5)");
+  try {
+    std::vector<Hoge> std_vec_src(hoge_vec.begin() + 5, hoge_vec.end());
+    ft::vector<Hoge> ft_vec_src(hoge_vec.begin() + 5, hoge_vec.end());
+    std::vector<Hoge> std_vec(hoge_vec.rbegin(), hoge_vec.rend());
+    ft::vector<Hoge> ft_vec(hoge_vec.rbegin(), hoge_vec.rend());
+    std_vec = std_vec_src;
+    ft_vec = ft_vec_src;
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      std::cout << std::endl;
+      std::cout << "std: size = " << std_vec.size() << ", "
+                << "capacity = " << std_vec.capacity() << std::endl;
+      std::cout << "ft: size = " << ft_vec.size() << ", "
+                << "capacity = " << ft_vec.capacity() << std::endl;
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: vec(5) = vec(10)");
+  try {
+    std::vector<Hoge> std_vec_src(hoge_vec.begin(), hoge_vec.end());
+    ft::vector<Hoge> ft_vec_src(hoge_vec.begin(), hoge_vec.end());
+    std::vector<Hoge> std_vec(hoge_vec.rbegin() + 5, hoge_vec.rend());
+    ft::vector<Hoge> ft_vec(hoge_vec.rbegin() + 5, hoge_vec.rend());
+    std_vec = std_vec_src;
+    ft_vec = ft_vec_src;
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      std::cout << std::endl;
+      std::cout << "std: size = " << std_vec.size() << ", "
+                << "capacity = " << std_vec.capacity() << std::endl;
+      std::cout << "ft: size = " << ft_vec.size() << ", "
+                << "capacity = " << ft_vec.capacity() << std::endl;
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: vec() -> reserve(42)");
+  try {
+    std::vector<Hoge> std_vec;
+    ft::vector<Hoge> ft_vec;
+    std_vec.reserve(42);
+    ft_vec.reserve(42);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      std::cout << std::endl;
+      std::cout << "std: size = " << std_vec.size() << ", "
+                << "capacity = " << std_vec.capacity() << std::endl;
+      std::cout << "ft: size = " << ft_vec.size() << ", "
+                << "capacity = " << ft_vec.capacity() << std::endl;
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: vec(5) -> reserve(42)");
+  try {
+    std::vector<Hoge> std_vec(hoge + 4, hoge + 9);
+    ft::vector<Hoge> ft_vec(hoge + 4, hoge + 9);
+    std::cout << std::endl << "hoge" << std::endl;
+    std_vec.reserve(42);
+    ft_vec.reserve(42);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      std::cout << std::endl;
+      std::cout << "std: size = " << std_vec.size() << ", "
+                << "capacity = " << std_vec.capacity() << std::endl;
+      std::cout << "ft: size = " << ft_vec.size() << ", "
+                << "capacity = " << ft_vec.capacity() << std::endl;
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: vec(5) -> reserve(0)");
+  try {
+    std::vector<Hoge> std_vec(hoge + 4, hoge + 9);
+    ft::vector<Hoge> ft_vec(hoge + 4, hoge + 9);
+    std::cout << std::endl << "hoge" << std::endl;
+    std_vec.reserve(0);
+    ft_vec.reserve(0);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      std::cout << std::endl;
+      std::cout << "std: size = " << std_vec.size() << ", "
+                << "capacity = " << std_vec.capacity() << std::endl;
+      std::cout << "ft: size = " << ft_vec.size() << ", "
+                << "capacity = " << ft_vec.capacity() << std::endl;
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: vec(5) -> reserve(4)");
+  try {
+    std::vector<Hoge> std_vec(hoge + 4, hoge + 9);
+    ft::vector<Hoge> ft_vec(hoge + 4, hoge + 9);
+    std::cout << std::endl << "hoge" << std::endl;
+    std_vec.reserve(4);
+    ft_vec.reserve(4);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      std::cout << std::endl;
+      std::cout << "std: size = " << std_vec.size() << ", "
+                << "capacity = " << std_vec.capacity() << std::endl;
+      std::cout << "ft: size = " << ft_vec.size() << ", "
+                << "capacity = " << ft_vec.capacity() << std::endl;
+      throw std::runtime_error("size or capacity");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "vector<Hoge>: vec(5) -> reserve(5)");
+  try {
+    std::vector<Hoge> std_vec(hoge + 4, hoge + 9);
+    ft::vector<Hoge> ft_vec(hoge + 4, hoge + 9);
+    std::cout << std::endl << "hoge" << std::endl;
+    std_vec.reserve(5);
+    ft_vec.reserve(5);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      std::cout << std::endl;
+      std::cout << "std: size = " << std_vec.size() << ", "
+                << "capacity = " << std_vec.capacity() << std::endl;
+      std::cout << "ft: size = " << ft_vec.size() << ", "
+                << "capacity = " << ft_vec.capacity() << std::endl;
       throw std::runtime_error("size or capacity");
     }
   } catch (std::exception& e) {

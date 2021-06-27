@@ -48,12 +48,12 @@ public :
   vector(const allocator_type & alloc_ = allocator_type())
     : alloc_(alloc_), first_(NULL), last_(NULL), reserved_last_(NULL)
   {};
-  vector( size_type size, const allocator_type & alloc_ = allocator_type() )
-    : alloc_(alloc_), first_(NULL), last_(NULL), reserved_last_(NULL)
-  {
-    resize(size);
-  }
-  vector( size_type size, const_reference value, const allocator_type & alloc_ = allocator_type() )
+  // vector( size_type size, const allocator_type & alloc_ = allocator_type() )
+  //   : alloc_(alloc_), first_(NULL), last_(NULL), reserved_last_(NULL)
+  // {
+  //   resize(size);
+  // }
+  vector( size_type size, const_reference value = value_type(), const allocator_type & alloc_ = allocator_type() )
     : alloc_(alloc_), first_(NULL), last_(NULL), reserved_last_(NULL)
   {
     resize(size, value);
@@ -333,25 +333,25 @@ public :
     alloc_.deallocate(old_first_, old_capacity);
   }
 
-  void resize(size_type sz)
-  {
-    // 現在の要素数より少ない
-    if (sz < size())
-    {
-      size_type diff = size() - sz;
-      destroy_until(rbegin() + diff) ;
-      last_ = first_ + sz ;
-    }
-    // 現在の要素数より大きい
-    else if ( sz > size() )
-    {
-      reserve(sz) ;
-      for (; last_ != reserved_last_ ; ++last_)
-      {
-        construct(last_);
-      }
-    }
-  }
+  // void resize(size_type sz)
+  // {
+  //   // 現在の要素数より少ない
+  //   if (sz < size())
+  //   {
+  //     size_type diff = size() - sz;
+  //     destroy_until(rbegin() + diff) ;
+  //     last_ = first_ + sz ;
+  //   }
+  //   // 現在の要素数より大きい
+  //   else if ( sz > size() )
+  //   {
+  //     reserve(sz) ;
+  //     for (; last_ != reserved_last_ ; ++last_)
+  //     {
+  //       construct(last_);
+  //     }
+  //   }
+  // }
 
   void resize(size_type sz, const_reference value)
   {
