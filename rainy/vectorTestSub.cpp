@@ -16,17 +16,17 @@ int main()
 
   std::cout << "=== TEST VECTOR ===" << std::endl;
 
-  putTestInfo(test_no, "insert(begin(), 43, 42), to vec(42, 21)");
-  flg = 0;
+  putTestInfo(test_no, "vector: erase begin() from vec({0..9}");
   try {
-    std::vector<int> std_vec(4, 2);
-    ft::vector<int> ft_vec(4, 2);
-    std_vec.insert(std_vec.begin(), 5, 4);
-    ft_vec.insert(ft_vec.begin(), 5, 4);
+    int src[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::vector<int> std_vec(src, src + 10);
+    ft::vector<int> ft_vec(src, src + 10);
+    std_vec.erase(std_vec.begin());
+    ft_vec.erase(ft_vec.begin());
+    std::cout << std::endl;
     for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      std::cout << std_vec[idx] << ": " << ft_vec[idx] << std::endl;
       if (std_vec[idx] != ft_vec[idx]) {
-        std::cout << "\nidx = " << idx << ": " << std_vec[idx] << ": "
-                  << ft_vec[idx] << std::endl;
         throw std::runtime_error("value");
       }
     }

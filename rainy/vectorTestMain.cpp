@@ -3196,6 +3196,8 @@ int main()
     }
     if (std_vec.size() != ft_vec.size() ||
         std_vec.capacity() != ft_vec.capacity()) {
+          std::cout << std_vec.size() << std::endl;
+          std::cout << ft_vec.size() << std::endl;
       throw std::runtime_error("size or capacity");
     }
   } catch (std::exception& e) {

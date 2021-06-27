@@ -534,12 +534,26 @@ public :
 
   iterator erase(iterator position)
   {
+    for (iterator itr = position; itr != end() - 1; ++itr)
+    {
+      *itr = *(itr + 1);
+    }
+    last_--;
     return position;
   }
-  iterator erase(iterator first_, iterator last_)
+
+  iterator erase(iterator first, iterator last)
   {
-    return first_;
+    iterator firstPosition = first;
+    size_type n = end() - last;
+    for (size_t i = 0; i < n; ++i)
+    {
+      *first++ = *last++;
+    }
+    last_ -= last - first;
+    return firstPosition;
   }
+
   void swap(vector& x)
   {
     pointer first = x.first_;
