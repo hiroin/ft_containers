@@ -181,10 +181,21 @@ public :
       }
     return *this ;
   }
+  bool equal(iterator first, iterator last, const_iterator rfirst)
+  {
+    const_iterator cfirst = first;
+    const_iterator clast = last;
+    for (; cfirst != clast; ++cfirst, ++rfirst)
+    {
+      if (*cfirst != *rfirst)
+        return false;
+    }
+    return true;
+  }
   bool operator==(const vector<T, Allocator>& r)
   {
     return (this->size() == r.size()
-      && std::equal(this->begin(), this->end(), r.begin()));
+      && equal(this->begin(), this->end(), r.begin()));
   }
   bool operator!=(const vector<T, Allocator>& r)
   {
