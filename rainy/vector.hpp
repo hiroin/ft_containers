@@ -377,7 +377,10 @@ public :
     else if ( sz > size() )
     {
       // insertの処理と一緒 ( https://cpprefjp.github.io/reference/vector/vector/resize.html )
-      reserve(sz);
+      if (sz < size() * 2)
+        reserve(size() * 2);
+      else
+        reserve(sz);
       for (size_t i = 0; sz - size(); ++i, ++last_)
       {
         construct(last_, value);
