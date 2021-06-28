@@ -468,7 +468,7 @@ public :
     }
     else
     {
-      construct(end().ptr_, *(end() - 1));
+      construct(&*end(), *(end() - 1));
       for (size_t i = 0; i < numOfMove; ++i)
       {
         *(end() - i) = *(end() - i - 1);
@@ -479,6 +479,7 @@ public :
     return iterator(&first_[index]);
   }
 
+  // 要construct
   void insert(iterator position, size_type n, const T& x)
   {
     if (position == iterator(NULL))
@@ -511,19 +512,6 @@ public :
   }
 
   template <class InputIterator>
-  size_t getSizeFromIterator(InputIterator first, InputIterator last)
-  {
-    InputIterator iter = first;
-    size_type n = 0;
-    while (iter != last)
-    {
-      ++iter;
-      ++n;
-    }
-    return n;
-  }
-
-  template <class InputIterator>
   void insert(iterator position,
     typename ft_enable_if<!ft_is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last)
   {
@@ -545,16 +533,33 @@ public :
       else
         c = size() + n;
       reserve(c) ;
+
+      for (size_t i = 0; i < numOfMove; ++i)
+      {
+        // *(end() - i) = *(end() - i - 1);
+        construct(&*(end() + n - 1 - i), *(end() - i - 1));
+        destroy(&*(end() - i - 1));
+      }
+      for (size_t i = 0; i < n; ++i)
+      {
+        construct(&first_[index++], *first++);
+        // first_[index++] = *first;
+        last_++;
+      }      
     }
-    for (size_t i = 0; i < numOfMove; ++i)
+    else
     {
-      *(end() + n - 1 - i) = *(end() - 1 - i);
-    }
-    for (size_t i = 0; i < n; ++i)
-    {
-      first_[index++] = *first;
-      first++;
-      last_++;
+      for (size_t i = 0; i < numOfMove; ++i)
+      {
+        *(end() + n - 1 - i) = *(end() - 1 - i);
+      }
+      for (size_t i = 0; i < n; ++i)
+      {
+        construct(&first_[index++], *first++);
+        // first_[index++] = *first;
+        // first++;
+        last_++;
+      }
     }
   }
 
@@ -646,6 +651,20 @@ public :
       // そこに&を適用することでT *を得ている。
       destroy( &*riter );
     }
+  }
+
+ private:
+  template <class InputIterator>
+  size_t getSizeFromIterator(InputIterator first, InputIterator last)
+  {
+    InputIterator iter = first;
+    size_type n = 0;
+    while (iter != last)
+    {
+      ++iter;
+      ++n;
+    }
+    return n;
   }
 };
 }; // namespace ft

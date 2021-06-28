@@ -22,21 +22,16 @@ int main()
   std::vector<Hoge> hoge_vec(hoge, &hoge[10]);
   std::list<Hoge> hoge_lst(hoge, &hoge[10]);
 
-  putTestInfo(test_no,
-              "vector<Hoge>: insert(begin, hoge[1]) to vec(10) reserve(11)");
+  putTestInfo(
+      test_no,
+      "vector<Hoge>: insert(begin, hoge[1~10ary] to vec after reserve(10)");
   try {
-    std::vector<Hoge> std_vec(hoge_lst.rbegin(), hoge_lst.rend());
-    ft::vector<Hoge> ft_vec(hoge_lst.rbegin(), hoge_lst.rend());
-    std_vec.reserve(11);
-    ft_vec.reserve(11);
-    ft::vectorIterator<Hoge> ft_itr = ft_vec.insert(ft_vec.begin(), hoge[1]);
-    std::vector<Hoge>::iterator std_itr = std_vec.insert(std_vec.begin(), hoge[1]);
-    std::cout << std::endl;
-    std::cout << *ft_itr << std::endl;
-    std::cout << *std_itr << std::endl;
-    if (*std_itr != *ft_itr) {
-      throw std::runtime_error("return value");
-    }
+    std::vector<Hoge> std_vec;
+    ft::vector<Hoge> ft_vec;
+    std_vec.reserve(10);
+    ft_vec.reserve(10);
+    std_vec.insert(std_vec.begin(), hoge + 1, hoge + 10);
+    ft_vec.insert(ft_vec.begin(), hoge + 1, hoge + 10);
     for (size_t idx = 0; idx < std_vec.size(); ++idx) {
       if (std_vec.at(idx) != ft_vec.at(idx)) {
         throw std::runtime_error("value");
