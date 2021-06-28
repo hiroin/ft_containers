@@ -22,20 +22,15 @@ int main()
   std::vector<Hoge> hoge_vec(hoge, &hoge[10]);
   std::list<Hoge> hoge_lst(hoge, &hoge[10]);
 
-  putTestInfo(
-      test_no,
-      "vector<Hoge>: insert(begin, 1, ary[5]) to vec(1) after reserve(42)");
+  putTestInfo(test_no, "vector<Hoge>: erase(begin, end) from vec(10)");
   try {
-    std::vector<Hoge> std_vec(1);
-    ft::vector<Hoge> ft_vec(1);
-    std_vec.reserve(4);
-    ft_vec.reserve(4);
-    std_vec.insert(std_vec.begin(), 1, hoge[5]);
-    ft_vec.insert(ft_vec.begin(), 1, hoge[5]);
+    std::vector<Hoge> std_vec(hoge, hoge + 10);
+    ft::vector<Hoge> ft_vec(hoge, hoge + 10);
+    if (std_vec.erase(std_vec.begin(), std_vec.end()) != std_vec.end() ||
+        ft_vec.erase(ft_vec.begin(), ft_vec.end()) != ft_vec.end()) {
+      throw std::runtime_error("return value");
+    }
     for (size_t idx = 0; idx < std_vec.size(); ++idx) {
-      std::cout << "--------------------" << std::endl;
-      std::cout << std_vec.at(idx) << std::endl;
-      std::cout << ft_vec.at(idx) << std::endl;
       if (std_vec.at(idx) != ft_vec.at(idx)) {
         throw std::runtime_error("value");
       }

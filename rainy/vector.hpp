@@ -591,6 +591,7 @@ public :
       *itr = *(itr + 1);
     }
     last_--;
+    destroy(last_);
     return position;
   }
 
@@ -602,7 +603,12 @@ public :
     {
       *first++ = *last++;
     }
-    last_ -= last - first;
+    // last_ -= last - first;
+    for (size_t i = 0; i < getSizeFromIterator(first, last); ++i)
+    {
+      last_--;
+      destroy(last_);
+    }
     return firstPosition;
   }
 
@@ -674,7 +680,6 @@ public :
     }
   }
 
- private:
   template <class InputIterator>
   size_t getSizeFromIterator(InputIterator first, InputIterator last)
   {
@@ -688,6 +693,13 @@ public :
     return n;
   }
 };
+
+template < typename T, class Allocator >
+void swap(vector<T, Allocator>& lhs, vector<T, Allocator>& rhs)
+{
+  lhs.swap(rhs);
+}
+
 }; // namespace ft
 
 #endif /* VECTOR_HPP */
