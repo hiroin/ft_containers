@@ -451,22 +451,30 @@ public :
     const size_type numOfMove = end() - position;
     if (size() + 1 > capacity())
     {
-        size_type c = size();
-        if (c == 0)
-            c = 1 ;
-        else
-            c *= 2 ;
-        reserve(c) ;
-        // construct(last_);
+      size_type c = size();
+      if (c == 0)
+          c = 1 ;
+      else
+          c *= 2 ;
+      reserve(c) ;
+      for (size_t i = 0; i < numOfMove; ++i)
+      {
+        // *(end() - i) = *(end() - i - 1);
+        construct((end() - i).ptr_, *(end() - i - 1));
+        destroy((end() - i - 1).ptr_);
+      }
+      // destroy(&first_[index]);
+      construct(&first_[index], x);
     }
-    for (size_t i = 0; i < numOfMove; ++i)
+    else
     {
-      // *(end() - i) = *(end() - i - 1);
-      construct((end() - i).ptr_, *(end() - i - 1));
-      destroy((end() - i - 1).ptr_);
+      construct(end().ptr_, *(end() - 1));
+      for (size_t i = 0; i < numOfMove; ++i)
+      {
+        *(end() - i) = *(end() - i - 1);
+      }
+      first_[index] = x;
     }
-    // destroy(&first_[index]);
-    construct(&first_[index], x);
     last_++;
     return iterator(&first_[index]);
   }

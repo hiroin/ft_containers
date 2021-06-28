@@ -29,8 +29,12 @@ int main()
     ft::vector<Hoge> ft_vec(hoge_lst.rbegin(), hoge_lst.rend());
     std_vec.reserve(11);
     ft_vec.reserve(11);
-    if (*std_vec.insert(std_vec.begin(), hoge[1]) !=
-        *ft_vec.insert(ft_vec.begin(), hoge[1])) {
+    ft::vectorIterator<Hoge> ft_itr = ft_vec.insert(ft_vec.begin(), hoge[1]);
+    std::vector<Hoge>::iterator std_itr = std_vec.insert(std_vec.begin(), hoge[1]);
+    std::cout << std::endl;
+    std::cout << *ft_itr << std::endl;
+    std::cout << *std_itr << std::endl;
+    if (*std_itr != *ft_itr) {
       throw std::runtime_error("return value");
     }
     for (size_t idx = 0; idx < std_vec.size(); ++idx) {
