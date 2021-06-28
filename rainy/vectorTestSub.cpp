@@ -24,15 +24,18 @@ int main()
 
   putTestInfo(
       test_no,
-      "vector<Hoge>: insert(begin, hoge[1~10ary] to vec after reserve(10)");
+      "vector<Hoge>: insert(begin, 1, ary[5]) to vec(1) after reserve(42)");
   try {
-    std::vector<Hoge> std_vec;
-    ft::vector<Hoge> ft_vec;
-    std_vec.reserve(10);
-    ft_vec.reserve(10);
-    std_vec.insert(std_vec.begin(), hoge + 1, hoge + 10);
-    ft_vec.insert(ft_vec.begin(), hoge + 1, hoge + 10);
+    std::vector<Hoge> std_vec(1);
+    ft::vector<Hoge> ft_vec(1);
+    std_vec.reserve(4);
+    ft_vec.reserve(4);
+    std_vec.insert(std_vec.begin(), 1, hoge[5]);
+    ft_vec.insert(ft_vec.begin(), 1, hoge[5]);
     for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      std::cout << "--------------------" << std::endl;
+      std::cout << std_vec.at(idx) << std::endl;
+      std::cout << ft_vec.at(idx) << std::endl;
       if (std_vec.at(idx) != ft_vec.at(idx)) {
         throw std::runtime_error("value");
       }

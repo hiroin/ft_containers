@@ -479,7 +479,6 @@ public :
     return iterator(&first_[index]);
   }
 
-  // 要construct
   void insert(iterator position, size_type n, const T& x)
   {
     if (position == iterator(NULL))
@@ -499,15 +498,37 @@ public :
       else
         c = size() + n;
       reserve(c) ;
+      for (size_t i = 0; i < numOfMove; ++i)
+      {
+        // *(end() + n - 1 - i) = *(end() - 1 - i);
+        construct(&*(end() + n - 1 - i), *(end() - i - 1));
+        destroy(&*(end() - i - 1));        
+      }
+      for (size_t i = 0; i < n; ++i)
+      {
+        construct(&first_[index++], x);
+        // first_[index++] = x;
+        last_++;
+      }
     }
-    for (size_t i = 0; i < numOfMove; ++i)
+    else
     {
-      *(end() + n - 1 - i) = *(end() - 1 - i);
-    }
-    for (size_t i = 0; i < n; ++i)
-    {
-      first_[index++] = x;
-      last_++;
+      for (size_t i = 0; i < numOfMove; ++i)
+      {
+        if ((end() + n - 1 - i) >= end())
+          construct(&*(end() + n - 1 - i), *(end() - 1 - i));
+        else
+          *(end() + n - 1 - i) = *(end() - 1 - i);
+      }
+      iterator oldEnd = end();
+      for (size_t i = 0; i < n; ++i)
+      {
+        if (begin() + index >= oldEnd)
+          construct(&first_[index++], x);
+        else
+          first_[index++] = x;
+        last_++;
+      }
     }
   }
 
