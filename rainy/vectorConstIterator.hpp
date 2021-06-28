@@ -97,6 +97,30 @@ class vectorConstIterator
 };
 
 template < typename T>
+bool operator==(const vectorConstIterator<T>& lhs, const vectorIterator<T>& rhs)
+{
+  return lhs.ptr_ == rhs.ptr_;
+}
+
+template < typename T>
+bool operator!=(const vectorConstIterator<T>& lhs, const vectorIterator<T>& rhs)
+{
+  return lhs.ptr_ != rhs.ptr_;
+}
+
+template < typename T>
+bool operator==(const vectorIterator<T>& lhs, const vectorConstIterator<T>& rhs)
+{
+  return lhs.ptr_ == rhs.ptr_;
+}
+
+template < typename T>
+bool operator!=(const vectorIterator<T>& lhs, const vectorConstIterator<T>& rhs)
+{
+  return lhs.ptr_ != rhs.ptr_;
+}
+
+template < typename T>
 bool operator==(const vectorConstIterator<T>& lhs, const vectorConstIterator<T>& rhs)
 {
   return lhs.ptr_ == rhs.ptr_;
