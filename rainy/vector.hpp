@@ -457,13 +457,17 @@ public :
         else
             c *= 2 ;
         reserve(c) ;
+        // construct(last_);
     }
     for (size_t i = 0; i < numOfMove; ++i)
     {
-      *(end() - i) = *(end() - i - 1);
+      // *(end() - i) = *(end() - i - 1);
+      construct((end() - i).ptr_, *(end() - i - 1));
+      destroy((end() - i - 1).ptr_);
     }
-    first_[index] = x;
-    last_++;  
+    // destroy(&first_[index]);
+    construct(&first_[index], x);
+    last_++;
     return iterator(&first_[index]);
   }
 
@@ -606,7 +610,7 @@ public :
   void construct(pointer ptr)
   {
     // traits::construct(alloc_, ptr);
-    alloc_.construct(ptr);
+    alloc_.construct(ptr, value_type());
   }
   void construct(pointer ptr, const_reference value)
   {

@@ -22,20 +22,19 @@ int main()
   std::vector<Hoge> hoge_vec(hoge, &hoge[10]);
   std::list<Hoge> hoge_lst(hoge, &hoge[10]);
 
-  putTestInfo(test_no, "vector<Hoge>: vec(1) = vec(1)");
+  putTestInfo(test_no,
+              "vector<Hoge>: insert(begin, hoge[1]) to vec(10) reserve(11)");
   try {
-    std::vector<Hoge> std_vec_src(1, hoge[2]);
-    ft::vector<Hoge> ft_vec_src(1, hoge[2]);
-    std::vector<Hoge> std_vec(1, hoge[2]);
-    ft::vector<Hoge> ft_vec(1, hoge[2]);
-    std_vec = std_vec_src;
-    ft_vec = ft_vec_src;
-    if ((ft_vec != ft_vec_src || !(ft_vec == ft_vec_src)) !=
-        (std_vec != std_vec_src || !(std_vec == std_vec_src))) {
-      throw std::runtime_error("assignation");
+    std::vector<Hoge> std_vec(hoge_lst.rbegin(), hoge_lst.rend());
+    ft::vector<Hoge> ft_vec(hoge_lst.rbegin(), hoge_lst.rend());
+    std_vec.reserve(11);
+    ft_vec.reserve(11);
+    if (*std_vec.insert(std_vec.begin(), hoge[1]) !=
+        *ft_vec.insert(ft_vec.begin(), hoge[1])) {
+      throw std::runtime_error("return value");
     }
     for (size_t idx = 0; idx < std_vec.size(); ++idx) {
-      if (std_vec[idx] != ft_vec[idx]) {
+      if (std_vec.at(idx) != ft_vec.at(idx)) {
         throw std::runtime_error("value");
       }
     }
