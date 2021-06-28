@@ -63,7 +63,7 @@ public :
     typename ft_enable_if<!ft_is_integral<InputIterator>::value, InputIterator>::type last, const Allocator & = Allocator())
     : first_(NULL), last_(NULL), reserved_last_(NULL)
   {
-    reserve(std::distance(first, last));
+    reserve(getSizeFromIterator(first, last));
     for (InputIterator i = first; i != last ; i++)
     {
       push_back(*i);
@@ -200,6 +200,22 @@ public :
   bool operator!=(const vector<T, Allocator>& r)
   {
     return !(*this == r);
+  }
+  bool operator<(const vector<T, Allocator>& r)
+  {
+    return lexicographical_compare(begin(), end(), r.begin(), r.end());
+  }
+  bool operator<=(const vector<T, Allocator>& r)
+  {
+    return !(*this > r);
+  }
+  bool operator>(const vector<T, Allocator>& r)
+  {
+    return lexicographical_compare(r.begin(), r.end(), begin(), end());
+  }
+  bool operator>=(const vector<T, Allocator>& r)
+  {
+    return !(*this < r);
   }
 
   // イテレーターアクセス
@@ -698,6 +714,21 @@ template < typename T, class Allocator >
 void swap(vector<T, Allocator>& lhs, vector<T, Allocator>& rhs)
 {
   lhs.swap(rhs);
+}
+
+template <class InputIterator1, class InputIterator2>
+bool lexicographical_compare(
+        InputIterator1 first1,
+        InputIterator1 last1,
+        InputIterator2 first2,
+        InputIterator2 last2)
+{
+  for ( ; first1 != last1 && first2 != last2 ; ++first1, ++first2)
+  {
+    if (*first1 < *first2) return true;
+    if (*first2 < *first1) return false;
+  }
+  return first1 == last1 && first2 != last2;
 }
 
 }; // namespace ft
