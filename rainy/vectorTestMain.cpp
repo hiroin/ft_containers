@@ -10791,46 +10791,5 @@ putTestInfo(test_no, "vector<Hoge>: push_back to vec() after reserve(20)");
   }
   std::cout << " => OK :)" << std::endl;
 
-  putTestInfo(test_no, "vector<int>: const");
-  try {
-    int num[10] = {0, 1, 2, 3, 42, 5, 6, 7, 8, 9};
-    const std::vector<int> std_vec(num, num + 10);
-    const ft::vector<int> ft_vec(num, num + 10);
-    std::vector<int>::const_iterator std_citr;
-    ft::vector<int>::const_iterator ft_citr;
-    std::vector<int>::const_reverse_iterator std_critr;
-    ft::vector<int>::const_reverse_iterator ft_critr;
-
-    for (int i = 0; i < 10; i++) {
-      if (std_vec[i] != ft_vec[i]) {
-        throw std::runtime_error("reference");
-      }
-    }
-
-    for (std_citr = std_vec.begin(), ft_citr = ft_vec.begin();
-         std_citr != std_vec.end(); ++std_citr, ++ft_citr) {
-      if (*std_citr != *ft_citr) {
-        throw std::runtime_error("iterator");
-      }
-    }
-    if (ft_citr != ft_vec.end()) {
-      throw std::runtime_error("iterator");
-    }
-
-    for (std_critr = std_vec.rbegin(), ft_critr = ft_vec.rbegin();
-         std_critr != std_vec.rend(); ++std_critr, ++ft_critr) {
-      if (*std_critr != *ft_critr) {
-        throw std::runtime_error("rev iterator");
-      }
-    }
-    if (ft_critr != ft_vec.rend()) {
-      throw std::runtime_error("rev iterator");
-    }
-
-  } catch (std::exception& e) {
-    throw std::runtime_error(e.what());
-  }
-  std::cout << " => OK :)" << std::endl;
-
   return 0;
 }

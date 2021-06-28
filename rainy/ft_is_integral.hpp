@@ -36,7 +36,7 @@ struct ft_integral_constant
   static const _Tp value = __v;
   typedef _Tp value_type;
   typedef ft_integral_constant<_Tp, __v> type;
-  const operator value_type() const { return value; }
+  operator value_type() const { return value; }
 };
 
 /// The type used as a compile-time boolean with true value.
