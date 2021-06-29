@@ -731,44 +731,90 @@ bool lexicographical_compare(
   return first1 == last1 && first2 != last2;
 }
 
+typedef unsigned long _Bit_type;
+# ifdef __MACH__
+enum { _S_word_bit = int(CHAR_BIT * sizeof(_Bit_type)) };
+# else
+enum { _S_word_bit = int(__CHAR_BIT__ * sizeof(_Bit_type)) };
+# endif
 
+struct _Bit_reference
+{
+  _Bit_type * _M_p;
+  _Bit_type _M_mask;
 
+  _Bit_reference(_Bit_type * __x, _Bit_type __y) : _M_p(__x), _M_mask(__y) {}
+  _Bit_reference() : _M_p(0), _M_mask(0) {}
 
+  operator bool() const
+  {
+    return !!(*_M_p & _M_mask);
+  }
+
+  _Bit_reference& operator=(bool __x)
+  {
+    if (__x)
+      *_M_p |= _M_mask;
+    else
+      *_M_p &= ~_M_mask;
+    return *this;
+  }
+
+  _Bit_reference& operator=(const _Bit_reference& __x)
+  {
+    return *this = bool(__x);
+  }
+
+  bool operator==(const _Bit_reference& __x) const
+  {
+    return bool(*this) == bool(__x);
+  }
+
+  bool operator<(const _Bit_reference& __x) const
+  {
+    return !bool(*this) && bool(__x);
+  }
+
+  void flip()
+  {
+    *_M_p ^= _M_mask;
+  }
+};
 
 
 template < typename Allocator >
 class vector<bool, Allocator>
-
-// template < class Allocator >
-// class vector<bool, Allocator>
 {
  public :
-  typedef bool value_type;
+  typedef bool             value_type;
+  typedef std::size_t      size_type;
+  typedef std::ptrdiff_t   difference_type;
+  // typedef _Bit_reference   reference;
+  // typedef bool             const_reference;
+  // typedef _Bit_reference*  pointer;
+  // typedef const bool*      const_pointer;
+  // typedef _Bit_iterator                                iterator;
+  // typedef _Bit_const_iterator                          const_iterator;
+  // typedef std::reverse_iterator<const_iterator>        const_reverse_iterator;
+  // typedef std::reverse_iterator<iterator>              reverse_iterator;
+  typedef Allocator        allocator_type;
+
   typedef bool* pointer;
   typedef const pointer const_pointer;
   typedef value_type& reference;
   typedef const value_type& const_reference;
-  typedef Allocator allocator_type;
-  typedef std::size_t size_type;
-  typedef std::ptrdiff_t difference_type;
-  // typedef pointer iterator;
   typedef vectorIterator<bool> iterator;
-  // typedef const_pointer const_iterator;
   typedef vectorConstIterator<bool> const_iterator;
-  // typedef std::reverse_iterator<pointer> reverse_iterator;
   typedef reverseIterator<iterator> reverse_iterator;
-  // typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
   typedef reverseIterator<const_iterator> const_reverse_iterator;
 
 private :
-  // 先頭の要素へのポインター
   pointer first_;
-  // 最後の要素の1つ前方のポインター
   pointer last_;
-  // 確保したストレージの終端
   pointer reserved_last_;
-  // アロケーターの値
   allocator_type alloc_;
+
+
 
 public :
   // コンストラクター
@@ -1119,11 +1165,17 @@ public :
     // 現在の要素数より大きい
     else if ( sz > size() )
     {
-      // insertの処理と一緒 ( https://cpprefjp.github.io/reference/vector/vector/resize.html )
-      if (sz < size() * 2)
-        reserve(size() * 2);
-      else
-        reserve(sz);
+      // bool以外
+      // if (sz < size() * 2)
+      //   reserve(size() * 2);
+      // else
+      //   reserve(sz);
+      // boolの場合
+      size_t allocsize = sz / 64 * 64;
+      if (sz % 64 != 0)
+        allocsize += 64;
+      reserve(allocsize);
+
       for (size_t i = 0; sz - size(); ++i, ++last_)
       {
         construct(last_, value);
