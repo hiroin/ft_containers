@@ -731,6 +731,79 @@ bool lexicographical_compare(
   return first1 == last1 && first2 != last2;
 }
 
+typedef unsigned long Bit_type_;
+# ifdef __MACH__
+enum { S_word_bit = int(CHAR_BIT * sizeof(Bit_type)) };
+# else
+enum { S_word_bit_ = int(__CHAR_BIT__ * sizeof(Bit_type_)) };
+# endif
+
+static size_t numPtrIndex_(size_t n)
+{
+  return (n / int(S_word_bit_));
+}
+
+struct BitReference_
+{
+  Bit_type_* ptr_;
+  Bit_type_  index_;
+
+  BitReference_(Bit_type_ * ptr, Bit_type_ index) : ptr_(ptr), index_(index) {}
+  BitReference_() : ptr_(NULL), index_(0) {}
+
+  operator bool() const
+  {
+    return ptr_[numPtrIndex_(index_)] & (1ULL << index_ % S_word_bit_);
+  }
+
+  BitReference_& operator=(bool x)
+  {
+    if (x)
+      ptr_[numPtrIndex_(index_)] |= (1ULL << index_ % S_word_bit_);
+    else
+      ptr_[numPtrIndex_(index_)] &= ~(1ULL << index_ % S_word_bit_);
+    return *this;
+  }
+
+  BitReference_& operator=(const BitReference_& x)
+  {
+    return *this = bool(x);
+  }
+
+  bool operator==(const BitReference_& x) const
+  {
+    return bool(*this) == bool(x);
+  }
+
+  bool operator<(const BitReference_& x) const
+  {
+    return !bool(*this) && bool(x);
+  }
+
+  void flip()
+  {
+    ptr_[numPtrIndex_(index_)] ^= (1ULL << index_ % S_word_bit_);
+  }
+
+  void moveIndex_(std::ptrdiff_t x)
+  {
+    index_ += x;
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 typedef unsigned long _Bit_type;
 # ifdef __MACH__
 enum { _S_word_bit = int(CHAR_BIT * sizeof(_Bit_type)) };
@@ -1051,6 +1124,92 @@ void fill(_Bit_iterator __first, _Bit_iterator __last, const bool& __x)
   else
     __fill_bvector(__first, __last, __x);
 }
+
+template<typename _Alloc>
+struct _Bvector_base
+{
+  typedef typename __gnu_cxx::__alloc_traits<_Alloc>::template
+    rebind<_Bit_type>::other _Bit_alloc_type;
+  typedef typename __gnu_cxx::__alloc_traits<_Bit_alloc_type>
+_Bit_alloc_traits;
+  typedef typename _Bit_alloc_traits::pointer _Bit_pointer;
+
+  struct _Bvector_impl
+  : public _Bit_alloc_type
+  {
+    _Bit_iterator 	_M_start;
+    _Bit_iterator 	_M_finish;
+    _Bit_pointer 	_M_end_of_storage;
+
+    _Bvector_impl()
+    : _Bit_alloc_type(), _M_start(), _M_finish(), _M_end_of_storage()
+    { }
+
+    _Bvector_impl(const _Bit_alloc_type& __a)
+    : _Bit_alloc_type(__a), _M_start(), _M_finish(), _M_end_of_storage()
+    { }
+
+    _Bit_type*
+    _M_end_addr()
+    {
+      if (_M_end_of_storage)
+        return std::__addressof(_M_end_of_storage[-1]) + 1;
+      return 0;
+    }
+  };
+
+public:
+  typedef _Alloc allocator_type;
+
+  _Bit_alloc_type&
+  _M_get_Bit_allocator() _GLIBCXX_NOEXCEPT
+  { return *static_cast<_Bit_alloc_type*>(&this->_M_impl); }
+
+  const _Bit_alloc_type&
+  _M_get_Bit_allocator() const _GLIBCXX_NOEXCEPT
+  { return *static_cast<const _Bit_alloc_type*>(&this->_M_impl); }
+
+  allocator_type
+  get_allocator() const _GLIBCXX_NOEXCEPT
+  { return allocator_type(_M_get_Bit_allocator()); }
+
+  _Bvector_base()
+  : _M_impl() { }
+  
+  _Bvector_base(const allocator_type& __a)
+  : _M_impl(__a) { }
+
+  ~_Bvector_base()
+  { this->_M_deallocate(); }
+
+protected:
+  _Bvector_impl _M_impl;
+
+  _Bit_pointer
+  _M_allocate(size_t __n)
+  { return _Bit_alloc_traits::allocate(_M_impl, _S_nword(__n)); }
+
+  void
+  _M_deallocate()
+  {
+    if (_M_impl._M_start._M_p)
+    {
+      const size_t __n = _M_impl._M_end_addr() - _M_impl._M_start._M_p;
+      _Bit_alloc_traits::deallocate(_M_impl,
+            _M_impl._M_end_of_storage - __n,
+            __n);
+      _M_impl._M_start = _M_impl._M_finish = _Bit_iterator();
+      _M_impl._M_end_of_storage = _Bit_pointer();
+    }
+  }
+
+  static size_t
+  _S_nword(size_t __n)
+  { return (__n + int(_S_word_bit) - 1) / int(_S_word_bit); }
+};
+
+
+
 
 
 
