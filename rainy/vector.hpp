@@ -813,7 +813,7 @@ class bitIterator
   bitIterator(const bitIterator& x) : ref_(x.ref_) {};
   ~bitIterator(){};
 
-  iterator& operator=(const bitIterator& x)
+  iterator& operator=(const iterator& x)
   {
     if (this == &x)
       return *this;
@@ -884,38 +884,38 @@ class bitIterator
     return bitIterator(tmp);
   }
 
-  friend bool operator==(const bitIterator& lhs, const bitIterator& rhs)
+  friend bool operator==(const iterator& lhs, const iterator& rhs)
   {
     return lhs.ref_.ptr_ == rhs.ref_.ptr_ && lhs.ref_.index_ == rhs.ref_.index_;
   }
 
-  friend bool operator!=(const bitIterator& lhs, const bitIterator& rhs)
+  friend bool operator!=(const iterator& lhs, const iterator& rhs)
   {
     return !(lhs == rhs);
   }
 
-  friend bool operator<(const bitIterator& lhs, const bitIterator& rhs)
+  friend bool operator<(const iterator& lhs, const iterator& rhs)
   {
     return lhs.ref_.ptr_ < rhs.ref_.ptr_
       || (lhs.ref_.ptr_ == rhs.ref_.ptr_ && lhs.ref_.index_ == rhs.ref_.index_);
   }
 
-  friend bool operator>(const bitIterator& lhs, const bitIterator& rhs)
+  friend bool operator>(const iterator& lhs, const iterator& rhs)
   {
     return rhs < lhs;
   }
 
-  friend bool operator<=(const bitIterator& lhs, const bitIterator& rhs)
+  friend bool operator<=(const iterator& lhs, const iterator& rhs)
   {
     return lhs < rhs || lhs == rhs;
   }
 
-  friend bool operator>=(const bitIterator& lhs, const bitIterator& rhs)
+  friend bool operator>=(const iterator& lhs, const iterator& rhs)
   {
     return lhs > rhs || lhs == rhs;
   }
 
-  friend iterator operator+(std::ptrdiff_t n, const bitIterator& x)
+  friend iterator operator+(std::ptrdiff_t n, const iterator& x)
   {
     return x + n;
   }
@@ -923,10 +923,141 @@ class bitIterator
   // 作っていないもの
   //  イテレーター同士の引き算
   //  swap
-
 };
 
+class constBitIterator
+{
+ public:
+  // typedef bool value_type;
+  typedef std::ptrdiff_t       difference_type;
+  typedef BitReference_*       pointer;
+  typedef const BitReference_  reference;
+  typedef constBitIterator     iterator;
+  // typedef random_access_iterator_tag iterator_category;
 
+ private:
+  BitReference_ ref_;
+
+ public:
+  constBitIterator(){};
+  constBitIterator(Bit_type_* ptr, size_t index) : ref_(ptr, index){};
+  constBitIterator(BitReference_& ref) : ref_(ref.ptr_, ref.index_){};
+  constBitIterator(const BitReference_& ref) : ref_(){};
+  constBitIterator(const bitIterator& x) : ref_(*x) {};
+  constBitIterator(const constBitIterator& x) : ref_(x.ref_) {};
+  ~constBitIterator(){};
+
+  iterator& operator=(const iterator& x)
+  {
+    if (this == &x)
+      return *this;
+    ref_.index_ = x.ref_.index_;
+    ref_.ptr_ = x.ref_.ptr_;
+    return *this;
+  }
+
+  reference operator *() const
+  {
+    return ref_;
+  }
+
+  iterator operator++()
+  {
+    ++(ref_.index_);
+    return *this;
+  }
+
+  iterator operator++(int)
+  {
+    iterator tmp = *this;
+    ++ref_.index_;
+    return tmp;
+  }
+
+  iterator& operator--()
+  {
+    --(ref_.index_);
+    return *this;
+  }
+
+  iterator operator--(int)
+  {
+    iterator tmp = *this;
+    --ref_.index_;
+    return tmp;
+  }
+
+  reference operator[](difference_type n) const
+  {
+    return BitReference_(ref_.ptr_, ref_.index_ + n);
+  }
+
+  iterator& operator+=(difference_type n)
+  {
+    ref_.index_ += n;
+    return *this;
+  }
+
+  iterator operator+(difference_type n) const
+  {
+    iterator tmp = iterator(*this);
+    tmp.ref_.index_ += n;
+    return iterator(tmp);
+  }
+
+  iterator& operator-=(difference_type n)
+  {
+    ref_.index_ -= n;
+    return *this;
+  }
+
+  iterator operator-(difference_type n)
+  {
+    iterator tmp = iterator(*this);
+    tmp.ref_.index_ -= n;
+    return iterator(tmp);
+  }
+
+  friend bool operator==(const iterator& lhs, const iterator& rhs)
+  {
+    return lhs.ref_.ptr_ == rhs.ref_.ptr_ && lhs.ref_.index_ == rhs.ref_.index_;
+  }
+
+  friend bool operator!=(const iterator& lhs, const iterator& rhs)
+  {
+    return !(lhs == rhs);
+  }
+
+  friend bool operator<(const iterator& lhs, const iterator& rhs)
+  {
+    return lhs.ref_.ptr_ < rhs.ref_.ptr_
+      || (lhs.ref_.ptr_ == rhs.ref_.ptr_ && lhs.ref_.index_ == rhs.ref_.index_);
+  }
+
+  friend bool operator>(const iterator& lhs, const iterator& rhs)
+  {
+    return rhs < lhs;
+  }
+
+  friend bool operator<=(const iterator& lhs, const iterator& rhs)
+  {
+    return lhs < rhs || lhs == rhs;
+  }
+
+  friend bool operator>=(const iterator& lhs, const iterator& rhs)
+  {
+    return lhs > rhs || lhs == rhs;
+  }
+
+  friend iterator operator+(std::ptrdiff_t n, const iterator& x)
+  {
+    return x + n;
+  }
+
+  // 作っていないもの
+  //  イテレーター同士の引き算
+  //  swap
+};
 
 
 
