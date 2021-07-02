@@ -203,8 +203,12 @@ class bitIterator
     return x + n;
   }
 
+  friend difference_type operator-(const iterator& lhs, const iterator& rhs)
+  {
+    return lhs.ref_.index_ - rhs.ref_.index_;
+  }
+
   // 作っていないもの
-  //  イテレーター同士の引き算
   //  swap
 };
 
@@ -467,6 +471,39 @@ public :
     {
       size_--;
     }
+  }
+
+  iterator insert(iterator position, const bool& u)
+  {
+    if (position == iterator(NULL, 0))
+    {
+      assign(1, u);
+      return begin();
+    }
+    else if
+    (position == end())
+    {
+      push_back(u);
+      return end() - 1;
+    }
+    const size_type index = position - begin();
+    const size_type numOfMove = end() - position;
+    if (size() + 1 > capacity())
+    {
+      size_type c = size();
+      if (c == 0)
+          c = 1 ;
+      else
+          c *= 2 ;
+      reserve(c) ;
+    }
+    for (size_t i = 0; i < numOfMove; ++i)
+    {
+      operator [](size() - i) = operator [](size() - i - 1); 
+    }
+    operator [](index) = u;
+    size_++;
+    return iterator(storage_, index);
   }
 
   void resize(size_type sz, value_type value = value_type())
