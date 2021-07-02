@@ -413,15 +413,15 @@ public :
     // 予約メモリーが足りなければ拡張
     if (size() + 1 > capacity())
     {
-        // 現在のストレージサイズ
-        size_type c = size();
-        // 0の場合は1に
-        if (c == 0)
-            c = 1 ;
-        else
-            // それ以外の場合は2倍する
-            c *= 2 ;
-        reserve(c) ;
+      // 現在のストレージサイズ
+      size_type c = size();
+      // 0の場合は1に
+      if (c == 0)
+        c = 1 ;
+      else
+        // それ以外の場合は2倍する
+        c *= 2 ;
+      reserve(c) ;
     }
     construct(last_, value);
     ++last_;

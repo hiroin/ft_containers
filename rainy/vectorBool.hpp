@@ -405,16 +405,68 @@ public :
     return reference(storage_, i);
   }
 
-  // const_reference operator [](size_type i) const
-  // {
-  //   return first_[i];
-  // }
+  const_reference operator [](size_type i) const
+  {
+    return reference(storage_, i);
+  }
 
   reference at( size_type i )
   {
     if ( i >= size() )
       throw std::out_of_range( "vector" ) ;
     return reference(storage_, i);
+  }
+
+  const_reference at( size_type i ) const
+  {
+    if ( i >= size() )
+      throw std::out_of_range( "vector" ) ;
+    return reference(storage_, i);
+  }
+
+  reference front()
+  {
+    return *begin();
+  }
+  const_reference front() const
+  {
+    return *begin();
+  }
+  reference back()
+  {
+    iterator tmp = end();
+    --tmp;
+    return *tmp;
+
+  }
+  const_reference back() const
+  {
+    const_iterator tmp = end();
+    --tmp;
+    return *tmp;
+  }
+
+  void push_back(bool x) 
+  {
+    if (size() + 1 > capacity())
+    {
+      size_type c = size();
+      if (c == 0)
+        c = 1 ;
+      else
+        c *= 2 ;
+      reserve(c) ;
+    }
+    *end() = x;
+    size_++;
+  }
+
+  void pop_back()
+  {
+    if (empty() == false)
+    {
+      size_--;
+    }
   }
 
   void resize(size_type sz, value_type value = value_type())
@@ -428,21 +480,19 @@ public :
       // last_ = first_ + sz ;
     }
     // 現在の要素数より大きい
-    else if ( sz > size() )
+    else if (sz > size())
     {
-      if (sz < size() * 2)
-        reserve(size() * 2);
-      else
-        reserve(sz);
-      for (size_type idx = 0; idx < storageSize_; ++idx)
+      size_type oldSize = size();
+      if(sz > capacity())
       {
-        size_t bit;
-        if (value)
-          bit = -1;
+        if (sz < size() * 2)
+          reserve(size() * 2);
         else
-          bit = 0;
-        for (size_t i = 0; i < getNeedStrageSize(sz); i++)
-          storage_[i] = bit;
+          reserve(sz);
+      }
+      for (size_type idx = oldSize; idx < size(); ++idx)
+      {
+        storage_[idx] = value;
       }
     }
     size_ = sz;
@@ -466,22 +516,10 @@ public :
     storage_ = ptr;
 
     // 古いストレージから新しいストレージに要素をコピー構築
-    // 後で実装
-    // for (iterator old_iter = old_first_, old_end_ = old_last_;
-    //   old_iter != old_end_; ++old_iter, ++last_)
-    // {
-    //   construct(last_, *old_iter) ;
-    // }
-
-    // 新しいストレージにコピーし終えたので
-    // 古いストレージの値は破棄
-    // 後で実装
-    // for (reverse_iterator riter = reverse_iterator(old_last_), rend = reverse_iterator(old_first_);
-    //       riter != rend ; ++riter)
-    // {
-    //   destroy(&*riter);
-    // }
-
+    for (size_t i = 0; i < oldStorageSize; i++)
+    {
+      storage_[i] = oldStorage[i];
+    }
     // ストレージを破棄する
     storageAlloc_.deallocate(oldStorage, oldStorageSize);
   }
