@@ -594,6 +594,32 @@ public :
     return firstPosition;
   }
 
+  void clear()
+  {
+    size_ = 0;
+  }
+
+  void swap(vector& x)
+  {
+    size_type* storage = x.storage_;
+    size_type  size = x.size_;
+    size_type  storageSize = x.storageSize_;
+
+    x.storage_ = this->storage_;
+    x.size_ = this->size_;
+    x.storageSize_ = this->storageSize_;
+    this->storage_ = storage;
+    this->size_ = size;
+    this->storageSize_ = storageSize;
+  }
+
+  void swap(reference x, reference y)
+  {
+    bool tmp = x;
+    x = y;
+    y = tmp;
+  }
+
   void resize(size_type sz, value_type value = value_type())
   {
     // 現在の要素数より少ない

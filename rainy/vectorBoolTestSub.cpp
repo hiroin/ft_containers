@@ -57,47 +57,44 @@ void test_vector_bool(int& test_no)
                        128, 129, 1023, 1024, 1025, 2000, 4000};
   bool flg = 0;
 
-  int i = 5;
-  int j = 1;
   std::stringstream sout;
-  sout << "Vector<bool>: reserve(" << size_ary[i] << ") by pointer to vec("
-        << size_ary[j] << ")";
-  putTestInfo(test_no, sout.str());
+  putTestInfo(test_no, "Vector<bool>: swap reference");
   try {
-    bool val[size_ary[j]];
-    for (size_t idx = 0; idx < size_ary[j]; ++idx) {
-      val[idx] = rand() % 2;
+    const size_t size = 4242;
+    bool val[size];
+    for (size_t i = 0; i < size; i++) {
+      val[i] = rand() % 2;
     }
 
-    std::vector<bool> std_vec(val, val + size_ary[j]);
-    ft::vector<bool> ft_vec(val, val + size_ary[j]);
-    std_vec.reserve(size_ary[i]);
-    ft_vec.reserve(size_ary[i]);
-    for (size_t idx = 0; idx < size_ary[j]; ++idx) {
-      if (std_vec[idx] != ft_vec[idx]) {
-        std::cout << std::endl << "idx = " << idx << std::endl;
-        std::cout << "std: " << std_vec[idx] << std::endl;
-        std::cout << " ft: " << ft_vec[idx] << std::endl;
-        throw std::runtime_error("value");
+    std::vector<bool> std_vec(val, &val[size]);
+    ft::vector<bool> ft_vec(val, &val[size]);
+
+    for (size_t i = 0; i < size; i++) {
+      std::cout << i << ":" << ft_vec[i] << std::endl;
+      std::cout << size - i - 1 << ":" << ft_vec[size - i - 1] << std::endl;
+      std_vec.swap(std_vec[i], std_vec[size - i - 1]);
+      ft_vec.swap(ft_vec[i], ft_vec[size - i - 1]);
+    }
+
+    std::vector<bool>::iterator std_itr;
+    ft::vector<bool>::iterator ft_itr;
+    for (std_itr = std_vec.begin(), ft_itr = ft_vec.begin();
+         std_itr != std_vec.end(); ++std_itr, ++ft_itr) {
+      if (*std_itr != *ft_itr) {
+        throw std::runtime_error("nomal itr");
       }
     }
-    if (std_vec.empty() != ft_vec.empty()) {
-      throw std::runtime_error("empty");
+    if (ft_itr != ft_vec.end()) {
+      throw std::runtime_error("nomal itr");
     }
-    if (std_vec.size() != ft_vec.size()) {
-      throw std::runtime_error("size");
+    for (std_itr = --std_vec.end(), ft_itr = --ft_vec.end();
+         std_itr != std_vec.begin(); --std_itr, --ft_itr) {
+      if (*std_itr != *ft_itr) {
+        throw std::runtime_error("nomal itr");
+      }
     }
-    if (std_vec.capacity() != ft_vec.capacity()) {
-      std::cout << std::endl;
-      std::cout << "std: " << std_vec.capacity() << std::endl;
-      std::cout << " ft: " << ft_vec.capacity() << std::endl;
-      throw std::runtime_error("capacity");
-    }
-    if (std_vec.max_size() != ft_vec.max_size()) {
-      // std::cout << std::endl;
-      // std::cout << "max_size(std) = " << std_vec.max_size() << std::endl;
-      // std::cout << "max_size(ft)  = " << ft_vec.max_size() << std::endl;
-      // throw std::runtime_error("max_size");
+    if (ft_itr != ft_vec.begin()) {
+      throw std::runtime_error("nomal itr");
     }
   } catch (std::runtime_error& e) {
     throw e;
