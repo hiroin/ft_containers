@@ -354,7 +354,7 @@ class vector<bool, Allocator>
   typedef std::size_t          size_type;
   typedef std::ptrdiff_t       difference_type;
   typedef BitReference_        reference;
-  typedef const BitReference_  const_reference;
+  typedef bool                 const_reference;
   typedef BitReference_*       pointer;       // 使わないのであればいい
   typedef const BitReference_* const_pointer; // 使わないのであればいい
   typedef bitIterator          iterator;
