@@ -5,6 +5,7 @@
 #include <memory>
 #include <iostream>
 #include <algorithm>
+#include <cstring>
 #include "ft_enable_if.hpp"
 #include "ft_is_integral.hpp"
 #include "vectorIterator.hpp"
@@ -434,12 +435,13 @@ public :
     if (sz <= capacity())
       return ;
 
-    // 動的メモリー確保をする
-    size_type* ptr = allocate(sz) ;
-
     // 古いストレージの情報を保存
-    size_type* old_storage_ = storage_;
-    size_type old_capacity = capacity();
+    size_type* oldStorage = storage_;
+    size_type  oldStorageSize = storageSize_;
+
+    // 動的メモリー確保をする
+    // storageSize_ = sz / S_word_bit_ + 1;
+    size_type* ptr = allocate(sz) ;
 
     // 新しいストレージに差し替え
     storage_ = ptr;
@@ -462,7 +464,7 @@ public :
     // }
 
     // ストレージを破棄する
-    storageAlloc_.deallocate(old_storage_, old_capacity);
+    storageAlloc_.deallocate(oldStorage, oldStorageSize);
   }
 
   size_type size() const
@@ -488,8 +490,15 @@ public :
  private :
   size_type* allocate(size_type n)
   {
-    storageSize_ = n / S_word_bit_ + 1;
-    return storageAlloc_.allocate(storageSize_);
+    if (n == 0)
+    {
+      storageSize_ = 0;
+      return NULL;
+    }
+    storageSize_ = (n - 1) / S_word_bit_ + 1;
+    size_type* ptr = storageAlloc_.allocate(storageSize_);
+    std::memset(ptr, 0, sizeof(size_type) * storageSize_);
+    return ptr;
   }
 };
 
