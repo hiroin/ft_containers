@@ -413,18 +413,16 @@ public :
         reserve(size() * 2);
       else
         reserve(sz);
-      // あとで実装しなおし、とりあえず0で埋める
-      // 本当はあらかじめ値が入っている場所は何もしない
       for (size_type idx = 0; idx < storageSize_; ++idx)
       {
-        storage_[idx] = static_cast<size_type>(0);
-      }    
-
-      // コンストラクトがいらない?
-      // for (size_t i = 0; sz - size(); ++i, ++last_)
-      // {
-      //   construct(last_, value);
-      // }
+        size_t bit;
+        if (value)
+          bit = -1;
+        else
+          bit = 0;
+        for (size_t i = 0; i < getNeedStrageSize(sz); i++)
+          storage_[i] = bit;
+      }
     }
     size_ = sz;
   }
@@ -467,6 +465,41 @@ public :
     storageAlloc_.deallocate(oldStorage, oldStorageSize);
   }
 
+  void assign(size_type n, const bool& u)
+  {
+    if (n == 0)
+    {
+      size_ = n;
+      return;
+    }
+    // 予約数が不十分ならば
+    if (capacity() < n)
+    {
+      if (n < size() * 2)
+        reserve(size() * 2);
+      else
+        reserve(n);      
+    }
+    size_t bit;
+    if (u)
+      bit = -1;
+    else
+      bit = 0;
+    for (size_t i = 0; i < getNeedStrageSize(n); i++)
+    {
+      storage_[i] = bit;
+    }
+    size_ = n;
+  }
+
+  void flip()
+  {
+    for (size_t i = 0; i < storageSize_; i++)
+    {
+      storage_[i] = ~storage_[i];
+    }
+  }
+
   size_type size() const
   {
     return size_;
@@ -495,10 +528,15 @@ public :
       storageSize_ = 0;
       return NULL;
     }
-    storageSize_ = (n - 1) / S_word_bit_ + 1;
+    storageSize_ = getNeedStrageSize(n);
     size_type* ptr = storageAlloc_.allocate(storageSize_);
     std::memset(ptr, 0, sizeof(size_type) * storageSize_);
     return ptr;
+  }
+
+  size_type getNeedStrageSize(size_type n)
+  {
+    return (n - 1) / S_word_bit_ + 1;
   }
 };
 
