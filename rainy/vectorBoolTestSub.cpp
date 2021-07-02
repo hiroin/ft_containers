@@ -68,4 +68,12 @@ int main()
 {
   int no = 1;
   test_vector_bool(no);
+
+  size_t size = 10;
+  bool val[size];
+  for (size_t idx = 0; idx < size; ++idx) {
+    val[idx] = rand() % 2;
+  }
+  std::vector<bool> std_vec(val, val + size);
+
 }

@@ -380,6 +380,20 @@ public :
     resize(size, value);
   };
 
+  template <typename InputIterator>
+  vector(InputIterator first,
+    typename ft_enable_if<!ft_is_integral<InputIterator>::value, InputIterator>::type last,
+    const allocator_type & alloc_ = allocator_type())
+    : storage_(NULL), size_(0), storageSize_(0), alloc_(alloc_)
+  {
+    size_ = getSizeFromIterator(first, last);
+    reserve(size_);
+    size_t i = 0;
+    for (InputIterator itr = first; itr != last ; ++itr, ++i)
+    {
+      operator [](i) = *itr; 
+    }
+  }
   // デストラクター
   ~vector()
   {
@@ -537,6 +551,19 @@ public :
   size_type getNeedStrageSize(size_type n)
   {
     return (n - 1) / S_word_bit_ + 1;
+  }
+
+  template <class InputIterator>
+  size_t getSizeFromIterator(InputIterator first, InputIterator last)
+  {
+    InputIterator iter = first;
+    size_type n = 0;
+    while (iter != last)
+    {
+      ++iter;
+      ++n;
+    }
+    return n;
   }
 };
 
