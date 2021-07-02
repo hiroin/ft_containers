@@ -613,7 +613,7 @@ public :
     this->storageSize_ = storageSize;
   }
 
-  void swap(reference x, reference y)
+  static void swap(reference x, reference y)
   {
     bool tmp = x;
     x = y;
