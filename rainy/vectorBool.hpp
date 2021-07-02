@@ -560,6 +560,16 @@ public :
     return storageSize_ * S_word_bit_ ;
   }
 
+  // イテレーターアクセス
+  iterator begin()
+  {
+    return bitIterator(storage_, 0);
+  }
+  iterator end()
+  {
+    return bitIterator(storage_, size_);
+  }
+
  private :
   size_type* allocate(size_type n)
   {
