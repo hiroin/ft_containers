@@ -537,6 +537,41 @@ public :
     }
   }
 
+  template <class InputIterator>
+  void insert(iterator position,
+    typename ft_enable_if<!ft_is_integral<InputIterator>::value, InputIterator>::type first,
+    InputIterator last)
+  {
+    if (position == iterator(NULL, 0))
+    {
+      assign(first, last);
+      return;
+    }
+    size_type index = position - begin();
+    size_type numOfMove = end() - position;
+    size_type n = getSizeFromIterator(first, last);
+    if (size() + n > capacity())
+    {
+      size_type c = size();
+      if (c == 0)
+        c = n ;
+      else if(size() + n < c * 2)
+        c *= 2;
+      else
+        c = size() + n;
+      reserve(c) ;
+    }
+    for (size_t i = 0; i < numOfMove; ++i)
+    {
+      operator [](size() + n - i - 1) = operator [](size() - i - 1); 
+    }
+    for (size_t i = 0; i < n; ++i)
+    {
+      operator [](index + i) = *first++;
+      size_++;
+    }
+  }
+
   void resize(size_type sz, value_type value = value_type())
   {
     // 現在の要素数より少ない
