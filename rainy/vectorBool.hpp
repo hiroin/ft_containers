@@ -506,6 +506,37 @@ public :
     return iterator(storage_, index);
   }
 
+  void insert(iterator position, size_type n, const bool& u)
+  {
+    if (position == iterator(NULL, 0))
+    {
+      assign(n, u);
+      return;
+    }
+    size_type index = position - begin();
+    size_type numOfMove = end() - position;
+    if (size() + n > capacity())
+    {
+      size_type c = size();
+      if (c == 0)
+        c = n ;
+      else if(size() + n < c * 2)
+        c *= 2;
+      else
+        c = size() + n;
+      reserve(c) ;
+    }
+    for (size_t i = 0; i < numOfMove; ++i)
+    {
+      operator [](size() + n - i - 1) = operator [](size() - i - 1); 
+    }
+    for (size_t i = 0; i < n; ++i)
+    {
+      operator [](index + i) = u;
+      size_++;
+    }
+  }
+
   void resize(size_type sz, value_type value = value_type())
   {
     // 現在の要素数より少ない
