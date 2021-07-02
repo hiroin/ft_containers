@@ -572,6 +572,28 @@ public :
     }
   }
 
+  iterator erase(iterator position)
+  {
+    for (iterator itr = position; itr != end() - 1; ++itr)
+    {
+      *itr = *(itr + 1);
+    }
+    size_--;
+    return position;
+  }
+
+  iterator erase(iterator first, iterator last)
+  {
+    iterator firstPosition = first;
+    size_type n = end() - last;
+    for (size_t i = 0; i < n; ++i)
+    {
+      *first++ = *last++;
+    }
+    size_ -= getSizeFromIterator(first, last);
+    return firstPosition;
+  }
+
   void resize(size_type sz, value_type value = value_type())
   {
     // 現在の要素数より少ない
