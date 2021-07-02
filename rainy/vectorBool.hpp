@@ -492,7 +492,7 @@ public :
       if (n < size() * 2)
         reserve(size() * 2);
       else
-        reserve(n);      
+        reserve(n);
     }
     size_t bit;
     if (u)
@@ -502,6 +502,32 @@ public :
     for (size_t i = 0; i < getNeedStrageSize(n); i++)
     {
       storage_[i] = bit;
+    }
+    size_ = n;
+  }
+
+  template <typename InputIterator>
+  void assign(InputIterator first,
+    typename ft_enable_if<!ft_is_integral<InputIterator>::value, InputIterator>::type last,
+    const allocator_type & alloc_ = allocator_type())
+  {
+    size_t n = getSizeFromIterator(first, last);
+    if (n == 0)
+    {
+      size_ = n;
+      return;
+    }
+    if (capacity() < n)
+    {
+      if (n < size() * 2)
+        reserve(size() * 2);
+      else
+        reserve(n);      
+    }
+    size_t i = 0;
+    for (InputIterator itr = first; itr != last ; ++itr, ++i)
+    {
+      operator [](i) = *itr; 
     }
     size_ = n;
   }
