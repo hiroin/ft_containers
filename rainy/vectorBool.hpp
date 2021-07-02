@@ -410,6 +410,13 @@ public :
   //   return first_[i];
   // }
 
+  reference at( size_type i )
+  {
+    if ( i >= size() )
+      throw std::out_of_range( "vector" ) ;
+    return reference(storage_, i);
+  }
+
   void resize(size_type sz, value_type value = value_type())
   {
     // 現在の要素数より少ない

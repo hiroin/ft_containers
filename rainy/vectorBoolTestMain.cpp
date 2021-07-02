@@ -439,44 +439,44 @@ void test_vector_bool(int& test_no) {
     std::cout << " => OK :)" << std::endl;
   }
 
-  // size = 420;
-  // std::stringstream sout;
-  // sout << "Vector<bool>: vec(" << size << ").at(0~" << size * 2 << ")";
-  // putTestInfo(test_no, sout.str());
-  // try {
-  //   bool val[size];
-  //   for (size_t idx = 0; idx < size; ++idx) {
-  //     val[idx] = rand() % 2;
-  //   }
+  size = 420;
+  std::stringstream sout;
+  sout << "Vector<bool>: vec(" << size << ").at(0~" << size * 2 << ")";
+  putTestInfo(test_no, sout.str());
+  try {
+    bool val[size];
+    for (size_t idx = 0; idx < size; ++idx) {
+      val[idx] = rand() % 2;
+    }
 
-  //   std::vector<bool> std_vec(val, val + size);
-  //   ft::vector<bool> ft_vec(val, val + size);
-  //   for (size_t idx = 0; idx < size; ++idx) {
-  //     if (std_vec.at(idx) != ft_vec.at(idx)) {
-  //       std::cout << std::endl;
-  //       std::cout << "std: " << std_vec.at(idx) << std::endl;
-  //       std::cout << " ft: " << ft_vec.at(idx) << std::endl;
-  //       throw std::runtime_error("value");
-  //     }
-  //   }
-  //   for (size_t idx = size; idx < size * 2; ++idx) {
-  //     flg = false;
-  //     try {
-  //       ft_vec.at(420) = 1;
-  //     } catch (std::out_of_range& e) {
-  //       if (strcmp(e.what(), "vector")) {
-  //         throw std::runtime_error(e.what());
-  //       }
-  //       flg = true;
-  //     }
-  //     if (!flg) {
-  //       throw std::runtime_error("error");
-  //     }
-  //   }
-  // } catch (std::runtime_error& e) {
-  //   throw e;
-  // }
-  // std::cout << " => OK :)" << std::endl;
+    std::vector<bool> std_vec(val, val + size);
+    ft::vector<bool> ft_vec(val, val + size);
+    for (size_t idx = 0; idx < size; ++idx) {
+      if (std_vec.at(idx) != ft_vec.at(idx)) {
+        std::cout << std::endl;
+        std::cout << "std: " << std_vec.at(idx) << std::endl;
+        std::cout << " ft: " << ft_vec.at(idx) << std::endl;
+        throw std::runtime_error("value");
+      }
+    }
+    for (size_t idx = size; idx < size * 2; ++idx) {
+      flg = false;
+      try {
+        ft_vec.at(420) = 1;
+      } catch (std::out_of_range& e) {
+        if (strcmp(e.what(), "vector")) {
+          throw std::runtime_error(e.what());
+        }
+        flg = true;
+      }
+      if (!flg) {
+        throw std::runtime_error("error");
+      }
+    }
+  } catch (std::runtime_error& e) {
+    throw e;
+  }
+  std::cout << " => OK :)" << std::endl;
 }
 
 int main()
