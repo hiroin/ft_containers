@@ -155,13 +155,6 @@ public :
             construct(&*dest_iter, *src_iter);
           }
         }
-        // clear();
-        // iterator dest_iter = begin();
-        // for (const_iterator src_iter = r.begin(), src_end = r.end();
-        //   src_iter != src_end; ++src_iter, ++dest_iter, ++last_)
-        // {
-        //   construct(&*dest_iter, *src_iter);
-        // }
       }
       // 4. 予約数が不十分ならば
       else
@@ -431,8 +424,60 @@ public :
   void assign(InputIterator first,
     typename ft_enable_if<!ft_is_integral<InputIterator>::value, InputIterator>::type last)
   {
-    vector<T> tmp(first, last);
-    *this = tmp;
+    size_t n = getSizeFromIterator(first, last);
+    if (size() == n)
+    {
+      for (iterator dest_iter = begin();
+        first != last; ++first, ++dest_iter)
+      {
+        *dest_iter = *first;
+      }
+    }
+    else
+    {
+      if (capacity() >= n)
+      {
+        iterator dest_iter;
+        iterator dest_end;
+        for (dest_iter = begin() + n, dest_end = end();
+          dest_iter != dest_end; ++dest_iter)
+        {
+          destroy(&*dest_iter);
+        }
+        if (size() >= n)
+        {
+          last_ = first_;
+          for (dest_iter = begin(); first != last;
+            ++first, ++dest_iter, last_++)
+          {
+            *dest_iter = *first;
+          }
+        }
+        else
+        {
+          last_ = first_;
+          for (dest_iter = begin(); dest_iter != dest_end;
+            ++first, ++dest_iter, last_++)
+          {
+            *dest_iter = *first;
+          }
+          for ( ; first != last; ++first, ++dest_iter, ++last_)
+          {
+            construct(&*dest_iter, *first);
+          }
+        }
+      }
+      else
+      {
+        clear();
+        reserve(n);
+        for (iterator dest_iter = begin(); first != last;
+          ++first, ++dest_iter, ++last_)
+        {
+          construct(&*dest_iter, *first);
+        }
+      }
+    }
   }
 
   void assign(size_type n, const T& u)
