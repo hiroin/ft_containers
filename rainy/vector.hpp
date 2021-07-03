@@ -24,13 +24,9 @@ class vector
   typedef Allocator allocator_type;
   typedef std::size_t size_type;
   typedef std::ptrdiff_t difference_type;
-  // typedef pointer iterator;
   typedef vectorIterator<T> iterator;
-  // typedef const_pointer const_iterator;
   typedef vectorConstIterator<T> const_iterator;
-  // typedef std::reverse_iterator<pointer> reverse_iterator;
   typedef reverseIterator<iterator> reverse_iterator;
-  // typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
   typedef reverseIterator<const_iterator> const_reverse_iterator;
 
 private :
@@ -48,11 +44,6 @@ public :
   vector(const allocator_type & alloc_ = allocator_type())
     : alloc_(alloc_), first_(NULL), last_(NULL), reserved_last_(NULL)
   {};
-  // vector( size_type size, const allocator_type & alloc_ = allocator_type() )
-  //   : alloc_(alloc_), first_(NULL), last_(NULL), reserved_last_(NULL)
-  // {
-  //   resize(size);
-  // }
   vector( size_type size, const_reference value = value_type(), const allocator_type & alloc_ = allocator_type() )
     : alloc_(alloc_), first_(NULL), last_(NULL), reserved_last_(NULL)
   {
@@ -83,11 +74,7 @@ public :
   vector(const vector & r)
     : alloc_(r.alloc_), first_(NULL), last_(NULL), reserved_last_(NULL)
   {
-    // コピー元の要素数を保持できるだけのストレージを確保
     reserve(r.size());
-    // コピー元の要素をコピー構築
-    // destはコピー先
-    // [src, last_)はコピー元
     pointer dest = first_;
     for (const_iterator src = r.begin(), last_ = r.end();
       src != last_ ; ++dest, ++src)
@@ -104,6 +91,7 @@ public :
     assign(r.begin(), r.end());
     return *this ;
   }
+
   bool equal(iterator first, iterator last, const_iterator rfirst)
   {
     const_iterator cfirst = first;
@@ -115,62 +103,74 @@ public :
     }
     return true;
   }
+
   bool operator==(const vector<T, Allocator>& r)
   {
     return (this->size() == r.size()
       && equal(this->begin(), this->end(), r.begin()));
   }
+
   bool operator!=(const vector<T, Allocator>& r)
   {
     return !(*this == r);
   }
+
   bool operator<(const vector<T, Allocator>& r)
   {
     return lexicographical_compare(begin(), end(), r.begin(), r.end());
   }
+
   bool operator<=(const vector<T, Allocator>& r)
   {
     return !(*this > r);
   }
+
   bool operator>(const vector<T, Allocator>& r)
   {
     return lexicographical_compare(r.begin(), r.end(), begin(), end());
   }
+
   bool operator>=(const vector<T, Allocator>& r)
   {
     return !(*this < r);
   }
 
-  // イテレーターアクセス
   iterator begin()
   {
     return iterator(first_);
   }
+
   iterator end()
   {
     return iterator(last_);
   }
+
   const_iterator begin() const
   {
     return const_iterator(first_);
   }
+
   const_iterator end() const
   {
     return const_iterator(last_);
   }
+
   reverse_iterator rbegin()
   {
     return reverse_iterator(end());
   }
+
   reverse_iterator rend()
   {
     return reverse_iterator(begin());
   }
+
   const_reverse_iterator rbegin() const
   {
     return const_reverse_iterator(end());
   }
-   const_reverse_iterator rend() const
+
+  const_reverse_iterator rend() const
   {
     return const_reverse_iterator(begin());
   }
@@ -179,63 +179,68 @@ public :
   {
     return end() - begin();
   }
+
   size_type max_size() const
   {
     return (alloc_.max_size());
   }
+
   bool empty() const
   {
-    // return size() == 0;
     return begin() == end();
   }
+
   size_type capacity() const
   {
     return reserved_last_ - first_;
   }  
 
-  // 要素アクセス
   reference operator [](size_type i)
   {
     return first_[i];
   }
+
   const_reference operator [](size_type i) const
   {
     return first_[i];
   }
+
   reference at( size_type i )
   {
     if ( i >= size() )
       throw std::out_of_range( "vector" ) ;
     return first_[i] ;
   }
+
   const_reference at( size_type i ) const
   {
     if ( i >= size() )
       throw std::out_of_range( "vector" ) ;
     return first_[i] ;
   }
+
   reference front()
   {
     return *begin();
   }
+
   const_reference front() const
   {
     return *begin();
   }
+
   reference back()
   {
     iterator tmp = end();
     --tmp;
     return *tmp;
-    // return last_ - 1;
-
   }
+
   const_reference back() const
   {
     const_iterator tmp = end();
     --tmp;
     return *tmp;
-    // return last_ - 1;
   }
 
   void reserve(size_type sz)
@@ -257,18 +262,10 @@ public :
     last_ = first_;
     reserved_last_ = first_ + sz;
 
-    // 例外安全のため
-    // 関数を抜けるときに古いストレージを破棄する
-    // C++20の機能
-    // std::scope_exit e( [&]{
-    //   traits::deallocate(alloc_, old_first_, old_capacity);
-    // } );
-
     // 古いストレージから新しいストレージに要素をコピー構築
     for (iterator old_iter = old_first_, old_end_ = old_last_;
       old_iter != old_end_; ++old_iter, ++last_)
     {
-      // construct(last_, std::move(*old_iter)) ;
       construct(last_, *old_iter) ;
     }
 
@@ -283,26 +280,6 @@ public :
     alloc_.deallocate(old_first_, old_capacity);
   }
 
-  // void resize(size_type sz)
-  // {
-  //   // 現在の要素数より少ない
-  //   if (sz < size())
-  //   {
-  //     size_type diff = size() - sz;
-  //     destroy_until(rbegin() + diff) ;
-  //     last_ = first_ + sz ;
-  //   }
-  //   // 現在の要素数より大きい
-  //   else if ( sz > size() )
-  //   {
-  //     reserve(sz) ;
-  //     for (; last_ != reserved_last_ ; ++last_)
-  //     {
-  //       construct(last_);
-  //     }
-  //   }
-  // }
-
   void resize(size_type sz, const_reference value = value_type())
   {
     // 現在の要素数より少ない
@@ -315,7 +292,6 @@ public :
     // 現在の要素数より大きい
     else if ( sz > size() )
     {
-      // insertの処理と一緒 ( https://cpprefjp.github.io/reference/vector/vector/resize.html )
       if (sz < size() * 2)
         reserve(size() * 2);
       else
@@ -324,10 +300,6 @@ public :
       {
         construct(last_, value);
       }
-      // for (; last_ != reserved_last_ ; ++last_)
-      // {
-      //   construct(last_, value);
-      // }
     }
   }
 
@@ -342,7 +314,7 @@ public :
       if (c == 0)
         c = 1 ;
       else
-        // それ以外の場合は2倍する
+      // それ以外の場合は2倍する
         c *= 2 ;
       reserve(c) ;
     }
@@ -668,10 +640,12 @@ public :
     this->last_ = last;
     this->reserved_last_ = reserved_last;
   }
+
   allocator_type get_allocator() const
   {
     return alloc_;
   }
+
   void clear()
   {
     destroy_until(rend());
@@ -683,42 +657,33 @@ public :
     // return traits::allocate(alloc_, n);
     return alloc_.allocate(n);
   }
+
   void deallocate()
   {
     if (capacity() > 0)
       // traits::deallocate(alloc_, first_, capacity());
       alloc_.deallocate(first_, capacity());
   }
-  // この関数いるのかな…
+
   void construct(pointer ptr)
   {
-    // traits::construct(alloc_, ptr);
     alloc_.construct(ptr, value_type());
   }
+
   void construct(pointer ptr, const_reference value)
   {
-    // traits::construct(alloc_, ptr, value);
     alloc_.construct(ptr, value);
   }
-  // ムーブ用
-  // c++11の機能
-  // void construct(pointer ptr, value_type && value)
-  // {
-  //   traits::construct(alloc_, ptr, std::move(value));
-  // }
+
   void destroy(pointer ptr)
   {
-    // traits::destroy(alloc_, ptr);
     alloc_.destroy(ptr);
    }
+
   void destroy_until(reverse_iterator rend)
   {
     for (reverse_iterator riter = rbegin(); riter != rend; ++riter, --last_)
     {
-      // 簡易vector<T>のiteratorは単なるT *だが、
-      // riterはリバースイテレーターなのでポインターではない。
-      // ポインターを取るために*riterでまずT &を得て、
-      // そこに&を適用することでT *を得ている。
       destroy( &*riter );
     }
   }
