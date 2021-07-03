@@ -50,56 +50,34 @@ static void test_value_assign(int& test_no, size_t size1, bool val1,
 
 void test_vector_bool(int& test_no)
 {
-  std::cout << "=== TEST VECTOR<BOOL> ===" << std::endl;
-  std::cout << std::boolalpha;
-  size_t size = 0;
-  size_t size_ary[] = {0,   1,   2,    63,   64,   65,   100, 127,
-                       128, 129, 1023, 1024, 1025, 2000, 4000};
-  bool flg = 0;
+  // std::cout << "=== TEST VECTOR<BOOL> ===" << std::endl;
+  // std::cout << std::boolalpha;
+  // size_t size = 0;
+  // size_t size_ary[] = {0,   1,   2,    63,   64,   65,   100, 127,
+  //                      128, 129, 1023, 1024, 1025, 2000, 4000};
+  // bool flg = 0;
+  // std::stringstream sout;
 
-  std::stringstream sout;
-  putTestInfo(test_no, "Vector<bool>: swap reference");
-  try {
-    const size_t size = 4242;
-    bool val[size];
-    for (size_t i = 0; i < size; i++) {
-      val[i] = rand() % 2;
-    }
-
-    std::vector<bool> std_vec(val, &val[size]);
-    ft::vector<bool> ft_vec(val, &val[size]);
-
-    for (size_t i = 0; i < size; i++) {
-      std::cout << i << ":" << ft_vec[i] << std::endl;
-      std::cout << size - i - 1 << ":" << ft_vec[size - i - 1] << std::endl;
-      std_vec.swap(std_vec[i], std_vec[size - i - 1]);
-      ft_vec.swap(ft_vec[i], ft_vec[size - i - 1]);
-    }
-
-    std::vector<bool>::iterator std_itr;
-    ft::vector<bool>::iterator ft_itr;
-    for (std_itr = std_vec.begin(), ft_itr = ft_vec.begin();
-         std_itr != std_vec.end(); ++std_itr, ++ft_itr) {
-      if (*std_itr != *ft_itr) {
-        throw std::runtime_error("nomal itr");
-      }
-    }
-    if (ft_itr != ft_vec.end()) {
-      throw std::runtime_error("nomal itr");
-    }
-    for (std_itr = --std_vec.end(), ft_itr = --ft_vec.end();
-         std_itr != std_vec.begin(); --std_itr, --ft_itr) {
-      if (*std_itr != *ft_itr) {
-        throw std::runtime_error("nomal itr");
-      }
-    }
-    if (ft_itr != ft_vec.begin()) {
-      throw std::runtime_error("nomal itr");
-    }
-  } catch (std::runtime_error& e) {
-    throw e;
+  const size_t size = 4242;
+  bool val[size];
+  for (size_t i = 0; i < size; i++) {
+    val[i] = rand() % 2;
   }
-  std::cout << " => OK :)" << std::endl;
+
+  std::vector<bool> std_vec(val, &val[size]);
+  ft::vector<bool> ft_vec(val, &val[size]);
+
+  std::vector<bool>::reverse_iterator std_ritr;
+  ft::vector<bool>::reverse_iterator ft_ritr;
+  for (std_ritr = std_vec.rbegin(), ft_ritr = ft_vec.rbegin();
+        std_ritr != std_vec.rend(); ++std_ritr, ++ft_ritr) {
+    // ↓ この比較ができない
+    // *std_ritrはboolで返ってくる
+    // *ft_ritrはft::BitReference_で返ってきてしまう…
+    if (*std_ritr != *ft_ritr) {
+      throw std::runtime_error("reverse itr");
+    }
+  }
 }
 
 int main()

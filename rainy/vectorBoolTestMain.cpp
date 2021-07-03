@@ -1629,6 +1629,699 @@ void test_vector_bool(int& test_no) {
       std::cout << " => OK :)" << std::endl;
     }
   }
+
+  // test iterators
+  putTestInfo(test_no, "Vector<bool>: check iterators");
+  try {
+    const size_t size = 4242;
+    bool val[size];
+    for (size_t i = 0; i < size; i++) {
+      val[i] = rand() % 2;
+    }
+
+    std::vector<bool> std_vec(val, &val[size]);
+    ft::vector<bool> ft_vec(val, &val[size]);
+
+    std::vector<bool>::iterator std_itr;
+    ft::vector<bool>::iterator ft_itr;
+    for (std_itr = std_vec.begin(), ft_itr = ft_vec.begin();
+         std_itr != std_vec.end(); ++std_itr, ++ft_itr) {
+      if (*std_itr != *ft_itr) {
+        throw std::runtime_error("nomal itr");
+      }
+    }
+    if (ft_itr != ft_vec.end()) {
+      throw std::runtime_error("nomal itr");
+    }
+    for (std_itr = --std_vec.end(), ft_itr = --ft_vec.end();
+         std_itr != std_vec.begin(); --std_itr, --ft_itr) {
+      if (*std_itr != *ft_itr) {
+        throw std::runtime_error("nomal itr");
+      }
+    }
+    if (ft_itr != ft_vec.begin()) {
+      throw std::runtime_error("nomal itr");
+    }
+
+    std::vector<bool>::const_iterator std_citr;
+    ft::vector<bool>::const_iterator ft_citr;
+    for (std_citr = std_vec.begin(), ft_citr = ft_vec.begin();
+         std_citr != std_vec.end(); ++std_citr, ++ft_citr) {
+      if (*std_citr != *ft_citr) {
+        throw std::runtime_error("const itr");
+      }
+    }
+    if (ft_citr != ft_vec.end()) {
+      throw std::runtime_error("const itr");
+    }
+    for (std_citr = --std_vec.end(), ft_citr = --ft_vec.end();
+         std_citr != std_vec.begin(); --std_citr, --ft_citr) {
+      if (*std_citr != *ft_citr) {
+        throw std::runtime_error("const itr");
+      }
+    }
+    if (ft_citr != ft_vec.begin()) {
+      throw std::runtime_error("const itr");
+    }
+
+    std::vector<bool>::reverse_iterator std_ritr;
+    ft::vector<bool>::reverse_iterator ft_ritr;
+    for (std_ritr = std_vec.rbegin(), ft_ritr = ft_vec.rbegin();
+         std_ritr != std_vec.rend(); ++std_ritr, ++ft_ritr) {
+      if (*std_ritr != *ft_ritr) {
+        throw std::runtime_error("reverse itr");
+      }
+    }
+    if (ft_ritr != ft_vec.rend()) {
+      throw std::runtime_error("reverse itr");
+    }
+    for (std_ritr = --std_vec.rend(), ft_ritr = --ft_vec.rend();
+         std_ritr != std_vec.rbegin(); --std_ritr, --ft_ritr) {
+      if (*std_ritr != *ft_ritr) {
+        throw std::runtime_error("reverse itr");
+      }
+    }
+    if (ft_ritr != ft_vec.rbegin()) {
+      throw std::runtime_error("reverse itr");
+    }
+
+    std::vector<bool>::const_reverse_iterator std_critr;
+    ft::vector<bool>::const_reverse_iterator ft_critr;
+    for (std_critr = std_vec.rbegin(), ft_critr = ft_vec.rbegin();
+         std_critr != std_vec.rend(); ++std_critr, ++ft_critr) {
+      if (*std_critr != *ft_critr) {
+        throw std::runtime_error("const reverse itr");
+      }
+    }
+    if (ft_critr != ft_vec.rend()) {
+      throw std::runtime_error("const reverse itr");
+    }
+    for (std_critr = --std_vec.rend(), ft_critr = --ft_vec.rend();
+         std_critr != std_vec.rbegin(); --std_critr, --ft_critr) {
+      if (*std_critr != *ft_critr) {
+        throw std::runtime_error("const reverse itr");
+      }
+    }
+    if (ft_critr != ft_vec.rbegin()) {
+      throw std::runtime_error("const reverse itr");
+    }
+
+  } catch (std::runtime_error& e) {
+    throw e;
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  // // test iterators
+  // putTestInfo(test_no, "Vector<bool>: const iterators");
+  // try {
+  //   const size_t size = 4242;
+  //   bool val[size];
+  //   for (size_t i = 0; i < size; i++) {
+  //     val[i] = rand() % 2;
+  //   }
+
+  //   const std::vector<bool> std_vec(val, &val[size]);
+  //   const ft::vector<bool> ft_vec(val, &val[size]);
+
+  //   for (size_t i = 0; i < size; i++) {
+  //     if (std_vec[i] != ft_vec[i]) {
+  //       throw std::runtime_error("operator[]");
+  //     }
+  //     if (std_vec.at(i) != ft_vec.at(i)) {
+  //       throw std::runtime_error("at");
+  //     }
+  //   }
+
+  //   if (std_vec.front() != ft_vec.front()) {
+  //     throw std::runtime_error("front");
+  //   }
+
+  //   if (std_vec.back() != ft_vec.back()) {
+  //     throw std::runtime_error("back");
+  //   }
+
+  //   std::vector<bool>::const_iterator std_citr;
+  //   ft::vector<bool>::const_iterator ft_citr;
+  //   for (std_citr = std_vec.begin(), ft_citr = ft_vec.begin();
+  //        std_citr != std_vec.end(); ++std_citr, ++ft_citr) {
+  //     if (*std_citr != *ft_citr) {
+  //       throw std::runtime_error("nomal itr");
+  //     }
+  //   }
+  //   if (ft_citr != ft_vec.end()) {
+  //     throw std::runtime_error("nomal itr");
+  //   }
+  //   for (std_citr = --std_vec.end(), ft_citr = --ft_vec.end();
+  //        std_citr != std_vec.begin(); --std_citr, --ft_citr) {
+  //     if (*std_citr != *ft_citr) {
+  //       throw std::runtime_error("nomal itr");
+  //     }
+  //   }
+  //   if (ft_citr != ft_vec.begin()) {
+  //     throw std::runtime_error("nomal itr");
+  //   }
+
+  //   std::vector<bool>::const_reverse_iterator std_critr;
+  //   ft::vector<bool>::const_reverse_iterator ft_critr;
+  //   for (std_critr = std_vec.rbegin(), ft_critr = ft_vec.rbegin();
+  //        std_critr != std_vec.rend(); ++std_critr, ++ft_critr) {
+  //     if (*std_critr != *ft_critr) {
+  //       throw std::runtime_error("reverse itr");
+  //     }
+  //   }
+  //   if (ft_critr != ft_vec.rend()) {
+  //     throw std::runtime_error("reverse itr");
+  //   }
+  //   for (std_critr = --std_vec.rend(), ft_critr = --ft_vec.rend();
+  //        std_critr != std_vec.rbegin(); --std_critr, --ft_critr) {
+  //     if (*std_critr != *ft_critr) {
+  //       throw std::runtime_error("reverse itr");
+  //     }
+  //   }
+  //   if (ft_critr != ft_vec.rbegin()) {
+  //     throw std::runtime_error("reverse itr");
+  //   }
+
+  // } catch (std::runtime_error& e) {
+  //   throw e;
+  // }
+  // std::cout << " => OK :)" << std::endl;
+
+  // putTestInfo(test_no, "Vector<bool>: vec(0) = vec(4242)");
+  // try {
+  //   const size_t size = 4242;
+  //   bool val[size];
+  //   for (size_t i = 0; i < size; i++) {
+  //     val[i] = rand() % 2;
+  //   }
+
+  //   std::vector<bool> std_vec;
+  //   ft::vector<bool> ft_vec;
+  //   std::vector<bool> std_vec2(val, &val[size]);
+  //   ft::vector<bool> ft_vec2(val, &val[size]);
+
+  //   std_vec = std_vec2;
+  //   ft_vec = ft_vec2;
+
+  //   for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+  //     if (std_vec[idx] != ft_vec[idx]) {
+  //       std::cout << std::endl << "idx = " << idx << std::endl;
+  //       std::cout << "std: " << std_vec[idx] << std::endl;
+  //       std::cout << " ft: " << ft_vec[idx] << std::endl;
+  //       throw std::runtime_error("value");
+  //     }
+  //   }
+  //   if (std_vec.empty() != ft_vec.empty()) {
+  //     throw std::runtime_error("empty");
+  //   }
+  //   if (std_vec.size() != ft_vec.size()) {
+  //     std::cout << std::endl;
+  //     std::cout << "std: " << std_vec.size() << std::endl;
+  //     std::cout << " ft: " << ft_vec.size() << std::endl;
+  //     throw std::runtime_error("size");
+  //   }
+  //   if (std_vec.capacity() != ft_vec.capacity()) {
+  //     std::cout << std::endl;
+  //     std::cout << "std: " << std_vec.capacity() << std::endl;
+  //     std::cout << " ft: " << ft_vec.capacity() << std::endl;
+  //     throw std::runtime_error("capacity");
+  //   }
+  //   if (std_vec.max_size() != ft_vec.max_size()) {
+  //     std::cout << std::endl;
+  //     std::cout << "max_size(std) = " << std_vec.max_size() << std::endl;
+  //     std::cout << "max_size(ft)  = " << ft_vec.max_size() << std::endl;
+  //     throw std::runtime_error("max_size");
+  //   }
+  // } catch (std::runtime_error& e) {
+  //   throw e;
+  // }
+  // std::cout << " => OK :)" << std::endl;
+
+  // putTestInfo(test_no, "Vector<bool>: vec(4242) = vec(0)");
+  // try {
+  //   const size_t size = 4242;
+  //   bool val[size];
+  //   for (size_t i = 0; i < size; i++) {
+  //     val[i] = rand() % 2;
+  //   }
+
+  //   std::vector<bool> std_vec(val, &val[size]);
+  //   ft::vector<bool> ft_vec(val, &val[size]);
+  //   std::vector<bool> std_vec2;
+  //   ft::vector<bool> ft_vec2;
+
+  //   std_vec = std_vec2;
+  //   ft_vec = ft_vec2;
+
+  //   for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+  //     if (std_vec[idx] != ft_vec[idx]) {
+  //       std::cout << std::endl << "idx = " << idx << std::endl;
+  //       std::cout << "std: " << std_vec[idx] << std::endl;
+  //       std::cout << " ft: " << ft_vec[idx] << std::endl;
+  //       throw std::runtime_error("value");
+  //     }
+  //   }
+  //   if (std_vec.empty() != ft_vec.empty()) {
+  //     throw std::runtime_error("empty");
+  //   }
+  //   if (std_vec.size() != ft_vec.size()) {
+  //     std::cout << std::endl;
+  //     std::cout << "std: " << std_vec.size() << std::endl;
+  //     std::cout << " ft: " << ft_vec.size() << std::endl;
+  //     throw std::runtime_error("size");
+  //   }
+  //   if (std_vec.capacity() != ft_vec.capacity()) {
+  //     std::cout << std::endl;
+  //     std::cout << "std: " << std_vec.capacity() << std::endl;
+  //     std::cout << " ft: " << ft_vec.capacity() << std::endl;
+  //     throw std::runtime_error("capacity");
+  //   }
+  //   if (std_vec.max_size() != ft_vec.max_size()) {
+  //     std::cout << std::endl;
+  //     std::cout << "max_size(std) = " << std_vec.max_size() << std::endl;
+  //     std::cout << "max_size(ft)  = " << ft_vec.max_size() << std::endl;
+  //     throw std::runtime_error("max_size");
+  //   }
+  // } catch (std::runtime_error& e) {
+  //   throw e;
+  // }
+  // std::cout << " => OK :)" << std::endl;
+
+  // putTestInfo(test_no, "Vector<bool>: vec(4242) = vec(2424)");
+  // try {
+  //   const size_t size = 4242;
+  //   bool val[size];
+  //   for (size_t i = 0; i < size; i++) {
+  //     val[i] = rand() % 2;
+  //   }
+
+  //   std::vector<bool> std_vec(val, &val[size]);
+  //   ft::vector<bool> ft_vec(val, &val[size]);
+  //   std::vector<bool> std_vec2(val, &val[2424]);
+  //   ft::vector<bool> ft_vec2(val, &val[2424]);
+
+  //   std_vec = std_vec2;
+  //   ft_vec = ft_vec2;
+
+  //   for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+  //     if (std_vec[idx] != ft_vec[idx]) {
+  //       std::cout << std::endl << "idx = " << idx << std::endl;
+  //       std::cout << "std: " << std_vec[idx] << std::endl;
+  //       std::cout << " ft: " << ft_vec[idx] << std::endl;
+  //       throw std::runtime_error("value");
+  //     }
+  //   }
+  //   if (std_vec.empty() != ft_vec.empty()) {
+  //     throw std::runtime_error("empty");
+  //   }
+  //   if (std_vec.size() != ft_vec.size()) {
+  //     std::cout << std::endl;
+  //     std::cout << "std: " << std_vec.size() << std::endl;
+  //     std::cout << " ft: " << ft_vec.size() << std::endl;
+  //     throw std::runtime_error("size");
+  //   }
+  //   if (std_vec.capacity() != ft_vec.capacity()) {
+  //     std::cout << std::endl;
+  //     std::cout << "std: " << std_vec.capacity() << std::endl;
+  //     std::cout << " ft: " << ft_vec.capacity() << std::endl;
+  //     throw std::runtime_error("capacity");
+  //   }
+  //   if (std_vec.max_size() != ft_vec.max_size()) {
+  //     std::cout << std::endl;
+  //     std::cout << "max_size(std) = " << std_vec.max_size() << std::endl;
+  //     std::cout << "max_size(ft)  = " << ft_vec.max_size() << std::endl;
+  //     throw std::runtime_error("max_size");
+  //   }
+  // } catch (std::runtime_error& e) {
+  //   throw e;
+  // }
+  // std::cout << " => OK :)" << std::endl;
+
+  // putTestInfo(test_no, "Vector<bool>: vec(2424) = vec(4242)");
+  // try {
+  //   const size_t size = 4242;
+  //   bool val[size];
+  //   for (size_t i = 0; i < size; i++) {
+  //     val[i] = rand() % 2;
+  //   }
+
+  //   std::vector<bool> std_vec(val, &val[2424]);
+  //   ft::vector<bool> ft_vec(val, &val[2424]);
+  //   std::vector<bool> std_vec2(val, &val[size]);
+  //   ft::vector<bool> ft_vec2(val, &val[size]);
+
+  //   std_vec = std_vec2;
+  //   ft_vec = ft_vec2;
+
+  //   for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+  //     if (std_vec[idx] != ft_vec[idx]) {
+  //       std::cout << std::endl << "idx = " << idx << std::endl;
+  //       std::cout << "std: " << std_vec[idx] << std::endl;
+  //       std::cout << " ft: " << ft_vec[idx] << std::endl;
+  //       throw std::runtime_error("value");
+  //     }
+  //   }
+  //   if (std_vec.empty() != ft_vec.empty()) {
+  //     throw std::runtime_error("empty");
+  //   }
+  //   if (std_vec.size() != ft_vec.size()) {
+  //     std::cout << std::endl;
+  //     std::cout << "std: " << std_vec.size() << std::endl;
+  //     std::cout << " ft: " << ft_vec.size() << std::endl;
+  //     throw std::runtime_error("size");
+  //   }
+  //   if (std_vec.capacity() != ft_vec.capacity()) {
+  //     std::cout << std::endl;
+  //     std::cout << "std: " << std_vec.capacity() << std::endl;
+  //     std::cout << " ft: " << ft_vec.capacity() << std::endl;
+  //     throw std::runtime_error("capacity");
+  //   }
+  //   if (std_vec.max_size() != ft_vec.max_size()) {
+  //     std::cout << std::endl;
+  //     std::cout << "max_size(std) = " << std_vec.max_size() << std::endl;
+  //     std::cout << "max_size(ft)  = " << ft_vec.max_size() << std::endl;
+  //     throw std::runtime_error("max_size");
+  //   }
+  // } catch (std::runtime_error& e) {
+  //   throw e;
+  // }
+  // std::cout << " => OK :)" << std::endl;
+
+  // putTestInfo(test_no, "Vector<bool>: relational: vec(4242) and vec(4242)");
+  // try {
+  //   const size_t size = 4242;
+  //   bool val[size];
+  //   for (size_t i = 0; i < size; i++) {
+  //     val[i] = rand() % 2;
+  //   }
+
+  //   std::vector<bool> std_vec(val, &val[size]);
+  //   ft::vector<bool> ft_vec(val, &val[size]);
+  //   std::vector<bool> std_vec2(val, &val[size]);
+  //   ft::vector<bool> ft_vec2(val, &val[size]);
+
+  //   std_vec = std_vec2;
+  //   ft_vec = ft_vec2;
+
+  //   if ((std_vec == std_vec2) != (ft_vec == ft_vec2)) {
+  //     throw std::runtime_error("==");
+  //   }
+  //   if ((std_vec != std_vec2) != (ft_vec != ft_vec2)) {
+  //     throw std::runtime_error("!=");
+  //   }
+  //   if ((std_vec < std_vec2) != (ft_vec < ft_vec2)) {
+  //     throw std::runtime_error("<");
+  //   }
+  //   if ((std_vec > std_vec2) != (ft_vec > ft_vec2)) {
+  //     throw std::runtime_error("<");
+  //   }
+  //   if ((std_vec <= std_vec2) != (ft_vec <= ft_vec2)) {
+  //     throw std::runtime_error("<=");
+  //   }
+  //   if ((std_vec >= std_vec2) != (ft_vec >= ft_vec2)) {
+  //     throw std::runtime_error(">=");
+  //   }
+  // } catch (std::runtime_error& e) {
+  //   throw e;
+  // }
+  // std::cout << " => OK :)" << std::endl;
+
+  // putTestInfo(test_no,
+  //             "Vector<bool>: relational: vec(4242) and vec(4242) diff");
+  // try {
+  //   const size_t size = 4242;
+  //   bool val[size];
+  //   for (size_t i = 0; i < size; i++) {
+  //     val[i] = rand() % 2;
+  //   }
+  //   std::vector<bool> std_vec(val, &val[size]);
+  //   ft::vector<bool> ft_vec(val, &val[size]);
+  //   for (size_t i = 0; i < size; i++) {
+  //     val[i] = rand() % 2;
+  //   }
+  //   std::vector<bool> std_vec2(val, &val[size]);
+  //   ft::vector<bool> ft_vec2(val, &val[size]);
+
+  //   std_vec = std_vec2;
+  //   ft_vec = ft_vec2;
+
+  //   if ((std_vec == std_vec2) != (ft_vec == ft_vec2)) {
+  //     throw std::runtime_error("==");
+  //   }
+  //   if ((std_vec != std_vec2) != (ft_vec != ft_vec2)) {
+  //     throw std::runtime_error("!=");
+  //   }
+  //   if ((std_vec < std_vec2) != (ft_vec < ft_vec2)) {
+  //     throw std::runtime_error("<");
+  //   }
+  //   if ((std_vec > std_vec2) != (ft_vec > ft_vec2)) {
+  //     throw std::runtime_error("<");
+  //   }
+  //   if ((std_vec <= std_vec2) != (ft_vec <= ft_vec2)) {
+  //     throw std::runtime_error("<=");
+  //   }
+  //   if ((std_vec >= std_vec2) != (ft_vec >= ft_vec2)) {
+  //     throw std::runtime_error(">=");
+  //   }
+  // } catch (std::runtime_error& e) {
+  //   throw e;
+  // }
+  // std::cout << " => OK :)" << std::endl;
+
+  // putTestInfo(test_no, "Vector<bool>: relational: vec(4242) and vec(2424)");
+  // try {
+  //   const size_t size = 4242;
+  //   bool val[size];
+  //   for (size_t i = 0; i < size; i++) {
+  //     val[i] = rand() % 2;
+  //   }
+
+  //   std::vector<bool> std_vec(val, &val[size]);
+  //   ft::vector<bool> ft_vec(val, &val[size]);
+  //   std::vector<bool> std_vec2(val + 1212, &val[3636]);
+  //   ft::vector<bool> ft_vec2(val + 1212, &val[3636]);
+
+  //   std_vec = std_vec2;
+  //   ft_vec = ft_vec2;
+
+  //   if ((std_vec == std_vec2) != (ft_vec == ft_vec2)) {
+  //     throw std::runtime_error("==");
+  //   }
+  //   if ((std_vec != std_vec2) != (ft_vec != ft_vec2)) {
+  //     throw std::runtime_error("!=");
+  //   }
+  //   if ((std_vec < std_vec2) != (ft_vec < ft_vec2)) {
+  //     throw std::runtime_error("<");
+  //   }
+  //   if ((std_vec > std_vec2) != (ft_vec > ft_vec2)) {
+  //     throw std::runtime_error("<");
+  //   }
+  //   if ((std_vec <= std_vec2) != (ft_vec <= ft_vec2)) {
+  //     throw std::runtime_error("<=");
+  //   }
+  //   if ((std_vec >= std_vec2) != (ft_vec >= ft_vec2)) {
+  //     throw std::runtime_error(">=");
+  //   }
+  // } catch (std::runtime_error& e) {
+  //   throw e;
+  // }
+  // std::cout << " => OK :)" << std::endl;
+
+  // putTestInfo(test_no, "Vector<bool>: relational: vec(4242) and vec(2424)");
+  // try {
+  //   const size_t size = 4242;
+  //   bool val[size];
+  //   for (size_t i = 0; i < size; i++) {
+  //     val[i] = rand() % 2;
+  //   }
+
+  //   std::vector<bool> std_vec(val, &val[size]);
+  //   ft::vector<bool> ft_vec(val, &val[size]);
+  //   std::vector<bool> std_vec2(val, &val[2424]);
+  //   ft::vector<bool> ft_vec2(val, &val[2424]);
+
+  //   std_vec = std_vec2;
+  //   ft_vec = ft_vec2;
+
+  //   if ((std_vec == std_vec2) != (ft_vec == ft_vec2)) {
+  //     throw std::runtime_error("==");
+  //   }
+  //   if ((std_vec != std_vec2) != (ft_vec != ft_vec2)) {
+  //     throw std::runtime_error("!=");
+  //   }
+  //   if ((std_vec < std_vec2) != (ft_vec < ft_vec2)) {
+  //     throw std::runtime_error("<");
+  //   }
+  //   if ((std_vec > std_vec2) != (ft_vec > ft_vec2)) {
+  //     throw std::runtime_error("<");
+  //   }
+  //   if ((std_vec <= std_vec2) != (ft_vec <= ft_vec2)) {
+  //     throw std::runtime_error("<=");
+  //   }
+  //   if ((std_vec >= std_vec2) != (ft_vec >= ft_vec2)) {
+  //     throw std::runtime_error(">=");
+  //   }
+  // } catch (std::runtime_error& e) {
+  //   throw e;
+  // }
+  // std::cout << " => OK :)" << std::endl;
+
+  // putTestInfo(test_no, "Vector<bool>: relational: vec(2424) and vec(4242)");
+  // try {
+  //   const size_t size = 4242;
+  //   bool val[size];
+  //   for (size_t i = 0; i < size; i++) {
+  //     val[i] = rand() % 2;
+  //   }
+
+  //   std::vector<bool> std_vec(val + 1212, &val[3636]);
+  //   ft::vector<bool> ft_vec(val + 1212, &val[3636]);
+  //   std::vector<bool> std_vec2(val, &val[size]);
+  //   ft::vector<bool> ft_vec2(val, &val[size]);
+
+  //   std_vec = std_vec2;
+  //   ft_vec = ft_vec2;
+
+  //   if ((std_vec == std_vec2) != (ft_vec == ft_vec2)) {
+  //     throw std::runtime_error("==");
+  //   }
+  //   if ((std_vec != std_vec2) != (ft_vec != ft_vec2)) {
+  //     throw std::runtime_error("!=");
+  //   }
+  //   if ((std_vec < std_vec2) != (ft_vec < ft_vec2)) {
+  //     throw std::runtime_error("<");
+  //   }
+  //   if ((std_vec > std_vec2) != (ft_vec > ft_vec2)) {
+  //     throw std::runtime_error("<");
+  //   }
+  //   if ((std_vec <= std_vec2) != (ft_vec <= ft_vec2)) {
+  //     throw std::runtime_error("<=");
+  //   }
+  //   if ((std_vec >= std_vec2) != (ft_vec >= ft_vec2)) {
+  //     throw std::runtime_error(">=");
+  //   }
+  // } catch (std::runtime_error& e) {
+  //   throw e;
+  // }
+  // std::cout << " => OK :)" << std::endl;
+
+  // putTestInfo(test_no, "Vector<bool>: relational: vec(2424) and vec(4242)");
+  // try {
+  //   const size_t size = 4242;
+  //   bool val[size];
+  //   for (size_t i = 0; i < size; i++) {
+  //     val[i] = rand() % 2;
+  //   }
+
+  //   std::vector<bool> std_vec(val, &val[2424]);
+  //   ft::vector<bool> ft_vec(val, &val[2424]);
+  //   std::vector<bool> std_vec2(val, &val[size]);
+  //   ft::vector<bool> ft_vec2(val, &val[size]);
+
+  //   std_vec = std_vec2;
+  //   ft_vec = ft_vec2;
+
+  //   if ((std_vec == std_vec2) != (ft_vec == ft_vec2)) {
+  //     throw std::runtime_error("==");
+  //   }
+  //   if ((std_vec != std_vec2) != (ft_vec != ft_vec2)) {
+  //     throw std::runtime_error("!=");
+  //   }
+  //   if ((std_vec < std_vec2) != (ft_vec < ft_vec2)) {
+  //     throw std::runtime_error("<");
+  //   }
+  //   if ((std_vec > std_vec2) != (ft_vec > ft_vec2)) {
+  //     throw std::runtime_error("<");
+  //   }
+  //   if ((std_vec <= std_vec2) != (ft_vec <= ft_vec2)) {
+  //     throw std::runtime_error("<=");
+  //   }
+  //   if ((std_vec >= std_vec2) != (ft_vec >= ft_vec2)) {
+  //     throw std::runtime_error(">=");
+  //   }
+  // } catch (std::runtime_error& e) {
+  //   throw e;
+  // }
+  // std::cout << " => OK :)" << std::endl;
+
+  // putTestInfo(test_no, "Vector<bool>: relational: vec(4242) and vec()");
+  // try {
+  //   const size_t size = 4242;
+  //   bool val[size];
+  //   for (size_t i = 0; i < size; i++) {
+  //     val[i] = rand() % 2;
+  //   }
+
+  //   std::vector<bool> std_vec(val, &val[size]);
+  //   ft::vector<bool> ft_vec(val, &val[size]);
+  //   std::vector<bool> std_vec2;
+  //   ft::vector<bool> ft_vec2;
+
+  //   std_vec = std_vec2;
+  //   ft_vec = ft_vec2;
+
+  //   if ((std_vec == std_vec2) != (ft_vec == ft_vec2)) {
+  //     throw std::runtime_error("==");
+  //   }
+  //   if ((std_vec != std_vec2) != (ft_vec != ft_vec2)) {
+  //     throw std::runtime_error("!=");
+  //   }
+  //   if ((std_vec < std_vec2) != (ft_vec < ft_vec2)) {
+  //     throw std::runtime_error("<");
+  //   }
+  //   if ((std_vec > std_vec2) != (ft_vec > ft_vec2)) {
+  //     throw std::runtime_error("<");
+  //   }
+  //   if ((std_vec <= std_vec2) != (ft_vec <= ft_vec2)) {
+  //     throw std::runtime_error("<=");
+  //   }
+  //   if ((std_vec >= std_vec2) != (ft_vec >= ft_vec2)) {
+  //     throw std::runtime_error(">=");
+  //   }
+  // } catch (std::runtime_error& e) {
+  //   throw e;
+  // }
+  // std::cout << " => OK :)" << std::endl;
+
+  // putTestInfo(test_no, "Vector<bool>: relational: vec() and vec(4242)");
+  // try {
+  //   const size_t size = 4242;
+  //   bool val[size];
+  //   for (size_t i = 0; i < size; i++) {
+  //     val[i] = rand() % 2;
+  //   }
+
+  //   std::vector<bool> std_vec;
+  //   ft::vector<bool> ft_vec;
+  //   std::vector<bool> std_vec2(val, &val[size]);
+  //   ft::vector<bool> ft_vec2(val, &val[size]);
+
+  //   std_vec = std_vec2;
+  //   ft_vec = ft_vec2;
+
+  //   if ((std_vec == std_vec2) != (ft_vec == ft_vec2)) {
+  //     throw std::runtime_error("==");
+  //   }
+  //   if ((std_vec != std_vec2) != (ft_vec != ft_vec2)) {
+  //     throw std::runtime_error("!=");
+  //   }
+  //   if ((std_vec < std_vec2) != (ft_vec < ft_vec2)) {
+  //     throw std::runtime_error("<");
+  //   }
+  //   if ((std_vec > std_vec2) != (ft_vec > ft_vec2)) {
+  //     throw std::runtime_error("<");
+  //   }
+  //   if ((std_vec <= std_vec2) != (ft_vec <= ft_vec2)) {
+  //     throw std::runtime_error("<=");
+  //   }
+  //   if ((std_vec >= std_vec2) != (ft_vec >= ft_vec2)) {
+  //     throw std::runtime_error(">=");
+  //   }
+  // } catch (std::runtime_error& e) {
+  //   throw e;
+  // }
+  // std::cout << " => OK :)" << std::endl;
+
 }
 
 int main()

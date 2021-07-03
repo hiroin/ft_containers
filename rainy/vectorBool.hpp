@@ -11,6 +11,7 @@
 #include "vectorIterator.hpp"
 #include "vectorConstIterator.hpp"
 #include "vector.hpp"
+#include "iterator.hpp"
 
 namespace ft {
 
@@ -33,6 +34,8 @@ struct BitReference_
 
   BitReference_(Bit_type_ * ptr, Bit_type_ index) : ptr_(ptr), index_(index) {}
   BitReference_() : ptr_(NULL), index_(0) {}
+  // BitReference_(const BitReference_& x) : ptr_(x.ptr_), index_(x.index_) {}
+  ~BitReference_();
 
   operator bool() const
   {
@@ -765,7 +768,14 @@ public :
   {
     return bitIterator(storage_, size_);
   }
-
+  reverse_iterator rbegin()
+  {
+    return reverse_iterator(end());
+  }
+  reverse_iterator rend()
+  {
+    return reverse_iterator(begin());
+  }
  private :
   size_type* allocate(size_type n)
   {
