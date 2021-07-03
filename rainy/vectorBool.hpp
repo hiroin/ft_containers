@@ -17,15 +17,19 @@ namespace ft {
 
 typedef unsigned long Bit_type_;
 # ifdef __MACH__
-enum { S_word_bit = int(CHAR_BIT * sizeof(Bit_type)) };
+enum { S_word_bit = int(CHAR_BIT * sizeof(Bit_type_)) };
+static size_t numPtrIndex_(size_t n)
+{
+  return (n / int(S_word_bit));
+}
 # else
 enum { S_word_bit_ = int(__CHAR_BIT__ * sizeof(Bit_type_)) };
-# endif
-
 static size_t numPtrIndex_(size_t n)
 {
   return (n / int(S_word_bit_));
 }
+# endif
+
 
 struct BitReference_
 {
