@@ -22,66 +22,25 @@ int main()
   std::vector<Hoge> hoge_vec(hoge, &hoge[10]);
   std::list<Hoge> hoge_lst(hoge, &hoge[10]);
 
-  putTestInfo(test_no, "construct using ft::iterator");
+  putTestInfo(test_no, "assign(42, 21) to vec()");
+  flg = 0;
   try {
-    int n;
     std::vector<int> std_vec;
     ft::vector<int> ft_vec;
-    std::vector<int>::iterator std_itr;
-    ft::vector<int>::iterator ft_itr;
-    std::vector<int>::reverse_iterator std_ritr;
-    ft::vector<int>::reverse_iterator ft_ritr;
-    std::vector<int>::const_iterator std_citr;
-    ft::vector<int>::const_iterator ft_citr;
-    std::vector<int>::const_reverse_iterator std_critr;
-    ft::vector<int>::const_reverse_iterator ft_critr;
-
-    for (int i = 0; i < 1000; i++) {
-      n = rand() % 1000;
-      std_vec.push_back(n);
-      ft_vec.push_back(n);
-    }
-
-    for (std_itr = std_vec.begin(), ft_itr = ft_vec.begin();
-         std_itr != std_vec.end(); ++std_itr, ++ft_itr) {
-      if (*std_itr != *ft_itr) {
-        throw std::runtime_error("iterator");
+    std_vec.assign(42, 21);
+    ft_vec.assign(42, 21);
+    for (size_t idx = 0; idx < std_vec.size(); ++idx) {
+      if (std_vec[idx] != ft_vec[idx]) {
+        std::cout << idx << std::endl;
+        std::cout << std_vec[idx] << std::endl;
+        std::cout << ft_vec[idx] << std::endl;
+        throw std::runtime_error("failed1");
       }
     }
-    if (ft_itr != ft_vec.end()) {
-      throw std::runtime_error("iterator");
+    if (std_vec.size() != ft_vec.size() ||
+        std_vec.capacity() != ft_vec.capacity()) {
+      throw std::runtime_error("failed2");
     }
-
-    for (std_ritr = std_vec.rbegin(), ft_ritr = ft_vec.rbegin();
-         std_ritr != std_vec.rend(); ++std_ritr, ++ft_ritr) {
-      if (*std_ritr != *ft_ritr) {
-        throw std::runtime_error("rev iterator");
-      }
-    }
-    if (ft_ritr != ft_vec.rend()) {
-      throw std::runtime_error("rev iterator");
-    }
-
-    for (std_citr = std_vec.begin(), ft_citr = ft_vec.begin();
-         std_citr != std_vec.end(); ++std_citr, ++ft_citr) {
-      if (*std_citr != *ft_citr) {
-        throw std::runtime_error("iterator");
-      }
-    }
-    if (ft_citr != ft_vec.end()) {
-      throw std::runtime_error("iterator");
-    }
-
-    for (std_critr = std_vec.rbegin(), ft_critr = ft_vec.rbegin();
-         std_critr != std_vec.rend(); ++std_critr, ++ft_critr) {
-      if (*std_critr != *ft_critr) {
-        throw std::runtime_error("rev iterator");
-      }
-    }
-    if (ft_critr != ft_vec.rend()) {
-      throw std::runtime_error("rev iterator");
-    }
-
   } catch (std::exception& e) {
     throw std::runtime_error(e.what());
   }

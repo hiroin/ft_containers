@@ -482,8 +482,60 @@ public :
 
   void assign(size_type n, const T& u)
   {
-    vector<T> tmp(n, u);
-    *this = tmp;
+    if (size() == n)
+    {
+      iterator dest_iter = begin();
+      for (size_t i = 0; i < n; ++i)
+      {
+        *dest_iter++ = u;
+      }
+    }
+    else
+    {
+      if (capacity() >= n)
+      {
+        iterator dest_iter;
+        iterator dest_end;
+        for (dest_iter = begin() + n, dest_end = end();
+          dest_iter != dest_end; ++dest_iter)
+        {
+          destroy(&*dest_iter);
+        }
+        if (size() >= n)
+        {
+          last_ = first_;
+          dest_iter = begin();
+          for (size_t i = 0; i < n; ++i, ++last_)
+          {
+            *dest_iter++ = u;
+          }
+        }
+        else
+        {
+          last_ = first_;
+          size_t i = 0;
+          for (dest_iter = begin(); dest_iter != dest_end;
+            ++dest_iter, ++last_, ++i)
+          {
+            *dest_iter = u;
+          }
+          for ( ; i < n; ++dest_iter, ++last_)
+          {
+            construct(&*dest_iter, u);
+          }
+        }
+      }
+      else
+      {
+        clear();
+        reserve(n);
+        iterator dest_iter = begin();
+        for (size_t i = 0; i < n; ++i, ++last_, ++dest_iter)
+        {
+          construct(&*dest_iter, u);
+        }
+      }
+    }
   }
 
   void pop_back()
