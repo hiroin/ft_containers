@@ -29,8 +29,8 @@ protected:
 public:
   typedef Iterator iterator_type;
   typedef std::ptrdiff_t difference_type;
-  typedef typename Iterator::value_type &reference;
-  typedef typename Iterator::value_type *pointer;
+  typedef typename Iterator::reference reference;
+  typedef typename Iterator::pointer pointer;
   typedef random_access_iterator_tag iterator_category;
 
   /**

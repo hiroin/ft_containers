@@ -12,6 +12,7 @@
 #include "vectorConstIterator.hpp"
 #include "vector.hpp"
 #include "iterator.hpp"
+#include "vectorBool.hpp"
 
 namespace ft {
 
@@ -34,7 +35,7 @@ struct BitReference_
   BitReference_(Bit_type_ * ptr, Bit_type_ index) : ptr_(ptr), index_(index) {}
   BitReference_() : ptr_(NULL), index_(0) {}
   // BitReference_(const BitReference_& x) : ptr_(x.ptr_), index_(x.index_) {}
-  ~BitReference_();
+  ~BitReference_(){};
 
   operator bool() const
   {
@@ -92,9 +93,9 @@ class bitIterator
  public:
   bitIterator(){};
   bitIterator(Bit_type_* ptr, size_t index) : ref_(ptr, index){};
-  bitIterator(BitReference_& ref) : ref_(ref.ptr_, ref.index_){};
-  bitIterator(const BitReference_& ref) : ref_(){};
-  bitIterator(bitIterator& x) : ref_(x.ref_) {};
+  // bitIterator(BitReference_& ref) : ref_(ref.ptr_, ref.index_){};
+  // bitIterator(const BitReference_& ref) : ref_(){};
+  // bitIterator(bitIterator& x) : ref_(x.ref_) {};
   bitIterator(const bitIterator& x) : ref_(x.ref_) {};
   ~bitIterator(){};
 
@@ -761,11 +762,19 @@ public :
   // イテレーターアクセス
   iterator begin()
   {
-    return bitIterator(storage_, 0);
+    return iterator(storage_, 0);
   }
   iterator end()
   {
-    return bitIterator(storage_, size_);
+    return iterator(storage_, size_);
+  }
+  const_iterator begin() const
+  {
+    return const_iterator(storage_, 0);
+  }
+  const_iterator end() const
+  {
+    return const_iterator(storage_, size_);
   }
   reverse_iterator rbegin()
   {
@@ -774,6 +783,14 @@ public :
   reverse_iterator rend()
   {
     return reverse_iterator(begin());
+  }
+  const_reverse_iterator rbegin() const
+  {
+    return const_reverse_iterator(end());
+  }
+  const_reverse_iterator rend() const
+  {
+    return const_reverse_iterator(begin());
   }
  private :
   size_type* allocate(size_type n)

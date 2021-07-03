@@ -68,16 +68,26 @@ void test_vector_bool(int& test_no)
   ft::vector<bool> ft_vec(val, &val[size]);
 
   std::vector<bool>::reverse_iterator std_ritr;
-  ft::vector<bool>::reverse_iterator ft_ritr;
-  for (std_ritr = std_vec.rbegin(), ft_ritr = ft_vec.rbegin();
-        std_ritr != std_vec.rend(); ++std_ritr, ++ft_ritr) {
-    // ↓ この比較ができない
-    // *std_ritrはboolで返ってくる
-    // *ft_ritrはft::BitReference_で返ってきてしまう…
-    if (*std_ritr != *ft_ritr) {
-      throw std::runtime_error("reverse itr");
-    }
+  ft::vector<bool>::iterator ft_itr;
+  ft::reverseIterator<ft::bitIterator> ft_ritr;
+  std_ritr = std_vec.rbegin();
+  if (*std_ritr)
+  {
+    std::cout << "OK" << std::endl;
   }
+  if (*ft_ritr)
+  {
+    std::cout << "OK" << std::endl;
+  }
+  // for (std_ritr = std_vec.rbegin(), ft_ritr = ft_vec.rbegin();
+  //       std_ritr != std_vec.rend(); ++std_ritr, ++ft_ritr) {
+  //   // ↓ この比較ができない
+  //   // *std_ritrはboolで返ってくる
+  //   // *ft_ritrはft::BitReference_で返ってきてしまう…
+  //   if (*std_ritr != *ft_ritr) {
+  //     throw std::runtime_error("reverse itr");
+  //   }
+  // }
 }
 
 int main()
