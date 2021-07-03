@@ -99,79 +99,9 @@ public :
 
   vector & operator =(const vector & r)
   {
-    // 1. 自分自身への代入なら何もしない
     if (this == &r)
       return *this;
-  
-    // 2. 要素数が同じならば
-    if (size() == r.size())
-    {   // 要素ごとにコピー代入
-      // std::copy(r.begin(), r.end(), begin()) ;
-      iterator dest_iter = begin();
-      for (const_iterator src_iter = r.begin(), src_end = r.end();
-        src_iter != src_end; ++src_iter, ++dest_iter)
-      {
-        *dest_iter = *src_iter;
-      }      
-    }
-    // 3. それ以外の場合で
-    else 
-      // 予約数が十分ならば、
-      if (capacity() >= r.size())
-      {
-        iterator dest_iter;
-        iterator dest_end = end();
-        const_iterator src_iter;
-        const_iterator src_end = r.end();
-        for (dest_iter = begin() + r.size(), dest_end = end();
-          dest_iter != dest_end;
-          ++dest_iter)
-        {
-          destroy(&*dest_iter);
-        }
-        if (size() >= r.size())
-        {
-          last_ = first_;
-          for (src_iter = r.begin(), dest_iter = begin();
-            src_iter != src_end;
-            ++src_iter, ++dest_iter, last_++)
-          {
-            *dest_iter = *src_iter;
-          }
-        }
-        else
-        {
-          last_ = first_;
-          for (src_iter = r.begin(), dest_iter = begin();
-            dest_iter != dest_end;
-            ++src_iter, ++dest_iter, last_++)
-          {
-            *dest_iter = *src_iter;
-          }
-          for (src_end = r.end();
-            src_iter != src_end;
-            ++src_iter, ++dest_iter, ++last_)
-          {
-            construct(&*dest_iter, *src_iter);
-          }
-        }
-      }
-      // 4. 予約数が不十分ならば
-      else
-      {
-        // 要素をすべて破棄
-        // destroy_all();
-        clear();
-        // 予約
-        reserve(r.size());
-        // コピー構築
-        iterator dest_iter = begin();
-        for (const_iterator src_iter = r.begin(), src_end = r.end();
-          src_iter != src_end; ++src_iter, ++dest_iter, ++last_)
-        {
-          construct(&*dest_iter, *src_iter);
-        }
-      }
+    assign(r.begin(), r.end());
     return *this ;
   }
   bool equal(iterator first, iterator last, const_iterator rfirst)
