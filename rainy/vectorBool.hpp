@@ -407,6 +407,14 @@ public :
     storageAlloc_.deallocate(storage_, storageSize_);
   };
 
+  vector & operator =(const vector & r)
+  {
+    if (this == &r)
+      return *this;
+    assign(r.begin(), r.end());
+    return *this ;
+  }
+
   reference operator [](size_type i)
   {
     return reference(storage_, i);
@@ -792,6 +800,43 @@ public :
   {
     return const_reverse_iterator(begin());
   }
+
+  bool operator==(const vector& r)
+  {
+    if (this->size() != r.size())
+      return false;  
+    for (const_iterator cfirst = begin(), clast = end(), rfirst = r.begin();
+      cfirst != clast; ++cfirst, ++rfirst)
+    {
+      if (*cfirst != *rfirst)
+        return false;
+    }
+    return true;    
+  }
+
+  bool operator!=(const vector& r)
+  {
+    return !(*this == r);
+  }
+
+  bool operator<(const vector& r)
+  {
+    return lexicographical_compare(begin(), end(), r.begin(), r.end());
+  }
+
+  bool operator<=(const vector& r)
+  {
+    return !(*this > r);
+  }
+  bool operator>(const vector& r)
+  {
+    return lexicographical_compare(r.begin(), r.end(), begin(), end());
+  }
+  bool operator>=(const vector& r)
+  {
+    return !(*this < r);
+  }
+
  private :
   size_type* allocate(size_type n)
   {
