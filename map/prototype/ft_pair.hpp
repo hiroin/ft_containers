@@ -19,6 +19,13 @@ namespace ft
     template<typename _U1, typename _U2>
     pair(const pair<_U1, _U2>& __p)
       : first(__p.first), second(__p.second) { }
+
+    pair operator=(const pair<_T1, _T2>& __x)
+    {
+      first = __x.first;
+      second = __x.second;
+      return *this;
+    }
   };
 
   template<typename _T1, typename _T2>

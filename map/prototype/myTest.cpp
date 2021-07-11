@@ -57,7 +57,8 @@ int main(int argc, char const *argv[]) {
   int search;
   ft::pair<int, int> p;
   for (int i = 0; i < node_n; i++) {
-    search = rand[i];
+    // search = rand[i];
+    search = 10 - i;
     p = ft::make_pair(search, search);
     bt.append(p);
   }
@@ -65,7 +66,8 @@ int main(int argc, char const *argv[]) {
   bt.print();
 
   for (int i = 0; i < node_n; i++) {
-    search = rand[i];
+    // search = rand[i];
+    search = 10 - i;
     p = ft::make_pair(search, search);
     bt.erase(p);
   }

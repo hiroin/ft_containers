@@ -154,7 +154,7 @@ class BinTree {
     return true;
   }
 
-  node_pointer searchNode(node_pointer node, node_type data) {
+  node_pointer searchNode(node_pointer node, value_type data) {
     if (node == NULL) {
       return node;
     }
@@ -246,6 +246,7 @@ class BinTree {
   //--------------------
   // erase
   //--------------------
+  // bool erase(value_type data) {
   bool erase(value_type data) {
     node_pointer deleteNode = searchNode(root, data);
 
@@ -253,17 +254,52 @@ class BinTree {
       return false;
     }
     if (deleteNode->LHS == NULL) {
-      Replace(deleteNode, deleteNode->RHS);
-      BalanceE(deleteNode->RHS);
+      if (deleteNode->RHS != NULL)
+      {
+        Replace(deleteNode, deleteNode->RHS);
+        BalanceE(deleteNode->RHS);
+      }
       alloc_.destroy(deleteNode);
       alloc_.deallocate(deleteNode, 1);
+      if (deleteNode == root)
+        root = nullNode;
     } else {
       node_pointer leftMaxNode = LeftMax(deleteNode);
-      deleteNode->data = leftMaxNode->data;
-      Replace(leftMaxNode, leftMaxNode->LHS);
+      // deleteNode->data = leftMaxNode->data;
+      // std::swap(deleteNode->data, leftMaxNode->data);
+      // Replace(leftMaxNode, leftMaxNode->LHS);
+      // BalanceE(leftMaxNode->LHS);
+      // alloc_.destroy(leftMaxNode);
+      // alloc_.deallocate(leftMaxNode, 1);
+
+      // leftMaxNodeの親と子のリンク張替え
+      if (leftMaxNode->LHS)
+      {
+        leftMaxNode->LHS->Parent = leftMaxNode->Parent;
+        leftMaxNode->Parent->RHS = leftMaxNode->LHS;
+      }
+
+      // deleteNodeの位置にleftMaxNodeを移動
+      leftMaxNode->Parent = deleteNode->Parent;
+      leftMaxNode->LHS = deleteNode->LHS;
+      leftMaxNode->RHS = deleteNode->RHS;
+
+      // 移動したleftMaxNodeに親と子からリンクを設定
+      if (deleteNode->LHS)
+        deleteNode->LHS->Parent = leftMaxNode;
+      if (deleteNode->RHS)
+        deleteNode->RHS->Parent = leftMaxNode;
+      if (deleteNode->Parent)
+      {
+        if (deleteNode->Parent->LHS == deleteNode)
+          deleteNode->Parent->LHS = leftMaxNode;
+        if (deleteNode->Parent->RHS == deleteNode)
+          deleteNode->Parent->RHS = leftMaxNode;
+      }
       BalanceE(leftMaxNode->LHS);
-      alloc_.destroy(leftMaxNode);
-      alloc_.deallocate(leftMaxNode, 1);
+      alloc_.destroy(deleteNode);
+      alloc_.deallocate(deleteNode, 1);
+      deleteNode = NULL;
     }
     return true;
   }
