@@ -1,10 +1,9 @@
 #include "BinTree.hpp"
 #include <cassert>
-#include <chrono>
 #include <fstream>
 #include <iostream>
-#include <random>
 #include <vector>
+#include <cstdlib>
 #include "ft_pair.hpp"
 
 #define FILENAME "rand.csv"
@@ -15,7 +14,7 @@ bool genRand(int node_n) {
     return false;
   }
 
-  std::random_device rand;
+  srand((unsigned int)time(NULL));
 
   for (int i = 0; i < node_n; i++) {
     ofs << rand() << std::endl;
@@ -53,7 +52,7 @@ int main(int argc, char const *argv[]) {
 
   std::cout << rand.size() << std::endl;
 
-  ft::BinTree<ft::pair<int, int>> bt;
+  ft::BinTree<ft::pair<int, int> > bt;
 
   int search;
   ft::pair<int, int> p;
@@ -63,10 +62,6 @@ int main(int argc, char const *argv[]) {
     bt.append(p);
   }
 
-  assert(bt.checkAVL());
-  // assert(bt.checkBin());
-
-  // bt.graphDebug();
   bt.print();
 
   // for (int i = 0; i < node_n; i++) {
@@ -74,9 +69,6 @@ int main(int argc, char const *argv[]) {
   //   p = ft::make_pair(search, search);
   //   bt.erase(p);
   // }
-
-  assert(bt.checkAVL());
-  // assert(bt.checkBin());
 
   return 0;
 }
