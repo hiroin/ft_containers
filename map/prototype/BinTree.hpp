@@ -95,6 +95,7 @@ public:
 
   BinTreeNode<T> *getRoot();
   
+  void deleteTree(BinTreeNode<T> *node);
   bool search(T data);
   bool append(T data);
   bool erase(T data);
@@ -153,39 +154,29 @@ BinTree<T, _Alloc>::BinTree() {
 
 template <typename T, typename _Alloc>
 BinTree<T, _Alloc>::~BinTree() {
-  std::queue<struct BinTreeNode<T> *> queue;
 
   if (root == nullNode) {
     alloc_.destroy(nullNode);
     alloc_.deallocate(nullNode, 1);
     return;
   }
-
-  if (root->LHS != nullNode) {
-    queue.push(root->LHS);
-  }
-  if (root->RHS != nullNode) {
-    queue.push(root->RHS);
-  }
-  while (!queue.empty()) {
-    struct BinTreeNode<T> *front = queue.front();
-    queue.pop();
-
-    if (front->LHS != nullNode) {
-      queue.push(front->LHS);
-    }
-    if (front->RHS != nullNode) {
-      queue.push(front->RHS);
-    }
-    alloc_.destroy(front);
-    alloc_.deallocate(front, 1);
-  }
+  deleteTree(root);
   alloc_.destroy(nullNode);
   alloc_.deallocate(nullNode, 1);
-  alloc_.destroy(root);
-  alloc_.deallocate(root, 1);
 }
-  
+
+
+template <typename T, typename _Alloc>
+void BinTree<T, _Alloc>::deleteTree(BinTreeNode<T> *node) {
+
+  if (node == nullNode)
+    return;
+  deleteTree(node->RHS);
+  deleteTree(node->LHS);
+  alloc_.destroy(node);
+  alloc_.deallocate(node, 1);
+}
+
 // getter
 template <typename T, typename _Alloc>
 BinTreeNode<T> *BinTree<T, _Alloc>::getRoot() {
