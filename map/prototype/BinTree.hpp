@@ -2,6 +2,7 @@
 #include <iostream>
 #include <queue>
 #include "iterator.hpp"
+#include "ft_pair.hpp"
 
 namespace ft
 {
@@ -85,30 +86,36 @@ template <typename _Val> struct BinTreeNode {
   _Link_type RHS;
   int height;
   int bias;
+
+  BinTreeNode()
+    : Parent(NULL), LHS(NULL), RHS(NULL), height(1), bias(0) {}
+  BinTreeNode(_Val data)
+    : data(data), Parent(NULL), LHS(NULL), RHS(NULL), height(1), bias(0) {}
+
 };
 
-// template<typename _Key, typename _Val, typename _Compare
-//   , typename = std::allocator<std::pair<const _Key, _Val> > >
-template<typename T, typename _Alloc = std::allocator<BinTreeNode<T> > >
+template<typename _Key, typename _Tp, typename _Compare = std::less<_Key>
+  , typename _Alloc = std::allocator<BinTreeNode<ft::pair<const _Key, _Tp> > > >
+// template<typename T, typename _Alloc = std::allocator<value_type > >
 class BinTree {
  public:
-  typedef _Key               key_type;
-  typedef _Val               value_type;
-  typedef value_type*        pointer;
-  typedef const value_type*  const_pointer;
-  typedef value_type&        reference;
-  typedef const value_type&  const_reference;
-  typedef size_t             size_type;
-  typedef std::ptrdiff_t     difference_type;
-  typedef _Alloc             allocator_type;
+  typedef _Key                       key_type;
+  typedef _Tp                        mapped_type;
+  typedef ft::pair<const _Key, _Tp>  value_type;
+  typedef value_type*                pointer;
+  typedef const value_type*          const_pointer;
+  typedef value_type&                reference;
+  typedef const value_type&          const_reference;
+  typedef size_t                     size_type;
+  typedef std::ptrdiff_t             difference_type;
+  typedef _Alloc                     allocator_type;
+
+  typedef BinTreeNode<value_type>    node_type;
+  typedef node_type*                 node_pointer;
 
   BinTree() {
     nullNode = alloc_.allocate(1);
-    alloc_.construct(nullNode, BinTreeNode<T>());
-    nullNode->LHS = NULL;
-    nullNode->RHS = NULL;
-    nullNode->Parent = NULL;
-    nullNode->height = 0;
+    alloc_.construct(nullNode, node_type());
     root = nullNode;
   }
 
@@ -123,12 +130,12 @@ class BinTree {
     alloc_.deallocate(nullNode, 1);
   }
 
-  BinTreeNode<T> getRoot() {
+  node_pointer getRoot() {
     return root;
   }
 
-  void deleteTree(BinTreeNode<T> *node) {
-    if (node == nullNode)
+  void deleteTree(node_pointer node) {
+    if (node == NULL)
       return;
     deleteTree(node->RHS);
     deleteTree(node->LHS);
@@ -139,20 +146,20 @@ class BinTree {
   //--------------------
   // search
   //--------------------
-  bool search(T data) {
-    struct BinTreeNode<T> *result = searchNode(root, data);
-    if (result == nullNode) {
+  bool search(node_pointer data) {
+    node_pointer result = searchNode(root, data);
+    if (result == NULL) {
       return false;
     }
     return true;
   }
 
-  BinTreeNode<T> *searchNode(struct BinTreeNode<T> *node, T data) {
-    if (node == nullNode) {
+  node_pointer searchNode(node_pointer node, node_type data) {
+    if (node == NULL) {
       return node;
     }
-    struct BinTreeNode<T> *tmp = node;
-    while (tmp != nullNode && tmp->data.first != data.first) {
+    node_pointer tmp = node;
+    while (tmp != NULL && tmp->data.first != data.first) {
       tmp = data.first < tmp->data.first ? tmp->LHS : tmp->RHS;
     }
     return tmp;
@@ -161,24 +168,24 @@ class BinTree {
   //--------------------
   // append
   //--------------------
-  bool append(T data) {
+  bool append(value_type data) {
     // initial append
     if (root == nullNode) {
-      // struct BinTreeNode<T> *newNode = new struct BinTreeNode<T>;
-      struct BinTreeNode<T> *newNode = alloc_.allocate(1);
-      alloc_.construct(newNode, BinTreeNode<T>());
-      newNode->data = data;
-      newNode->Parent = nullNode;
-      newNode->LHS = nullNode;
-      newNode->RHS = nullNode;
-      newNode->height = 1;
-      newNode->bias = 0;
-
+      // node_pointer newNode = new value_type;
+      node_pointer newNode = alloc_.allocate(1);
+      node_type tmpNode(data);
+      alloc_.construct(newNode, tmpNode);
+      // newNode->data = data;
+      // newNode->Parent = nullNode;
+      // newNode->LHS = nullNode;
+      // newNode->RHS = nullNode;
+      // newNode->height = 1;
+      // newNode->bias = 0;
       root = newNode;
       return true;
     }
 
-    struct BinTreeNode<T> *parent = searchParentNode(root, data);
+    node_pointer parent = searchParentNode(root, data);
 
     if (parent->data.first == data.first) {
       return false;
@@ -186,24 +193,26 @@ class BinTree {
 
     // 念の為のガード、ありえないパターン
     if (data.first < parent->data.first) {
-      if (parent->LHS != nullNode) {
+      if (parent->LHS != NULL) {
         return false;
       }
     } else {
-      if (parent->RHS != nullNode) {
+      if (parent->RHS != NULL) {
         return false;
       }
     }
 
-    // struct BinTreeNode<T> *newNode = new struct BinTreeNode<T>;
-    struct BinTreeNode<T> *newNode = alloc_.allocate(1);
-    alloc_.construct(newNode, BinTreeNode<T>());  
-    newNode->data = data;
-    newNode->Parent = parent;
-    newNode->LHS = nullNode;
-    newNode->RHS = nullNode;
-    newNode->height = 1;
-    newNode->bias = 0;
+    // node_pointer newNode = new value_type;
+    node_pointer newNode = alloc_.allocate(1);
+    node_type tmpNode(data);
+    alloc_.construct(newNode, tmpNode);
+    // alloc_.construct(newNode, node_type());  
+    // newNode->data = data;
+    // newNode->Parent = parent;
+    // newNode->LHS = nullNode;
+    // newNode->RHS = nullNode;
+    // newNode->height = 1;
+    // newNode->bias = 0;
 
     if (data.first < parent->data.first) {
       parent->LHS = newNode;
@@ -217,16 +226,16 @@ class BinTree {
   }
 
   // return parent node's pointer whose child will have "data".
-  BinTreeNode<T> *searchParentNode(struct BinTreeNode<T> *node, T data) {
-    // if node is root or nullNode,return themself.
-    if (node->data.first == data.first || node == nullNode) {
+  node_pointer searchParentNode(node_pointer node, value_type data) {
+    // if node is root or NULL,return themself.
+    if (node->data.first == data.first || node == NULL) {
       return node;
     }
-    struct BinTreeNode<T> *parent = node;
-    struct BinTreeNode<T> *canditate
+    node_pointer parent = node;
+    node_pointer canditate
       = data.first < node->data.first ? node->LHS : node->RHS;
 
-    while (canditate != nullNode && canditate->data.first != data.first) {
+    while (canditate != NULL && canditate->data.first != data.first) {
       parent = canditate;
       canditate = data.first < canditate->data.first
         ? canditate->LHS : canditate->RHS;
@@ -237,19 +246,19 @@ class BinTree {
   //--------------------
   // erase
   //--------------------
-  bool erase(T data) {
-    struct BinTreeNode<T> *deleteNode = searchNode(root, data);
+  bool erase(value_type data) {
+    node_pointer deleteNode = searchNode(root, data);
 
-    if (deleteNode == nullNode) {
+    if (deleteNode == NULL) {
       return false;
     }
-    if (deleteNode->LHS == nullNode) {
+    if (deleteNode->LHS == NULL) {
       Replace(deleteNode, deleteNode->RHS);
       BalanceE(deleteNode->RHS);
       alloc_.destroy(deleteNode);
       alloc_.deallocate(deleteNode, 1);
     } else {
-      struct BinTreeNode<T> *leftMaxNode = LeftMax(deleteNode);
+      node_pointer leftMaxNode = LeftMax(deleteNode);
       deleteNode->data = leftMaxNode->data;
       Replace(leftMaxNode, leftMaxNode->LHS);
       BalanceE(leftMaxNode->LHS);
@@ -259,28 +268,25 @@ class BinTree {
     return true;
   }
 
-  struct BinTreeNode<T> *LeftMax(struct BinTreeNode<T> *node) {
-    struct BinTreeNode<T> *leftMaxNode = node->LHS;
+  node_pointer LeftMax(node_pointer node) {
+    node_pointer leftMaxNode = node->LHS;
 
-    while (leftMaxNode->RHS != nullNode) {
+    while (leftMaxNode->RHS != NULL) {
       leftMaxNode = leftMaxNode->RHS;
     }
     return leftMaxNode;
   }
 
-
 private:
   allocator_type alloc_;
+  node_pointer root;
+  node_pointer nullNode;
 
-  struct BinTreeNode<T> *root;
-  struct BinTreeNode<T> *nullNode;
-  int animationCount;
-
-  int bias(struct BinTreeNode<T> *node) {
+  int bias(node_pointer node) {
     return node->LHS->height - node->RHS->height;
   }
 
-  void modHeight(struct BinTreeNode<T> *node) {
+  void modHeight(node_pointer node) {
     int lHeight = node->LHS->height;
     int rHeight = node->RHS->height;
     node->height = 1 + (lHeight > rHeight ? lHeight : rHeight);
@@ -288,8 +294,8 @@ private:
   }
 
   // after要素について、beforeの親からafterへのポインタをはる
-  void Replace(struct BinTreeNode<T> *before, struct BinTreeNode<T> *after) {
-    struct BinTreeNode<T> *parentNode = before->Parent;
+  void Replace(node_pointer before, node_pointer after) {
+    node_pointer parentNode = before->Parent;
     if (before == root) {
       root = after;
     } else if (parentNode->LHS == before) {
@@ -307,13 +313,13 @@ private:
   //      node            LHS
   //   LHS    Z   -->    X   node
   //  X   Y                 Y    Z
-  struct BinTreeNode<T> *RotateR(struct BinTreeNode<T> *node) {
-    struct BinTreeNode<T> *LHS = node->LHS;
-    struct BinTreeNode<T> *Y = node->LHS->RHS;
-    struct BinTreeNode<T> *partitionRoot = LHS;
+  node_pointer RotateR(node_pointer node) {
+    node_pointer LHS = node->LHS;
+    node_pointer Y = node->LHS->RHS;
+    node_pointer partitionRoot = LHS;
 
     node->LHS = Y;
-    if (Y != nullNode) {
+    if (Y != NULL) {
       Y->Parent = node;
     }
     partitionRoot->RHS = node;
@@ -328,7 +334,7 @@ private:
   // W      RHS          node     RHS
   //     LHS   Z  -->   W    X   Y   Z
   //    X   Y
-  struct BinTreeNode<T> *RotateRL(struct BinTreeNode<T> *node) {
+  node_pointer RotateRL(node_pointer node) {
     RotateR(node->RHS);
     return RotateL(node);
   }
@@ -336,13 +342,13 @@ private:
   //   node                RHS
   //  X    RHS   -->   node   Z
   //     Y    Z       X    Y
-  struct BinTreeNode<T> *RotateL(struct BinTreeNode<T> *node) {
-    struct BinTreeNode<T> *RHS = node->RHS;
-    struct BinTreeNode<T> *Y = node->RHS->LHS;
-    struct BinTreeNode<T> *partitionRoot = RHS;
+  node_pointer RotateL(node_pointer node) {
+    node_pointer RHS = node->RHS;
+    node_pointer Y = node->RHS->LHS;
+    node_pointer partitionRoot = RHS;
 
     node->RHS = Y;
-    if (Y != nullNode) {
+    if (Y != NULL) {
       Y->Parent = node;
     }
     partitionRoot->LHS = node;
@@ -357,7 +363,7 @@ private:
   //   LHS      Z      LHS     node
   //  W   RHS     --> W   X   Y    Z
   //     X   Y
-  struct BinTreeNode<T> *RotateLR(struct BinTreeNode<T> *node) {
+  node_pointer RotateLR(node_pointer node) {
     RotateL(node->LHS);
     return RotateR(node);
   }
@@ -365,11 +371,11 @@ private:
   //--------------------
   // balance
   //--------------------
-  void BalanceA(struct BinTreeNode<T> *node) {
-    struct BinTreeNode<T> *targetNode = node;
+  void BalanceA(node_pointer node) {
+    node_pointer targetNode = node;
 
-    while (targetNode->Parent != nullNode) {
-      struct BinTreeNode<T> *parentNode = targetNode->Parent;
+    while (targetNode->Parent != NULL) {
+      node_pointer parentNode = targetNode->Parent;
       int height = parentNode->height;
 
       // when target node is LHS
@@ -399,11 +405,11 @@ private:
     }
   }
 
-  void BalanceE(struct BinTreeNode<T> *node) {
-    struct BinTreeNode<T> *targetNode = node;
+  void BalanceE(node_pointer node) {
+    node_pointer targetNode = node;
 
-    while (targetNode->Parent != nullNode) {
-      struct BinTreeNode<T> *parentNode = targetNode->Parent;
+    while (targetNode->Parent != NULL) {
+      node_pointer parentNode = targetNode->Parent;
       int height = parentNode->height;
 
       // when objective node is RHS
@@ -441,8 +447,8 @@ private:
       printTree(root, 1);
   }
 
-  void printTree(BinTreeNode<T> *node, size_t depth) {
-    if (node == nullNode)
+  void printTree(node_pointer node, size_t depth) {
+    if (node == NULL)
       return;
     printTree(node->RHS, depth + 1);
     for (size_t i = 0; i < depth; i++) {
@@ -453,7 +459,7 @@ private:
     ++depth;
   }
 
-  void DumpNode(struct BinTreeNode<T> *node) {
+  void DumpNode(node_pointer node) {
     if (node == nullNode) {
       std::cout << "nullNode" << std::endl;
       return;
@@ -462,10 +468,10 @@ private:
               << ",bias:" << bias(node) << ",LHS:" << node->LHS->data.first
               << ",RHS:" << node->RHS->data.first << std::endl;
 
-    if (node->LHS == nullNode) {
+    if (node->LHS == NULL) {
       std::cout << "LHS is nullNode" << std::endl;
     }
-    if (node->RHS == nullNode) {
+    if (node->RHS == NULL) {
       std::cout << "RHS is nullNode" << std::endl;
     }
     if (node == root) {

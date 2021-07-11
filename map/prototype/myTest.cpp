@@ -52,7 +52,7 @@ int main(int argc, char const *argv[]) {
 
   std::cout << rand.size() << std::endl;
 
-  ft::BinTree<ft::pair<int, int> > bt;
+  ft::BinTree<int, int> bt;
 
   int search;
   ft::pair<int, int> p;
@@ -64,11 +64,11 @@ int main(int argc, char const *argv[]) {
 
   bt.print();
 
-  // for (int i = 0; i < node_n; i++) {
-  //   search = rand[i];
-  //   p = ft::make_pair(search, search);
-  //   bt.erase(p);
-  // }
+  for (int i = 0; i < node_n; i++) {
+    search = rand[i];
+    p = ft::make_pair(search, search);
+    bt.erase(p);
+  }
 
   return 0;
 }
