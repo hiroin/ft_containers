@@ -76,11 +76,13 @@ namespace ft
 //   _Base_ptr _M_node;
 // };
 
-template <typename T> struct BinTreeNode {
-  T data;
-  struct BinTreeNode<T> *Parent;
-  struct BinTreeNode<T> *LHS;
-  struct BinTreeNode<T> *RHS;
+template <typename _Val> struct BinTreeNode {
+  typedef BinTreeNode<_Val>* _Link_type;
+
+  _Val data;
+  _Link_type Parent;
+  _Link_type LHS;
+  _Link_type RHS;
   int height;
   int bias;
 };
@@ -90,7 +92,15 @@ template <typename T> struct BinTreeNode {
 template<typename T, typename _Alloc = std::allocator<BinTreeNode<T> > >
 class BinTree {
  public:
-  typedef _Alloc allocator_type;
+  typedef _Key               key_type;
+  typedef _Val               value_type;
+  typedef value_type*        pointer;
+  typedef const value_type*  const_pointer;
+  typedef value_type&        reference;
+  typedef const value_type&  const_reference;
+  typedef size_t             size_type;
+  typedef std::ptrdiff_t     difference_type;
+  typedef _Alloc             allocator_type;
 
   BinTree() {
     nullNode = alloc_.allocate(1);
