@@ -64,21 +64,32 @@ int main(int argc, char const *argv[]) {
   ft::pair<int, int> p;
   for (int i = 0; i < node_n; i++) {
     // search = rand[i];
-    search = 10 - i;
+    search = 30 - i * 4;
     std::cout << "append: " << search << std::endl;
     p = ft::make_pair(search, search);
     bt.append(p);
   }
+  bt.append(ft::make_pair(28, 28));
+  bt.append(ft::make_pair(32, 32));
+  bt.append(ft::make_pair(25, 25));
+  bt.append(ft::make_pair(26, 26));
+  bt.append(ft::make_pair(24, 24));
   std::cout << "------------------------" << std::endl;
 
   bt.print();
 
+  p = ft::make_pair(26, 26);
+  bt.erase(p);
+
   for (int i = 0; i < node_n; i++) {
-    search = rand[i];
-    // search = 10 - i;
+    // search = rand[i];
+    search = 10 - i;
     p = ft::make_pair(search, search);
     // bt.erase(p);
   }
+  std::cout << "------------------------" << std::endl;
+  bt.print();
+
 
   return 0;
 }

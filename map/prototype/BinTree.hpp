@@ -161,7 +161,7 @@ class BinTree {
   }
 
   node_pointer searchNode(node_pointer node, value_type data) {
-    if (node == NULL) {
+    if (node == nullNode) {
       return node;
     }
     node_pointer tmp = node;
@@ -259,8 +259,7 @@ class BinTree {
   // bool erase(value_type data) {
   bool erase(value_type data) {
     node_pointer deleteNode = searchNode(root, data);
-
-    if (deleteNode == NULL) {
+    if (deleteNode == NULL || deleteNode == nullNode) {
       return false;
     }
     // LHSもRHSもNULLの場合
@@ -299,19 +298,20 @@ class BinTree {
     // RHSもLHSもいる場合
     } else {
       node_pointer leftMaxNode = LeftMax(deleteNode);
+      pointer tmp = deleteNode->data;
       deleteNode->data = leftMaxNode->data;
       if (leftMaxNode->LHS == NULL) {
         if (leftMaxNode->Parent->LHS == leftMaxNode)
-          leftMaxNode->LHS = NULL;
+          leftMaxNode->Parent->LHS = NULL;
         if (leftMaxNode->Parent->RHS == leftMaxNode)
-          leftMaxNode->RHS = NULL;
+          leftMaxNode->Parent->RHS = NULL;
         BalanceE(leftMaxNode->Parent);
       } else {
         Replace(leftMaxNode, leftMaxNode->LHS);
         BalanceE(leftMaxNode->LHS);
       }
-      val_alloc_.destroy(leftMaxNode->data);
-      val_alloc_.deallocate(leftMaxNode->data, 1);
+      val_alloc_.destroy(tmp);
+      val_alloc_.deallocate(tmp, 1);
       alloc_.destroy(leftMaxNode);
       alloc_.deallocate(leftMaxNode, 1);
 
