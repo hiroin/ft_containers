@@ -78,9 +78,9 @@ namespace ft
 // };
 
 template <typename _Val> struct BinTreeNode {
-  typedef BinTreeNode<_Val>* _Link_type;
+  typedef BinTreeNode<_Val>*   _Link_type;
 
-  _Val data;
+  _Val *data;
   _Link_type Parent;
   _Link_type LHS;
   _Link_type RHS;
@@ -88,14 +88,16 @@ template <typename _Val> struct BinTreeNode {
   int bias;
 
   BinTreeNode()
-    : Parent(NULL), LHS(NULL), RHS(NULL), height(1), bias(0) {}
-  BinTreeNode(_Val data)
-    : data(data), Parent(NULL), LHS(NULL), RHS(NULL), height(1), bias(0) {}
+    : data(NULL), Parent(NULL), LHS(NULL), RHS(NULL), height(1), bias(0) {}
+  BinTreeNode(_Val *val)
+    : data(val), Parent(NULL), LHS(NULL), RHS(NULL), height(1), bias(0) {
+  }
+  ~BinTreeNode() {}
 
 };
 
 template<typename _Key, typename _Tp, typename _Compare = std::less<_Key>
-  , typename _Alloc = std::allocator<BinTreeNode<ft::pair<const _Key, _Tp> > > >
+  , typename _Alloc = std::allocator<ft::pair<const _Key, _Tp> > >
 // template<typename T, typename _Alloc = std::allocator<value_type > >
 class BinTree {
  public:
@@ -112,6 +114,8 @@ class BinTree {
 
   typedef BinTreeNode<value_type>    node_type;
   typedef node_type*                 node_pointer;
+  typedef std::allocator<BinTreeNode<ft::pair<const _Key, _Tp> > > 
+    node_allocator_type;
 
   BinTree() {
     nullNode = alloc_.allocate(1);
@@ -139,6 +143,8 @@ class BinTree {
       return;
     deleteTree(node->RHS);
     deleteTree(node->LHS);
+    val_alloc_.destroy(node->data);
+    val_alloc_.deallocate(node->data, 1);
     alloc_.destroy(node);
     alloc_.deallocate(node, 1);
   }
@@ -159,8 +165,8 @@ class BinTree {
       return node;
     }
     node_pointer tmp = node;
-    while (tmp != NULL && tmp->data.first != data.first) {
-      tmp = data.first < tmp->data.first ? tmp->LHS : tmp->RHS;
+    while (tmp != NULL && tmp->data->first != data.first) {
+      tmp = data.first < tmp->data->first ? tmp->LHS : tmp->RHS;
     }
     return tmp;
   }
@@ -173,7 +179,9 @@ class BinTree {
     if (root == nullNode) {
       // node_pointer newNode = new value_type;
       node_pointer newNode = alloc_.allocate(1);
-      node_type tmpNode(data);
+      pointer newVal = val_alloc_.allocate(1);
+      val_alloc_.construct(newVal, data);
+      node_type tmpNode(newVal);
       alloc_.construct(newNode, tmpNode);
       // newNode->data = data;
       // newNode->Parent = nullNode;
@@ -187,12 +195,12 @@ class BinTree {
 
     node_pointer parent = searchParentNode(root, data);
 
-    if (parent->data.first == data.first) {
+    if (parent->data->first == data.first) {
       return false;
     }
 
     // 念の為のガード、ありえないパターン
-    if (data.first < parent->data.first) {
+    if (data.first < parent->data->first) {
       if (parent->LHS != NULL) {
         return false;
       }
@@ -203,18 +211,20 @@ class BinTree {
     }
 
     // node_pointer newNode = new value_type;
+    pointer newVal = val_alloc_.allocate(1);
+    val_alloc_.construct(newVal, data);
     node_pointer newNode = alloc_.allocate(1);
-    node_type tmpNode(data);
+    node_type tmpNode(newVal);
     alloc_.construct(newNode, tmpNode);
     // alloc_.construct(newNode, node_type());  
     // newNode->data = data;
-    // newNode->Parent = parent;
+    newNode->Parent = parent;
     // newNode->LHS = nullNode;
     // newNode->RHS = nullNode;
     // newNode->height = 1;
     // newNode->bias = 0;
 
-    if (data.first < parent->data.first) {
+    if (data.first < parent->data->first) {
       parent->LHS = newNode;
       BalanceA(parent->LHS);
     } else {
@@ -228,16 +238,16 @@ class BinTree {
   // return parent node's pointer whose child will have "data".
   node_pointer searchParentNode(node_pointer node, value_type data) {
     // if node is root or NULL,return themself.
-    if (node->data.first == data.first || node == NULL) {
+    if (node->data->first == data.first || node == NULL) {
       return node;
     }
     node_pointer parent = node;
     node_pointer canditate
-      = data.first < node->data.first ? node->LHS : node->RHS;
+      = data.first < node->data->first ? node->LHS : node->RHS;
 
-    while (canditate != NULL && canditate->data.first != data.first) {
+    while (canditate != NULL && canditate->data->first != data.first) {
       parent = canditate;
-      canditate = data.first < canditate->data.first
+      canditate = data.first < canditate->data->first
         ? canditate->LHS : canditate->RHS;
     }
     return parent;
@@ -253,53 +263,86 @@ class BinTree {
     if (deleteNode == NULL) {
       return false;
     }
-    if (deleteNode->LHS == NULL) {
-      if (deleteNode->RHS != NULL)
-      {
-        Replace(deleteNode, deleteNode->RHS);
-        BalanceE(deleteNode->RHS);
-      }
+    // LHSもRHSもNULLの場合
+    if (deleteNode->LHS == NULL && deleteNode->RHS == NULL) {
+      node_pointer deleteParentNode = searchParentNode(root, data);
+      if (deleteParentNode->LHS == deleteNode)
+        deleteParentNode->LHS = NULL;
+      if (deleteParentNode->RHS == deleteNode)
+        deleteParentNode->RHS = NULL;
+      val_alloc_.destroy(deleteNode->data);
+      val_alloc_.deallocate(deleteNode->data, 1);
       alloc_.destroy(deleteNode);
       alloc_.deallocate(deleteNode, 1);
       if (deleteNode == root)
         root = nullNode;
-    } else {
-      node_pointer leftMaxNode = LeftMax(deleteNode);
-      // deleteNode->data = leftMaxNode->data;
-      // std::swap(deleteNode->data, leftMaxNode->data);
-      // Replace(leftMaxNode, leftMaxNode->LHS);
-      // BalanceE(leftMaxNode->LHS);
-      // alloc_.destroy(leftMaxNode);
-      // alloc_.deallocate(leftMaxNode, 1);
-
-      // leftMaxNodeの親と子のリンク張替え
-      if (leftMaxNode->LHS)
-      {
-        leftMaxNode->LHS->Parent = leftMaxNode->Parent;
-        leftMaxNode->Parent->RHS = leftMaxNode->LHS;
-      }
-
-      // deleteNodeの位置にleftMaxNodeを移動
-      leftMaxNode->Parent = deleteNode->Parent;
-      leftMaxNode->LHS = deleteNode->LHS;
-      leftMaxNode->RHS = deleteNode->RHS;
-
-      // 移動したleftMaxNodeに親と子からリンクを設定
-      if (deleteNode->LHS)
-        deleteNode->LHS->Parent = leftMaxNode;
-      if (deleteNode->RHS)
-        deleteNode->RHS->Parent = leftMaxNode;
-      if (deleteNode->Parent)
-      {
-        if (deleteNode->Parent->LHS == deleteNode)
-          deleteNode->Parent->LHS = leftMaxNode;
-        if (deleteNode->Parent->RHS == deleteNode)
-          deleteNode->Parent->RHS = leftMaxNode;
-      }
-      BalanceE(leftMaxNode->LHS);
+    // LHSがNULLの場合
+    } else if (deleteNode->LHS == NULL) {
+      Replace(deleteNode, deleteNode->RHS);
+      BalanceE(deleteNode->RHS);
+      val_alloc_.destroy(deleteNode->data);
+      val_alloc_.deallocate(deleteNode->data, 1);
       alloc_.destroy(deleteNode);
       alloc_.deallocate(deleteNode, 1);
-      deleteNode = NULL;
+      if (deleteNode == root)
+        root = deleteNode->RHS;
+    // RHSがNULLの場合
+    } else if (deleteNode->RHS == NULL) {
+      Replace(deleteNode, deleteNode->LHS);
+      BalanceE(deleteNode->LHS);
+      val_alloc_.destroy(deleteNode->data);
+      val_alloc_.deallocate(deleteNode->data, 1);
+      alloc_.destroy(deleteNode);
+      alloc_.deallocate(deleteNode, 1);
+      if (deleteNode == root)
+        root = deleteNode->LHS;
+    // RHSもLHSもいる場合
+    } else {
+      node_pointer leftMaxNode = LeftMax(deleteNode);
+      deleteNode->data = leftMaxNode->data;
+      if (leftMaxNode->LHS == NULL) {
+        if (leftMaxNode->Parent->LHS == leftMaxNode)
+          leftMaxNode->LHS = NULL;
+        if (leftMaxNode->Parent->RHS == leftMaxNode)
+          leftMaxNode->RHS = NULL;
+        BalanceE(leftMaxNode->Parent);
+      } else {
+        Replace(leftMaxNode, leftMaxNode->LHS);
+        BalanceE(leftMaxNode->LHS);
+      }
+      val_alloc_.destroy(leftMaxNode->data);
+      val_alloc_.deallocate(leftMaxNode->data, 1);
+      alloc_.destroy(leftMaxNode);
+      alloc_.deallocate(leftMaxNode, 1);
+
+      // // leftMaxNodeの親と子のリンク張替え
+      // if (leftMaxNode->LHS)
+      // {
+      //   leftMaxNode->LHS->Parent = leftMaxNode->Parent;
+      //   leftMaxNode->Parent->RHS = leftMaxNode->LHS;
+      // }
+
+      // // deleteNodeの位置にleftMaxNodeを移動
+      // leftMaxNode->Parent = deleteNode->Parent;
+      // leftMaxNode->LHS = deleteNode->LHS;
+      // leftMaxNode->RHS = deleteNode->RHS;
+
+      // // 移動したleftMaxNodeに親と子からリンクを設定
+      // if (deleteNode->LHS)
+      //   deleteNode->LHS->Parent = leftMaxNode;
+      // if (deleteNode->RHS)
+      //   deleteNode->RHS->Parent = leftMaxNode;
+      // if (deleteNode->Parent)
+      // {
+      //   if (deleteNode->Parent->LHS == deleteNode)
+      //     deleteNode->Parent->LHS = leftMaxNode;
+      //   if (deleteNode->Parent->RHS == deleteNode)
+      //     deleteNode->Parent->RHS = leftMaxNode;
+      // }
+      // BalanceE(leftMaxNode->LHS);
+      // alloc_.destroy(deleteNode);
+      // alloc_.deallocate(deleteNode, 1);
+      // deleteNode = NULL;
     }
     return true;
   }
@@ -314,17 +357,28 @@ class BinTree {
   }
 
 private:
-  allocator_type alloc_;
+  allocator_type val_alloc_;
+  node_allocator_type alloc_;
   node_pointer root;
   node_pointer nullNode;
 
   int bias(node_pointer node) {
-    return node->LHS->height - node->RHS->height;
+    if (node->LHS == NULL) {
+      return - node->RHS->height;
+    } else if (node->RHS == NULL) {
+      return node->LHS->height;
+    } else {
+      return node->LHS->height - node->RHS->height;
+    }
   }
 
   void modHeight(node_pointer node) {
-    int lHeight = node->LHS->height;
-    int rHeight = node->RHS->height;
+    int lHeight = 0;
+    int rHeight = 0;
+    if (node->LHS != NULL)
+      lHeight = node->LHS->height;
+    if (node->RHS != NULL)
+      rHeight = node->RHS->height;
     node->height = 1 + (lHeight > rHeight ? lHeight : rHeight);
     node->bias = lHeight - rHeight;
   }
@@ -484,13 +538,13 @@ private:
   }
 
   void printTree(node_pointer node, size_t depth) {
-    if (node == NULL)
+    if (node == nullNode || node == NULL)
       return;
     printTree(node->RHS, depth + 1);
     for (size_t i = 0; i < depth; i++) {
-      std::cout << "";
+      std::cout << " ";
     }
-    std::cout << node->data.first << std::endl;
+    std::cout << node->data->first << std::endl;
     printTree(node->LHS, depth + 1);
     ++depth;
   }
@@ -500,9 +554,9 @@ private:
       std::cout << "nullNode" << std::endl;
       return;
     }
-    std::cout << "data:" << node->data.first << ",height:" << node->height
-              << ",bias:" << bias(node) << ",LHS:" << node->LHS->data.first
-              << ",RHS:" << node->RHS->data.first << std::endl;
+    std::cout << "data:" << node->data->first << ",height:" << node->height
+              << ",bias:" << bias(node) << ",LHS:" << node->LHS->data->first
+              << ",RHS:" << node->RHS->data->first << std::endl;
 
     if (node->LHS == NULL) {
       std::cout << "LHS is nullNode" << std::endl;

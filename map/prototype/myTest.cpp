@@ -24,6 +24,12 @@ bool genRand(int node_n) {
 }
 
 int main(int argc, char const *argv[]) {
+
+  // ft::pair<int, int> p1;
+  // p1 = ft::make_pair(1, 1);
+  // ft::BinTreeNode<ft::pair<int, int> > bt1(p1);
+  // return 0;
+
   if (argc < 1) {
     std::cout << "./a.out Node_N" << std::endl;
     exit(1);
@@ -59,17 +65,19 @@ int main(int argc, char const *argv[]) {
   for (int i = 0; i < node_n; i++) {
     // search = rand[i];
     search = 10 - i;
+    std::cout << "append: " << search << std::endl;
     p = ft::make_pair(search, search);
     bt.append(p);
   }
+  std::cout << "------------------------" << std::endl;
 
   bt.print();
 
   for (int i = 0; i < node_n; i++) {
-    // search = rand[i];
-    search = 10 - i;
+    search = rand[i];
+    // search = 10 - i;
     p = ft::make_pair(search, search);
-    bt.erase(p);
+    // bt.erase(p);
   }
 
   return 0;
