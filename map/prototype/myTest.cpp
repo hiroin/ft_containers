@@ -139,11 +139,17 @@ int main(int argc, char const *argv[]) {
     ft::BinTreeNode<ft::pair<const int, int> > *byn1 = bt.getRoot();
     std::cout << "root: " << byn1->data->first << std::endl;
     ft::_AVL_tree_iterator<ft::pair<const int, int> > itr(byn1);
+    ft::_AVL_tree_iterator<ft::pair<const int, int> > itr2(byn1);
     std::cout << itr->first << std::endl;
     std::cout << (*itr).first << std::endl;
+    ++itr2;
     itr++;
     std::cout << itr->first << std::endl;
+    if (itr2 == itr)
+      std::cout << "itr2 == itr" << std::endl;
     itr++;
+    if (itr2 != itr)
+      std::cout << "itr2 != itr" << std::endl;
     std::cout << itr->first << std::endl;
     itr++;
     std::cout << itr->first << std::endl;
