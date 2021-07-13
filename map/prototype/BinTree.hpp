@@ -47,7 +47,7 @@ struct _AVL_tree_iterator
 
   explicit
   _AVL_tree_iterator(_Base_ptr __x)
-  : _M_node(__x) { std::cout << _M_node->data->first << std::endl; }
+  : _M_node(__x) { }
 
   reference
   operator*() const
@@ -109,10 +109,10 @@ struct _AVL_tree_iterator
     {
       _Base_ptr __y = __x->Parent;
       while (__y != NULL && __x == __y->RHS) 
-        {
-          __x = __y;
-          __y = __y->Parent;
-        }
+      {
+        __x = __y;
+        __y = __y->Parent;
+      }
       if (__x->RHS != __y)
         __x = __y;
     }
@@ -131,6 +131,44 @@ struct _AVL_tree_iterator
   _AVL_tree_increment(const _Base_ptr __x) const
   {
     return local_AVL_tree_increment(const_cast<_Base_ptr>(__x));
+  }
+
+  _Base_ptr
+  local_AVL_tree_decrement(_Base_ptr __x)
+  {
+    _Base_ptr tmp = __x;
+    if (__x->LHS != NULL)
+    {
+      _Base_ptr __y = __x->LHS;
+      while (__y->RHS != NULL)
+        __y = __y->RHS;
+      __x = __y;
+    }
+    else
+    {
+      _Base_ptr __y = __x->Parent;
+      while (__y != NULL &&__x == __y->LHS)
+      {
+        __x = __y;
+        __y = __y->Parent;
+      }
+      __x = __y;
+    }
+    if (__x == NULL)
+      return tmp;    
+    return __x;
+  }
+
+  _Base_ptr
+  _AVL_tree_decrement(_Base_ptr __x)
+  {
+    return local_AVL_tree_decrement(__x);
+  }
+
+  const _Base_ptr
+  _AVL_tree_decrement(const _Base_ptr __x) const
+  {
+    return local_AVL_tree_decrement(const_cast<_Base_ptr>(__x));
   }
 
 };

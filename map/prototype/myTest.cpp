@@ -113,19 +113,17 @@ int main(int argc, char const *argv[]) {
   // }
 
   {
-    std::cout << "std---------------------" << std::endl;
-    std::pair<int,int> std_pair;
-    std_pair = std::make_pair(1,1);
-    std::map<int, int> std_map;
-    std_map.insert(std_pair);
-    std::map<int,int>::iterator std_itr;
-    std_itr = std_map.begin();
-    std::cout << (*std_itr).first << std::endl;
-    std_itr++;
-    std::cout << (*std_itr).first << std::endl;
-    std::cout << "------------------------" << std::endl;
-
-
+    // std::cout << "std---------------------" << std::endl;
+    // std::pair<int,int> std_pair;
+    // std_pair = std::make_pair(1,1);
+    // std::map<int, int> std_map;
+    // std_map.insert(std_pair);
+    // std::map<int,int>::iterator std_itr;
+    // std_itr = std_map.begin();
+    // std::cout << (*std_itr).first << std::endl;
+    // std_itr++;
+    // std::cout << (*std_itr).first << std::endl;
+    // std::cout << "------------------------" << std::endl;
     int search;
     ft::pair<int, int> p;
     for (int i = 0; i < node_n; i++) {
@@ -151,7 +149,39 @@ int main(int argc, char const *argv[]) {
     std::cout << itr->first << std::endl;
     itr++;
     std::cout << itr->first << std::endl;
-  }  
+  }
 
+  {
+    int search;
+    ft::pair<int, int> p;
+    for (int i = 0; i < node_n; i++) {
+      search = 10 - i;
+      std::cout << "append: " << search << std::endl;
+      p = ft::make_pair(search, search);
+      bt.append(p);
+    }
+    std::cout << "------------------------" << std::endl;
+    bt.print();
+    std::cout << "------------------------" << std::endl;
+
+    ft::BinTreeNode<ft::pair<const int, int> > *byn1 = bt.getRoot();
+    std::cout << "root: " << byn1->data->first << std::endl;
+    ft::_AVL_tree_iterator<ft::pair<const int, int> > itr(byn1);
+    std::cout << itr->first << std::endl;
+    itr--;
+    std::cout << itr->first << std::endl;
+    itr--;
+    std::cout << itr->first << std::endl;
+    itr--;
+    std::cout << itr->first << std::endl;
+    itr--;
+    std::cout << itr->first << std::endl;
+    itr--;
+    std::cout << itr->first << std::endl;
+    itr--;
+    std::cout << itr->first << std::endl;
+    itr--;
+    std::cout << itr->first << std::endl;
+  }
   return 0;
 }
