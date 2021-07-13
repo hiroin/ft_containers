@@ -65,7 +65,7 @@ struct _AVL_tree_iterator
   }
 
   _Self
-  operator++(int) _GLIBCXX_NOEXCEPT
+  operator++(int)
   {
     _Self __tmp = *this;
     _M_node = _AVL_tree_increment(_M_node);
@@ -73,14 +73,14 @@ struct _AVL_tree_iterator
   }
 
   _Self&
-  operator--() _GLIBCXX_NOEXCEPT
+  operator--()
   {
     _M_node = _AVL_tree_decrement(_M_node);
     return *this;
   }
 
   _Self
-  operator--(int) _GLIBCXX_NOEXCEPT
+  operator--(int)
   {
     _Self __tmp = *this;
     _M_node = _AVL_tree_decrement(_M_node);
@@ -155,7 +155,7 @@ struct _AVL_tree_iterator
       __x = __y;
     }
     if (__x == NULL)
-      return tmp;    
+      return tmp;
     return __x;
   }
 
@@ -172,6 +172,171 @@ struct _AVL_tree_iterator
   }
 
 };
+
+template<typename _Tp>
+struct _AVL_tree_const_iterator
+{
+  typedef _Tp  value_type;
+  typedef const _Tp& reference;
+  typedef const _Tp* pointer;
+
+  typedef _AVL_tree_iterator<_Tp> iterator;
+
+  typedef bidirectional_iterator_tag iterator_category;
+  typedef std::ptrdiff_t             difference_type;
+
+  typedef _AVL_tree_const_iterator<_Tp>    _Self;
+  typedef BinTreeNode<_Tp>*          _Base_ptr;
+
+  _Base_ptr _M_node;
+
+  _AVL_tree_const_iterator()
+  : _M_node() { }
+
+  explicit
+  _AVL_tree_const_iterator(_Base_ptr __x)
+  : _M_node(__x) { }
+
+  _AVL_tree_const_iterator(const iterator& __it)
+  : _M_node(__it._M_node) { }
+
+  iterator
+  _M_const_cast() const
+  { return iterator(const_cast<typename iterator::_Base_ptr>(_M_node)); }
+
+  reference
+  operator*() const
+  { return *_M_node->data; }
+
+  pointer
+  operator->() const
+  { return _M_node->data; }
+
+  _Self&
+  operator++()
+  {
+    _M_node = _AVL_tree_increment(_M_node);
+    return *this;
+  }
+
+  _Self
+  operator++(int)
+  {
+    _Self __tmp = *this;
+    _M_node = _AVL_tree_increment(_M_node);
+    return __tmp;
+  }
+
+  _Self&
+  operator--()
+  {
+    _M_node = _AVL_tree_decrement(_M_node);
+    return *this;
+  }
+
+  _Self
+  operator--(int)
+  {
+    _Self __tmp = *this;
+    _M_node = _AVL_tree_decrement(_M_node);
+    return __tmp;
+  }
+
+  bool
+  operator==(const _Self& __x)
+  { return _M_node == __x._M_node; }
+
+  bool
+  operator!=(const _Self& __x)
+  { return _M_node != __x._M_node; }
+
+  _Base_ptr
+  local_AVL_tree_increment(_Base_ptr __x)
+  {
+    _Base_ptr tmp = __x;
+    if (__x->RHS != NULL) 
+    {
+      __x = __x->RHS;
+      while (__x->LHS != 0)
+        __x = __x->LHS;
+    }
+    else 
+    {
+      _Base_ptr __y = __x->Parent;
+      while (__y != NULL && __x == __y->RHS) 
+      {
+        __x = __y;
+        __y = __y->Parent;
+      }
+      if (__x->RHS != __y)
+        __x = __y;
+    }
+    if (__x == NULL)
+      return tmp;
+    return __x;
+  }
+
+  _Base_ptr
+  _AVL_tree_increment(_Base_ptr __x)
+  {
+    return local_AVL_tree_increment(__x);
+  }
+
+  const _Base_ptr
+  _AVL_tree_increment(const _Base_ptr __x) const
+  {
+    return local_AVL_tree_increment(const_cast<_Base_ptr>(__x));
+  }
+
+  _Base_ptr
+  local_AVL_tree_decrement(_Base_ptr __x)
+  {
+    _Base_ptr tmp = __x;
+    if (__x->LHS != NULL)
+    {
+      _Base_ptr __y = __x->LHS;
+      while (__y->RHS != NULL)
+        __y = __y->RHS;
+      __x = __y;
+    }
+    else
+    {
+      _Base_ptr __y = __x->Parent;
+      while (__y != NULL &&__x == __y->LHS)
+      {
+        __x = __y;
+        __y = __y->Parent;
+      }
+      __x = __y;
+    }
+    if (__x == NULL)
+      return tmp;
+    return __x;
+  }
+
+  _Base_ptr
+  _AVL_tree_decrement(_Base_ptr __x)
+  {
+    return local_AVL_tree_decrement(__x);
+  }
+
+  const _Base_ptr
+  _AVL_tree_decrement(const _Base_ptr __x) const
+  {
+    return local_AVL_tree_decrement(const_cast<_Base_ptr>(__x));
+  }
+
+};
+
+template<typename _Val>
+bool operator==(const _AVL_tree_iterator<_Val>& __x,
+            const _AVL_tree_const_iterator<_Val>& __y)
+{ return __x._M_node == __y._M_node; }
+
+template<typename _Val>
+bool operator!=(const _AVL_tree_iterator<_Val>& __x,
+            const _AVL_tree_const_iterator<_Val>& __y)
+{ return __x._M_node != __y._M_node; }
 
 template<typename _Key, typename _Tp, typename _Compare = std::less<_Key>
   , typename _Alloc = std::allocator<ft::pair<const _Key, _Tp> > >

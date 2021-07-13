@@ -189,5 +189,40 @@ int main(int argc, char const *argv[]) {
     itr--;
     std::cout << itr->first << std::endl;
   }
+
+  {
+    int search;
+    ft::pair<int, int> p;
+    for (int i = 0; i < node_n; i++) {
+      search = 10 - i;
+      std::cout << "append: " << search << std::endl;
+      p = ft::make_pair(search, search);
+      bt.append(p);
+    }
+    std::cout << "------------------------" << std::endl;
+    bt.print();
+    std::cout << "------------------------" << std::endl;
+
+    ft::BinTreeNode<ft::pair<const int, int> > *byn1 = bt.getRoot();
+    std::cout << "root: " << byn1->data->first << std::endl;
+    ft::_AVL_tree_iterator<ft::pair<const int, int> > itr(byn1);
+    ft::_AVL_tree_const_iterator<ft::pair<const int, int> > citr(byn1);
+    std::cout << itr->first << std::endl;
+    std::cout << (*itr).first << std::endl;
+    citr++;
+    ++itr;
+    std::cout << itr->first << std::endl;
+    if (citr == itr)
+      std::cout << "citr == itr" << std::endl;
+    itr++;
+    if (citr != itr)
+      std::cout << "citr != itr" << std::endl;
+    ++citr;
+    std::cout << itr->first << std::endl;
+    itr++;
+    std::cout << itr->first << std::endl;
+    itr++;
+    std::cout << itr->first << std::endl;
+  }
   return 0;
 }
