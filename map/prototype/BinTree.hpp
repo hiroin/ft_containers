@@ -1,6 +1,5 @@
 #include <fstream>
 #include <iostream>
-#include <queue>
 #include "iterator.hpp"
 #include "ft_pair.hpp"
 
@@ -353,6 +352,11 @@ class BinTree {
   typedef size_t                     size_type;
   typedef std::ptrdiff_t             difference_type;
   typedef _Alloc                     allocator_type;
+
+  typedef _AVL_tree_iterator<value_type>        iterator;
+  typedef _AVL_tree_const_iterator<value_type>  const_iterator;
+  typedef ft::reverseIterator<iterator>         reverse_iterator;
+  typedef ft::reverseIterator<const_iterator>   const_reverse_iterator;
 
   typedef BinTreeNode<value_type>    node_type;
   typedef node_type*                 node_pointer;
