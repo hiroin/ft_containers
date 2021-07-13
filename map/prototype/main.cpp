@@ -33,4 +33,6 @@ int main()
   ft::pair<int, char> p6 = ft::make_pair(1, 'a');
   ft_print("p6", p6);
 
+  std::map<int,int>::iterator itr;
+
 }
