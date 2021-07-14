@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 13:37:31 by dnakano           #+#    #+#             */
-/*   Updated: 2021/07/13 12:07:45 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/14 04:18:21 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,19 @@ void test_map(int& test_no) {
       std::pair<int, std::string>(6, "foobar"),
       std::pair<int, std::string>(3, "norminette")};
   std::map<int, std::string> persons_map(persons, persons + 10);
+
+  ft::pair<int, std::string> ft_persons[10] = {
+      ft::pair<int, std::string>(7, "dnakano"),
+      ft::pair<int, std::string>(2, "nop"),
+      ft::pair<int, std::string>(4, "bunjiro"),
+      ft::pair<int, std::string>(0, "deedee"),
+      ft::pair<int, std::string>(9, "sataharu"),
+      ft::pair<int, std::string>(8, "marvin"),
+      ft::pair<int, std::string>(5, "hoge"),
+      ft::pair<int, std::string>(1, "fuga"),
+      ft::pair<int, std::string>(6, "foobar"),
+      ft::pair<int, std::string>(3, "norminette")};
+  ft::map<int, std::string> ft_persons_map(ft_persons, ft_persons + 10);
 
   std::pair<int, std::string> persons_sorted[10] = {
       std::pair<int, std::string>(0, "dnakano"),
@@ -100,33 +113,37 @@ void test_map(int& test_no) {
   try {
     std::map<int, std::string> std_map;
     ft::map<int, std::string> ft_map;
+    if (std_map.size() != ft_map.size()
+      || std_map.empty() != ft_map.empty()
+      || std_map.max_size() != ft_map.max_size()) {
+        std::cout << (std_map.size() != ft_map.size()) << std::endl;
+        std::cout << (std_map.empty() != ft_map.empty()) << std::endl;
+        std::cout << (std_map.max_size() != ft_map.max_size()) << std::endl;
+      throw std::runtime_error("size");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
+
+  putTestInfo(test_no, "map<int, string>: insert to map(0)");
+  try {
+    std::map<int, std::string> std_map;
+    ft::map<int, std::string> ft_map;
+
+    std_map.insert(persons[0]);
+    ft_map.insert(persons[0]);
+    if (std_map[7] != ft_map[7]) {
+      throw std::runtime_error("value");
+    }
     if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
         std_map.max_size() != ft_map.max_size()) {
       throw std::runtime_error("size");
     }
   } catch (std::exception& e) {
-    throw std::runtime_error("failed");
+    throw std::runtime_error(e.what());
   }
   std::cout << " => OK :)" << std::endl;
-
-  // putTestInfo(test_no, "map<int, string>: insert to map(0)");
-  // try {
-  //   std::map<int, std::string> std_map;
-  //   ft::map<int, std::string> ft_map;
-
-  //   std_map.insert(persons[0]);
-  //   ft_map.insert(persons[0]);
-  //   if (std_map[7] != ft_map[7]) {
-  //     throw std::runtime_error("value");
-  //   }
-  //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
-  //     throw std::runtime_error("size");
-  //   }
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error(e.what());
-  // }
-  // std::cout << " => OK :)" << std::endl;
 
   // putTestInfo(test_no, "map<int, string>: insert 2 to map(0)");
   // try {

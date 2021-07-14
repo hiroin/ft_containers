@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <limits>
 #include "iterator.hpp"
 #include "ft_pair.hpp"
 
@@ -365,7 +366,7 @@ class BinTree {
   typedef std::allocator<BinTreeNode<ft::pair<const _Key, _Tp> > > 
     node_allocator_type;
 
-  BinTree() {
+  BinTree() : size_(0) {
     nullNode = alloc_.allocate(1);
     alloc_.construct(nullNode, node_type());
     root = nullNode;
@@ -373,14 +374,8 @@ class BinTree {
 
   BinTree(const _Compare& __comp,
     const allocator_type& __a = allocator_type())
-    : comp_(__comp), val_alloc_(__a)
+    : val_alloc_(__a), comp_(__comp), size_(0)
   {
-    nullNode = alloc_.allocate(1);
-    alloc_.construct(nullNode, node_type());
-    root = nullNode;
-  }
-
-  BinTree(const _Compare& ) {
     nullNode = alloc_.allocate(1);
     alloc_.construct(nullNode, node_type());
     root = nullNode;
@@ -395,6 +390,22 @@ class BinTree {
     deleteTree(root);
     alloc_.destroy(nullNode);
     alloc_.deallocate(nullNode, 1);
+  }
+
+  bool empty() const {
+    return size_ == 0;
+  }
+
+  size_type size() const {
+    return size_;
+  }
+
+  size_type max_size() const {
+    return std::min(
+      std::numeric_limits<size_type>::max() /
+        (sizeof(value_type) + sizeof(node_pointer) * 4),
+      std::numeric_limits<size_type>::max() / (sizeof(value_type) * 2)
+    );
   }
 
   node_pointer getRoot() {
@@ -437,55 +448,44 @@ class BinTree {
   //--------------------
   // append
   //--------------------
-  bool append(value_type data) {
+  // bool append(value_type data) {
+  ft::pair<iterator, bool> append(value_type data) {
     // initial append
     if (root == nullNode) {
-      // node_pointer newNode = new value_type;
       node_pointer newNode = alloc_.allocate(1);
       pointer newVal = val_alloc_.allocate(1);
       val_alloc_.construct(newVal, data);
       node_type tmpNode(newVal);
       alloc_.construct(newNode, tmpNode);
-      // newNode->data = data;
-      // newNode->Parent = nullNode;
-      // newNode->LHS = nullNode;
-      // newNode->RHS = nullNode;
-      // newNode->height = 1;
-      // newNode->bias = 0;
       root = newNode;
-      return true;
+      ++size_;
+      // return true;
+      return ft::make_pair(iterator(root), true);
     }
 
     node_pointer parent = searchParentNode(root, data);
-
     if (parent->data->first == data.first) {
-      return false;
+      // return false;
+      return ft::make_pair(iterator(parent), false);
     }
 
     // 念の為のガード、ありえないパターン
-    if (data.first < parent->data->first) {
-      if (parent->LHS != NULL) {
-        return false;
-      }
-    } else {
-      if (parent->RHS != NULL) {
-        return false;
-      }
-    }
+    // if (data.first < parent->data->first) {
+    //   if (parent->LHS != NULL) {
+    //     return ft::make_pair(iterator(parent), false);
+    //   }
+    // } else {
+    //   if (parent->RHS != NULL) {
+    //     return ft::make_pair(iterator(parent), false>);
+    //   }
+    // }
 
-    // node_pointer newNode = new value_type;
     pointer newVal = val_alloc_.allocate(1);
     val_alloc_.construct(newVal, data);
     node_pointer newNode = alloc_.allocate(1);
     node_type tmpNode(newVal);
     alloc_.construct(newNode, tmpNode);
-    // alloc_.construct(newNode, node_type());  
-    // newNode->data = data;
     newNode->Parent = parent;
-    // newNode->LHS = nullNode;
-    // newNode->RHS = nullNode;
-    // newNode->height = 1;
-    // newNode->bias = 0;
 
     if (data.first < parent->data->first) {
       parent->LHS = newNode;
@@ -494,8 +494,8 @@ class BinTree {
       parent->RHS = newNode;
       BalanceA(parent->RHS);
     }
-
-    return true;
+    ++size_;
+    return ft::make_pair(iterator(newNode), true);
   }
 
   // return parent node's pointer whose child will have "data".
@@ -607,6 +607,7 @@ class BinTree {
       // alloc_.deallocate(deleteNode, 1);
       // deleteNode = NULL;
     }
+    --size_;
     return true;
   }
 
@@ -625,6 +626,7 @@ private:
   node_pointer root;
   node_pointer nullNode;
   _Compare comp_;
+  size_t size_;
 
   int bias(node_pointer node) {
     if (node->LHS == NULL) {

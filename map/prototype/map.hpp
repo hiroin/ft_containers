@@ -57,6 +57,22 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
     const allocator_type& __a = allocator_type())
     : _M_t(__comp, __a) { }
 
+  bool empty()
+  { return _M_t.empty(); }
+
+  size_type size()
+  { return _M_t.size(); }
+
+  size_type max_size() const
+  {
+    return _M_t.max_size();
+  }
+
+  ft::pair<iterator, bool> insert(const value_type& __x)
+  {
+    return _M_t.append(__x);
+  }
+
 };
 
 } // namespace ft
