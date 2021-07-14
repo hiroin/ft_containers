@@ -6,6 +6,7 @@
 #include <map>
 #include <cstdlib>
 #include "ft_pair.hpp"
+#include "map.hpp"
 
 #define FILENAME "rand.csv"
 
@@ -223,6 +224,9 @@ int main(int argc, char const *argv[]) {
     std::cout << itr->first << std::endl;
     itr++;
     std::cout << itr->first << std::endl;
+  }
+  {
+    ft::map<int, int> m;
   }
   return 0;
 }

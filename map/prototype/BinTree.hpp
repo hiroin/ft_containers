@@ -1,3 +1,6 @@
+#ifndef _FT_BINTREE_H_
+#define _FT_BINTREE_H_
+
 #include <fstream>
 #include <iostream>
 #include "iterator.hpp"
@@ -339,7 +342,6 @@ bool operator!=(const _AVL_tree_iterator<_Val>& __x,
 
 template<typename _Key, typename _Tp, typename _Compare = std::less<_Key>
   , typename _Alloc = std::allocator<ft::pair<const _Key, _Tp> > >
-// template<typename T, typename _Alloc = std::allocator<value_type > >
 class BinTree {
  public:
   typedef _Key                       key_type;
@@ -364,6 +366,21 @@ class BinTree {
     node_allocator_type;
 
   BinTree() {
+    nullNode = alloc_.allocate(1);
+    alloc_.construct(nullNode, node_type());
+    root = nullNode;
+  }
+
+  BinTree(const _Compare& __comp,
+    const allocator_type& __a = allocator_type())
+    : comp_(__comp), val_alloc_(__a)
+  {
+    nullNode = alloc_.allocate(1);
+    alloc_.construct(nullNode, node_type());
+    root = nullNode;
+  }
+
+  BinTree(const _Compare& ) {
     nullNode = alloc_.allocate(1);
     alloc_.construct(nullNode, node_type());
     root = nullNode;
@@ -607,6 +624,7 @@ private:
   node_allocator_type alloc_;
   node_pointer root;
   node_pointer nullNode;
+  _Compare comp_;
 
   int bias(node_pointer node) {
     if (node->LHS == NULL) {
@@ -817,3 +835,4 @@ private:
 };
 
 }
+#endif

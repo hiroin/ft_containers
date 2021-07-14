@@ -9,18 +9,33 @@ namespace ft
 {
 
 template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
-    typename _Alloc = std::allocator<std::pair<const _Key, _Tp> > >
+    typename _Alloc = std::allocator<ft::pair<const _Key, _Tp> > >
   class map
 {
  public:
   typedef _Key                        key_type;
   typedef _Tp                         mapped_type;
-  typedef std::pair<const _Key, _Tp>  value_type;
+  typedef ft::pair<const _Key, _Tp>   value_type;
   typedef _Compare                    key_compare;
   typedef _Alloc                      allocator_type;
+  typedef typename _Alloc::pointer          pointer;
+  typedef typename _Alloc::const_pointer    const_pointer;
+  typedef typename _Alloc::reference        reference;
+  typedef typename _Alloc::const_reference  const_reference;
 
  private:
   typedef typename _Alloc::value_type _Alloc_value_type;
+  typedef BinTree<key_type, mapped_type, key_compare, allocator_type> _AVL_type;
+
+  _AVL_type _M_t;
+
+ public:
+  typedef typename _AVL_type::iterator               iterator;
+  typedef typename _AVL_type::const_iterator         const_iterator;
+  typedef typename _AVL_type::size_type              size_type;
+  typedef typename _AVL_type::difference_type        difference_type;
+  typedef typename _AVL_type::reverse_iterator       reverse_iterator;
+  typedef typename _AVL_type::const_reverse_iterator const_reverse_iterator;
 
  public:
   class value_compare
@@ -36,6 +51,12 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
     bool operator()(const value_type& __x, const value_type& __y) const
     { return comp(__x.first, __y.first); }
   };
+
+  explicit
+  map(const _Compare& __comp = key_compare(),
+    const allocator_type& __a = allocator_type())
+    : _M_t(__comp, __a) { }
+
 };
 
 } // namespace ft
