@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 13:37:31 by dnakano           #+#    #+#             */
-/*   Updated: 2021/07/15 07:15:27 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/15 07:44:23 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void test_map(int& test_no) {
       ft::pair<int, std::string>(1, "fuga"),
       ft::pair<int, std::string>(6, "foobar"),
       ft::pair<int, std::string>(3, "norminette")};
-  // ft::map<int, std::string> ft_persons_map(ft_persons, ft_persons + 10);
+  ft::map<int, std::string> ft_persons_map(ft_persons, ft_persons + 10);
 
   std::pair<int, std::string> persons_sorted[10] = {
       std::pair<int, std::string>(0, "dnakano"),

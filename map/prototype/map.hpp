@@ -57,6 +57,13 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
     const allocator_type& __a = allocator_type())
     : _M_t(__comp, __a) { }
 
+  template<typename _InputIterator>
+  map(_InputIterator __first, _InputIterator __last,
+    const _Compare& __comp = key_compare(),
+    const allocator_type& __a = allocator_type())
+    : _M_t(__comp, __a)
+  { insert(__first, __last); }
+
   bool empty()
   { return _M_t.empty(); }
 
