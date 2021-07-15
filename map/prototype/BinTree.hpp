@@ -44,6 +44,8 @@ struct _AVL_tree_iterator
   typedef BinTreeNode<_Tp>*          _Base_ptr;
 
   _Base_ptr _M_node;
+  _Base_ptr lastNode_;
+  _Base_ptr nullNode_;
 
   _AVL_tree_iterator()
   : _M_node() { }
@@ -51,6 +53,10 @@ struct _AVL_tree_iterator
   explicit
   _AVL_tree_iterator(_Base_ptr __x)
   : _M_node(__x) { }
+
+  explicit
+  _AVL_tree_iterator(_Base_ptr __x, _Base_ptr lastNode, _Base_ptr nullNode)
+  : _M_node(__x), lastNode_(lastNode), nullNode_(nullNode) { }
 
   reference
   operator*() const
@@ -99,8 +105,24 @@ struct _AVL_tree_iterator
   { return _M_node != __x._M_node; }
 
   _Base_ptr
+  _AVL_tree_increment(_Base_ptr __x)
+  {
+    return local_AVL_tree_increment(__x);
+  }
+
+  const _Base_ptr
+  _AVL_tree_increment(const _Base_ptr __x) const
+  {
+    return local_AVL_tree_increment(const_cast<_Base_ptr>(__x));
+  }
+
+  _Base_ptr
   local_AVL_tree_increment(_Base_ptr __x)
   {
+    if (__x == lastNode_)
+      return nullNode_;
+    if (__x == nullNode_)
+      return nullNode_;
     _Base_ptr tmp = __x;
     if (__x->RHS != NULL) 
     {
@@ -125,20 +147,22 @@ struct _AVL_tree_iterator
   }
 
   _Base_ptr
-  _AVL_tree_increment(_Base_ptr __x)
+  _AVL_tree_decrement(_Base_ptr __x)
   {
-    return local_AVL_tree_increment(__x);
+    return local_AVL_tree_decrement(__x);
   }
 
   const _Base_ptr
-  _AVL_tree_increment(const _Base_ptr __x) const
+  _AVL_tree_decrement(const _Base_ptr __x) const
   {
-    return local_AVL_tree_increment(const_cast<_Base_ptr>(__x));
+    return local_AVL_tree_decrement(const_cast<_Base_ptr>(__x));
   }
 
   _Base_ptr
   local_AVL_tree_decrement(_Base_ptr __x)
   {
+    if (__x == nullNode_)
+      return lastNode_;
     _Base_ptr tmp = __x;
     if (__x->LHS != NULL)
     {
@@ -160,18 +184,6 @@ struct _AVL_tree_iterator
     if (__x == NULL)
       return tmp;
     return __x;
-  }
-
-  _Base_ptr
-  _AVL_tree_decrement(_Base_ptr __x)
-  {
-    return local_AVL_tree_decrement(__x);
-  }
-
-  const _Base_ptr
-  _AVL_tree_decrement(const _Base_ptr __x) const
-  {
-    return local_AVL_tree_decrement(const_cast<_Base_ptr>(__x));
   }
 
 };
@@ -367,21 +379,33 @@ class BinTree {
     node_allocator_type;
 
   BinTree() : size_(0) {
+    pointer newVal = val_alloc_.allocate(1);
+    val_alloc_.construct(newVal, value_type());
+    node_type tmpNode(newVal);
+
     nullNode = alloc_.allocate(1);
-    alloc_.construct(nullNode, node_type());
+    alloc_.construct(nullNode, tmpNode);
     root = nullNode;
+    lastNode_ = nullNode;
   }
 
   BinTree(const _Compare& __comp,
     const allocator_type& __a = allocator_type())
     : val_alloc_(__a), comp_(__comp), size_(0)
   {
+    pointer newVal = val_alloc_.allocate(1);
+    val_alloc_.construct(newVal, value_type());
+    node_type tmpNode(newVal);
+
     nullNode = alloc_.allocate(1);
-    alloc_.construct(nullNode, node_type());
+    alloc_.construct(nullNode, tmpNode);
     root = nullNode;
+    lastNode_ = nullNode;
   }
 
   ~BinTree() {
+    val_alloc_.destroy(nullNode->data);
+    val_alloc_.deallocate(nullNode->data, 1);
     if (root == nullNode) {
       alloc_.destroy(nullNode);
       alloc_.deallocate(nullNode, 1);
@@ -427,8 +451,21 @@ class BinTree {
     alloc_.deallocate(node, 1);
   }
 
-  // iterator end()
-  // { return iterator(&this->_M_impl._M_header); }
+  iterator begin() {
+    return iterator(getMinmumNode(root), lastNode_, nullNode);
+  }
+
+  const_iterator begin() const {
+    return const_iterator(getMinmumNode(root), lastNode_, nullNode);
+  }
+
+  iterator end() {
+    return iterator(nullNode, lastNode_, nullNode);
+  }
+
+  const_iterator end() const {
+    return const_iterator(nullNode, lastNode_, nullNode);
+  }
 
   //--------------------
   // search
@@ -475,11 +512,25 @@ class BinTree {
     return node;
   }
 
-  node_pointer maximum(node_pointer node) const {
+  void printMaximumNode() {
+    if (root != nullNode)
+      std::cout << getMaximumNode(root)->data->first << std::endl;
+  }
+
+  node_pointer getMaximumNode(node_pointer node) const {
     if (node == nullNode)
       return nullNode;
-    while (node->right != NULL) {
-      node = node->right;
+    while (node->RHS != NULL) {
+      node = node->RHS;
+    }
+    return node;
+  }
+
+  node_pointer getMinmumNode(node_pointer node) const {
+    if (node == nullNode)
+      return nullNode;
+    while (node->LHS != NULL) {
+      node = node->LHS;
     }
     return node;
   }
@@ -497,6 +548,7 @@ class BinTree {
       node_type tmpNode(newVal);
       alloc_.construct(newNode, tmpNode);
       root = newNode;
+      lastNode_ = newNode;
       ++size_;
       // return true;
       return ft::make_pair(iterator(root), true);
@@ -534,6 +586,7 @@ class BinTree {
       parent->RHS = newNode;
       BalanceA(parent->RHS);
     }
+    lastNode_ = getMaximumNode(root);
     ++size_;
     return ft::make_pair(iterator(newNode), true);
   }
@@ -654,6 +707,7 @@ class BinTree {
       // alloc_.deallocate(deleteNode, 1);
       // deleteNode = NULL;
     }
+    lastNode_ = getMaximumNode(root);
     --size_;
     return true;
   }
@@ -672,6 +726,7 @@ private:
   node_allocator_type alloc_;
   node_pointer root;
   node_pointer nullNode;
+  node_pointer lastNode_;
   _Compare comp_;
   size_t size_;
 

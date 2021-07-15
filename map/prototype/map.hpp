@@ -73,6 +73,18 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
   void insert(_InputIterator __first, _InputIterator __last)
   { _M_t.append(__first, __last); }
 
+  iterator begin()
+  { return _M_t.begin(); }
+
+  const_iterator begin() const
+  { return _M_t.begin(); }
+
+  iterator end()
+  { return _M_t.end(); }
+
+  const_iterator end() const
+  { return _M_t.end(); }
+
   iterator lower_bound(const key_type& __x)
   { return _M_t.lower_bound(__x); }
 
