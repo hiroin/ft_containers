@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 13:37:31 by dnakano           #+#    #+#             */
-/*   Updated: 2021/07/15 07:44:23 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/15 08:31:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,57 +145,59 @@ void test_map(int& test_no) {
   }
   std::cout << " => OK :)" << std::endl;
 
-  // putTestInfo(test_no, "map<int, string>: insert 2 to map(0)");
-  // try {
-  //   std::map<int, std::string> std_map;
-  //   ft::map<int, std::string> ft_map;
+  putTestInfo(test_no, "map<int, string>: insert 2 to map(0)");
+  try {
+    std::map<int, std::string> std_map;
+    ft::map<int, std::string> ft_map;
 
-  //   std_map.insert(persons[0]);
-  //   ft_map.insert(persons[0]);
-  //   std_map.insert(persons[1]);
-  //   ft_map.insert(persons[1]);
-  //   if (std_map[7] != ft_map[7]) {
-  //     throw std::runtime_error("value");
-  //   }
-  //   if (std_map[2] != ft_map[2]) {
-  //     throw std::runtime_error("value");
-  //   }
-  //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       0) {
-  //     throw std::runtime_error("size");
-  //   }
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error(e.what());
-  // }
-  // std::cout << " => OK :)" << std::endl;
+    std_map.insert(persons[0]);
+    ft_map.insert(ft_persons[0]);
+    std_map.insert(persons[1]);
+    ft_map.insert(ft_persons[1]);
+    if (std_map[7] != ft_map[7]) {
+      throw std::runtime_error("value");
+    }
+    if (std_map[2] != ft_map[2]) {
+      throw std::runtime_error("value");
+    }
+    if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
+        0) {
+      throw std::runtime_error("size");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
 
-  // putTestInfo(test_no, "map<int, string>: insert 10 to map(0)");
-  // try {
-  //   std::map<int, std::string> std_map;
-  //   ft::map<int, std::string> ft_map;
-  //   std::pair<std::map<int, std::string>::iterator, bool> std_res;
-  //   std::pair<ft::map<int, std::string>::iterator, bool> ft_res;
+  putTestInfo(test_no, "map<int, string>: insert 10 to map(0)");
+  try {
+    std::map<int, std::string> std_map;
+    ft::map<int, std::string> ft_map;
+    std::pair<std::map<int, std::string>::iterator, bool> std_res;
+    ft::pair<ft::map<int, std::string>::iterator, bool> ft_res;
 
-  //   for (int i = 0; i < 10; i++) {
-  //     std_res = std_map.insert(persons[i]);
-  //     ft_res = ft_map.insert(persons[i]);
-  //     if (*std_res.first != *ft_res.first || std_res.second != ft_res.second) {
-  //       throw std::runtime_error("return value");
-  //     }
-  //   }
-  //   for (int i = 0; i < 10; i++) {
-  //     if (std_map[i] != ft_map[i]) {
-  //       throw std::runtime_error("value");
-  //     }
-  //   }
-  //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       0) {
-  //     throw std::runtime_error("size");
-  //   }
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error(e.what());
-  // }
-  // std::cout << " => OK :)" << std::endl;
+    for (int i = 0; i < 10; i++) {
+      std_res = std_map.insert(persons[i]);
+      ft_res = ft_map.insert(ft_persons[i]);
+      // std::cout << std_res.first->first << std::endl;
+      if (std_res.first->first != ft_res.first->first
+        || std_res.second != ft_res.second) {
+        throw std::runtime_error("return value");
+      }
+    }
+    for (int i = 0; i < 10; i++) {
+      if (std_map[i] != ft_map[i]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
+        0) {
+      throw std::runtime_error("size");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
 
   // putTestInfo(test_no, "map<int, string>: insert 10 sorted to map(0)");
   // try {
