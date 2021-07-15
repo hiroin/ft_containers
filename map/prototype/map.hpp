@@ -91,8 +91,6 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
   const_iterator lower_bound(const key_type& __x) const
   { return _M_t.lower_bound(__x); }
 
-  // iterator end()
-  // { return _M_t.end(); }
 
   // mapped_type&
   // operator[](const key_type& __k)

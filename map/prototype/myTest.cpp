@@ -228,68 +228,68 @@ int main(int argc, char const *argv[]) {
   //   itr++;
   //   std::cout << itr->first << std::endl;
   // }
-  {
-    ft::map<int, std::string> ft_m;
-    std::map<int, std::string> std_m;
-    // std::cout << "ft  size():" << ft_m.size() << std::endl;
-    // std::cout << "std size():" << std_m.size() << std::endl;
-    // std::cout << "ft  empty():" << ft_m.empty() << std::endl;
-    // std::cout << "std empty():" << std_m.empty() << std::endl;
-    // std::cout << "ft  max_size() :" << ft_m.max_size() << std::endl;
-    // std::cout << "std max_size() :" << std_m.max_size() << std::endl;
+  // {
+  //   ft::map<int, std::string> ft_m;
+  //   std::map<int, std::string> std_m;
+  //   // std::cout << "ft  size():" << ft_m.size() << std::endl;
+  //   // std::cout << "std size():" << std_m.size() << std::endl;
+  //   // std::cout << "ft  empty():" << ft_m.empty() << std::endl;
+  //   // std::cout << "std empty():" << std_m.empty() << std::endl;
+  //   // std::cout << "ft  max_size() :" << ft_m.max_size() << std::endl;
+  //   // std::cout << "std max_size() :" << std_m.max_size() << std::endl;
 
-    // ft::pair<ft::map<int, std::string>::iterator, bool> result
-    //   = ft_m.insert(ft::make_pair(7, "dnakano"));
-    // std::cout << result.first->first << std::endl;
-    // std::cout << result.second << std::endl;
-    // std::cout << ft_m.size() << std::endl;
-    // result = ft_m.insert(ft::make_pair(7, "dnakano"));    
-    // std::cout << result.first->first << std::endl;
-    // std::cout << result.second << std::endl;
-    // std::cout << ft_m.size() << std::endl;
+  //   // ft::pair<ft::map<int, std::string>::iterator, bool> result
+  //   //   = ft_m.insert(ft::make_pair(7, "dnakano"));
+  //   // std::cout << result.first->first << std::endl;
+  //   // std::cout << result.second << std::endl;
+  //   // std::cout << ft_m.size() << std::endl;
+  //   // result = ft_m.insert(ft::make_pair(7, "dnakano"));    
+  //   // std::cout << result.first->first << std::endl;
+  //   // std::cout << result.second << std::endl;
+  //   // std::cout << ft_m.size() << std::endl;
 
-    std_m.insert(std::make_pair(100,"one"));
-    std_m.insert(std::make_pair(200,"two"));
-    std_m.insert(std::make_pair(300,"three"));
-    std::map<int, std::string>::iterator itr = std_m.begin();
-    std::cout << "begin(): 100 : " <<  itr->first << std::endl;
-    ++itr;
-    std::cout << "++itr  : 200 : " <<  itr->first << std::endl;
-    ++itr;
-    std::cout << "++itr  : 300 : " <<  itr->first << std::endl;
-    ++itr;
-    std::cout << "end()  : ?   : " <<  itr->first << std::endl;
-    ++itr;
-    std::cout << "++itr  : ?   : " <<  itr->first << std::endl;
-    ++itr;
-    std::cout << "++itr  : ?   : " <<  itr->first << std::endl;
-    itr = std_m.end();
-    std::cout << "end()  : ?   : " <<  itr->first << std::endl;
-    --itr;
-    std::cout << "--itr  : 300 : " <<  itr->first << std::endl;
-    --itr;
-    std::cout << "--itr  : 200 : " <<  itr->first << std::endl;
-    --itr;
-    std::cout << "--itr  : 100 : " <<  itr->first << std::endl;
-    --itr;
-    std::cout << "--itr  : ?   : " <<  itr->first << std::endl;
-    ++itr;
-    std::cout << "++itr  : ? : " <<  itr->first << std::endl;
+  //   std_m.insert(std::make_pair(100,"one"));
+  //   std_m.insert(std::make_pair(200,"two"));
+  //   std_m.insert(std::make_pair(300,"three"));
+  //   std::map<int, std::string>::iterator itr = std_m.begin();
+  //   std::cout << "begin(): 100 : " <<  itr->first << std::endl;
+  //   ++itr;
+  //   std::cout << "++itr  : 200 : " <<  itr->first << std::endl;
+  //   ++itr;
+  //   std::cout << "++itr  : 300 : " <<  itr->first << std::endl;
+  //   ++itr;
+  //   std::cout << "end()  : ?   : " <<  itr->first << std::endl;
+  //   ++itr;
+  //   std::cout << "++itr  : ?   : " <<  itr->first << std::endl;
+  //   ++itr;
+  //   std::cout << "++itr  : ?   : " <<  itr->first << std::endl;
+  //   itr = std_m.end();
+  //   std::cout << "end()  : ?   : " <<  itr->first << std::endl;
+  //   --itr;
+  //   std::cout << "--itr  : 300 : " <<  itr->first << std::endl;
+  //   --itr;
+  //   std::cout << "--itr  : 200 : " <<  itr->first << std::endl;
+  //   --itr;
+  //   std::cout << "--itr  : 100 : " <<  itr->first << std::endl;
+  //   --itr;
+  //   std::cout << "--itr  : ?   : " <<  itr->first << std::endl;
+  //   ++itr;
+  //   std::cout << "++itr  : ? : " <<  itr->first << std::endl;
 
-    std::map<int, std::string>::iterator itr_null(NULL);
-    std::map<int, std::string>::iterator itr_end = std_m.end();
-    if (itr_null == itr_end)
-      std::cout << "itr_null == itr_end" << std::endl;
-    else
-      std::cout << "itr_null != itr_end" << std::endl;
-    ++itr_end;
-    --itr_end;
-    std::map<int, std::string>::iterator itr_end2 = std_m.end();
-    if (itr_end == itr_end2)
-      std::cout << "itr_end == itr_end2" << std::endl;
-    else
-      std::cout << "itr_end != itr_end2" << std::endl;
-  }
+  //   std::map<int, std::string>::iterator itr_null(NULL);
+  //   std::map<int, std::string>::iterator itr_end = std_m.end();
+  //   if (itr_null == itr_end)
+  //     std::cout << "itr_null == itr_end" << std::endl;
+  //   else
+  //     std::cout << "itr_null != itr_end" << std::endl;
+  //   ++itr_end;
+  //   --itr_end;
+  //   std::map<int, std::string>::iterator itr_end2 = std_m.end();
+  //   if (itr_end == itr_end2)
+  //     std::cout << "itr_end == itr_end2" << std::endl;
+  //   else
+  //     std::cout << "itr_end != itr_end2" << std::endl;
+  // }
 
   {
     std::cout << "------------------------" << std::endl;
@@ -297,27 +297,33 @@ int main(int argc, char const *argv[]) {
     ft_m.insert(ft::make_pair(100,"one"));
     ft_m.insert(ft::make_pair(200,"two"));
     ft_m.insert(ft::make_pair(300,"three"));
-    ft::map<int, std::string>::iterator itr = ft_m.begin();
-    std::cout << "begin(): 100 : " <<  itr->first << std::endl;
-    ++itr;
-    std::cout << "++itr  : 200 : " <<  itr->first << std::endl;
-    ++itr;
-    std::cout << "++itr  : 300 : " <<  itr->first << std::endl;
-    ++itr;
-    std::cout << "end()  : ?   : " <<  itr->first << std::endl;
-    --itr;
-    std::cout << "--itr  : 300 : " <<  itr->first << std::endl;
-    ++itr;
-    std::cout << "end()  : ?   : " <<  itr->first << std::endl;
+    // ft::map<int, std::string>::iterator itr = ft_m.begin();
+    // std::cout << "begin(): 100 : " <<  itr->first << std::endl;
+    // ++itr;
+    // std::cout << "++itr  : 200 : " <<  itr->first << std::endl;
+    // ++itr;
+    // std::cout << "++itr  : 300 : " <<  itr->first << std::endl;
+    // ++itr;
+    // std::cout << "end()  : ?   : " <<  itr->first << std::endl;
+    // --itr;
+    // std::cout << "--itr  : 300 : " <<  itr->first << std::endl;
+    // ++itr;
+    // std::cout << "end()  : ?   : " <<  itr->first << std::endl;
     ft::map<int, std::string>::iterator itr_end = ft_m.end();
-    if (itr == itr_end)
-      std::cout << "itr == itr_end" << std::endl;
+    // if (itr == itr_end)
+    //   std::cout << "itr == itr_end" << std::endl;
 
-    ft::map<int, std::string>::iterator itr_null(NULL);
-    if (itr_null == itr_end)
-      std::cout << "itr_null == itr_end" << std::endl;
-    else
-      std::cout << "itr_null != itr_end" << std::endl;
+    // ft::map<int, std::string>::iterator itr_null(NULL);
+    // if (itr_null == itr_end)
+    //   std::cout << "itr_null == itr_end" << std::endl;
+    // else
+    //   std::cout << "itr_null != itr_end" << std::endl;
+    std::cout << ft_m.lower_bound(0)->first << std::endl;
+    std::cout << ft_m.lower_bound(100)->first << std::endl;
+    std::cout << ft_m.lower_bound(150)->first << std::endl;
+    std::cout << ft_m.lower_bound(200)->first << std::endl;
+    std::cout << ft_m.lower_bound(350)->first << std::endl;
+    std::cout << ((ft_m.lower_bound(350)) == itr_end) << std::endl;
   }
 
 

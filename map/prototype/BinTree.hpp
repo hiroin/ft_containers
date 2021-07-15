@@ -204,6 +204,8 @@ struct _AVL_tree_const_iterator
   typedef BinTreeNode<_Tp>*          _Base_ptr;
 
   _Base_ptr _M_node;
+  _Base_ptr lastNode_;
+  _Base_ptr nullNode_;
 
   _AVL_tree_const_iterator()
   : _M_node() { }
@@ -268,6 +270,10 @@ struct _AVL_tree_const_iterator
   _Base_ptr
   local_AVL_tree_increment(_Base_ptr __x)
   {
+    if (__x == lastNode_)
+      return nullNode_;
+    if (__x == nullNode_)
+      return nullNode_;
     _Base_ptr tmp = __x;
     if (__x->RHS != NULL) 
     {
@@ -306,6 +312,8 @@ struct _AVL_tree_const_iterator
   _Base_ptr
   local_AVL_tree_decrement(_Base_ptr __x)
   {
+    if (__x == nullNode_)
+      return lastNode_;    
     _Base_ptr tmp = __x;
     if (__x->LHS != NULL)
     {
@@ -491,13 +499,13 @@ class BinTree {
 
   iterator lower_bound(const key_type& __x) {
     if (root == nullNode) {
-      return iterator(NULL);
+      return iterator(nullNode, lastNode_, nullNode);
     }
     node_pointer result = findLowerBound(root, __x);
-    // if (result == NULL)
-    //   return end();
-    // else
-      return iterator(result);
+    if (result == NULL)
+      return end();
+    else
+      return iterator(result, lastNode_, nullNode);
   }
 
   node_pointer findLowerBound(node_pointer node, const key_type& k) const {
@@ -507,7 +515,7 @@ class BinTree {
       node_pointer res = findLowerBound(node->LHS, k);
       return res ? res : node;
     } else if (comp_(node->data->first, k)) {
-      return findLowerBound(node->RHS_, k);
+      return findLowerBound(node->RHS, k);
     }
     return node;
   }
