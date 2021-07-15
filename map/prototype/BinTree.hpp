@@ -401,6 +401,10 @@ class BinTree {
   }
 
   size_type max_size() const {
+		return (std::min((size_type) std::numeric_limits<difference_type>::max(),
+						std::numeric_limits<size_type>::max() / (sizeof(node_type) + sizeof(pointer))));
+		return std::min<size_type>(alloc_.max_size(),
+				std::numeric_limits<difference_type>::max());
     return std::min(
       std::numeric_limits<size_type>::max() /
         (sizeof(value_type) + sizeof(node_pointer) * 4),
@@ -422,6 +426,9 @@ class BinTree {
     alloc_.destroy(node);
     alloc_.deallocate(node, 1);
   }
+
+  // iterator end()
+  // { return iterator(&this->_M_impl._M_header); }
 
   //--------------------
   // search
@@ -445,6 +452,38 @@ class BinTree {
     return tmp;
   }
 
+  iterator lower_bound(const key_type& __x) {
+    if (root == nullNode) {
+      return iterator(NULL);
+    }
+    node_pointer result = findLowerBound(root, __x);
+    // if (result == NULL)
+    //   return end();
+    // else
+      return iterator(result);
+  }
+
+  node_pointer findLowerBound(node_pointer node, const key_type& k) const {
+    if (node == NULL) {
+      return NULL;
+    } else if (comp_(k, node->data->first)) {
+      node_pointer res = findLowerBound(node->LHS, k);
+      return res ? res : node;
+    } else if (comp_(node->data->first, k)) {
+      return findLowerBound(node->RHS_, k);
+    }
+    return node;
+  }
+
+  node_pointer maximum(node_pointer node) const {
+    if (node == nullNode)
+      return nullNode;
+    while (node->right != NULL) {
+      node = node->right;
+    }
+    return node;
+  }
+
   //--------------------
   // append
   //--------------------
@@ -463,11 +502,12 @@ class BinTree {
       return ft::make_pair(iterator(root), true);
     }
 
-    node_pointer parent = searchParentNode(root, data);
-    if (parent->data->first == data.first) {
+    node_pointer samaNode = searchNode(root, data);
+    if (samaNode != NULL) {
       // return false;
-      return ft::make_pair(iterator(parent), false);
+      return ft::make_pair(iterator(samaNode), false);
     }
+    node_pointer parent = searchParentNode(root, data);
 
     // 念の為のガード、ありえないパターン
     // if (data.first < parent->data->first) {
@@ -514,6 +554,13 @@ class BinTree {
         ? canditate->LHS : canditate->RHS;
     }
     return parent;
+  }
+
+  template<typename _InputIterator>
+  void append(_InputIterator __first, _InputIterator __last) {
+    for (_InputIterator itr = __first; itr != __last; ++itr) {
+      append(*itr);
+    }
   }
 
   //--------------------

@@ -64,14 +64,33 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
   { return _M_t.size(); }
 
   size_type max_size() const
-  {
-    return _M_t.max_size();
-  }
+  { return _M_t.max_size(); }
 
   ft::pair<iterator, bool> insert(const value_type& __x)
-  {
-    return _M_t.append(__x);
-  }
+  { return _M_t.append(__x); }
+
+  template<typename _InputIterator>
+  void insert(_InputIterator __first, _InputIterator __last)
+  { _M_t.append(__first, __last); }
+
+  iterator lower_bound(const key_type& __x)
+  { return _M_t.lower_bound(__x); }
+
+  const_iterator lower_bound(const key_type& __x) const
+  { return _M_t.lower_bound(__x); }
+
+  // iterator end()
+  // { return _M_t.end(); }
+
+  // mapped_type&
+  // operator[](const key_type& __k)
+  // {
+  //   iterator __i = lower_bound(__k);
+  //   // __i->first is greater than or equivalent to __k.
+  //   if (__i == end() || key_comp()(__k, (*__i).first))
+  //     __i = insert(__i, value_type(__k, mapped_type()));
+  //   return (*__i).second;
+  // }
 
 };
 
