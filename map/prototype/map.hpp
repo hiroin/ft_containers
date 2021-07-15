@@ -91,16 +91,26 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
   const_iterator lower_bound(const key_type& __x) const
   { return _M_t.lower_bound(__x); }
 
+  mapped_type&
+  operator[](const key_type& __k)
+  {
+    iterator __i = lower_bound(__k);
+    // __i->first is greater than or equivalent to __k.
+    // if (__i == end() || key_comp()(__k, (*__i).first))
+    if (__i == end() || __k != (*__i).first)
+    {
+      // __i = insert(__i, value_type(__k, mapped_type()));
+      __i = insert(value_type(__k, mapped_type())).first;
+    }
+    return (*__i).second;
+  }
 
-  // mapped_type&
-  // operator[](const key_type& __k)
-  // {
-  //   iterator __i = lower_bound(__k);
-  //   // __i->first is greater than or equivalent to __k.
-  //   if (__i == end() || key_comp()(__k, (*__i).first))
-  //     __i = insert(__i, value_type(__k, mapped_type()));
-  //   return (*__i).second;
-  // }
+#ifdef DEBUG
+ public:
+  void print() {
+      _M_t.print();
+  }
+#endif
 
 };
 

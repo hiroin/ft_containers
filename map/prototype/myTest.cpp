@@ -324,6 +324,14 @@ int main(int argc, char const *argv[]) {
     std::cout << ft_m.lower_bound(200)->first << std::endl;
     std::cout << ft_m.lower_bound(350)->first << std::endl;
     std::cout << ((ft_m.lower_bound(350)) == itr_end) << std::endl;
+
+    std::cout << "ft_m[100]: " << ft_m[100] << std::endl;
+    std::cout << "ft_m[200]: " << ft_m[200] << std::endl;
+    std::cout << "ft_m[300]: " << ft_m[300] << std::endl;
+    std::cout << "ft_m[400]: " << ft_m[400] << std::endl;
+#ifdef DEBUG
+    ft_m.print();
+#endif
   }
 
 
@@ -340,6 +348,7 @@ int main(int argc, char const *argv[]) {
         ft::pair<int, std::string>(1, "fuga"),
         ft::pair<int, std::string>(6, "foobar"),
         ft::pair<int, std::string>(3, "norminette")};
+    ft_m.insert(ft_persons[0]);
     ft_m.insert(ft_persons, ft_persons + 10);
     // ft::map<int, std::string> ft_persons_map(ft_persons, ft_persons + 10);
   }

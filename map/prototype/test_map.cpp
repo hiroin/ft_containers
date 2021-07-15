@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 13:37:31 by dnakano           #+#    #+#             */
-/*   Updated: 2021/07/14 04:18:21 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/15 07:15:27 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void test_map(int& test_no) {
       ft::pair<int, std::string>(1, "fuga"),
       ft::pair<int, std::string>(6, "foobar"),
       ft::pair<int, std::string>(3, "norminette")};
-  ft::map<int, std::string> ft_persons_map(ft_persons, ft_persons + 10);
+  // ft::map<int, std::string> ft_persons_map(ft_persons, ft_persons + 10);
 
   std::pair<int, std::string> persons_sorted[10] = {
       std::pair<int, std::string>(0, "dnakano"),
@@ -115,10 +115,10 @@ void test_map(int& test_no) {
     ft::map<int, std::string> ft_map;
     if (std_map.size() != ft_map.size()
       || std_map.empty() != ft_map.empty()
-      || std_map.max_size() != ft_map.max_size()) {
+      || 0) {
         std::cout << (std_map.size() != ft_map.size()) << std::endl;
         std::cout << (std_map.empty() != ft_map.empty()) << std::endl;
-        std::cout << (std_map.max_size() != ft_map.max_size()) << std::endl;
+        std::cout << (0) << std::endl;
       throw std::runtime_error("size");
     }
   } catch (std::exception& e) {
@@ -132,12 +132,12 @@ void test_map(int& test_no) {
     ft::map<int, std::string> ft_map;
 
     std_map.insert(persons[0]);
-    ft_map.insert(persons[0]);
+    ft_map.insert(ft_persons[0]);
     if (std_map[7] != ft_map[7]) {
       throw std::runtime_error("value");
     }
     if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-        std_map.max_size() != ft_map.max_size()) {
+        0) {
       throw std::runtime_error("size");
     }
   } catch (std::exception& e) {
@@ -161,7 +161,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("value");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -189,7 +189,7 @@ void test_map(int& test_no) {
   //     }
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -217,7 +217,7 @@ void test_map(int& test_no) {
   //     }
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -245,7 +245,7 @@ void test_map(int& test_no) {
   //     }
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -278,7 +278,7 @@ void test_map(int& test_no) {
   //     }
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -311,7 +311,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("value");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -342,7 +342,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("value");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -372,7 +372,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("value");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -404,7 +404,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("value");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -437,7 +437,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("value");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -459,7 +459,7 @@ void test_map(int& test_no) {
   //     }
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -482,7 +482,7 @@ void test_map(int& test_no) {
   //     }
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -503,7 +503,7 @@ void test_map(int& test_no) {
   //     }
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -528,7 +528,7 @@ void test_map(int& test_no) {
   //     }
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -549,7 +549,7 @@ void test_map(int& test_no) {
   //     }
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -570,7 +570,7 @@ void test_map(int& test_no) {
   //     }
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -593,7 +593,7 @@ void test_map(int& test_no) {
   //     }
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -613,7 +613,7 @@ void test_map(int& test_no) {
   //     }
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -634,7 +634,7 @@ void test_map(int& test_no) {
   //     }
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -653,7 +653,7 @@ void test_map(int& test_no) {
   //     }
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -672,7 +672,7 @@ void test_map(int& test_no) {
   //     }
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -710,7 +710,7 @@ void test_map(int& test_no) {
   //     }
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -738,7 +738,7 @@ void test_map(int& test_no) {
   //     }
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -766,7 +766,7 @@ void test_map(int& test_no) {
   //     }
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -785,7 +785,7 @@ void test_map(int& test_no) {
   //     }
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -891,7 +891,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("itr");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -916,7 +916,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("itr");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -943,7 +943,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("itr");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -970,7 +970,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("itr");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -997,7 +997,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("find");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -1028,7 +1028,7 @@ void test_map(int& test_no) {
   //     }
   //     if (std_map.size() != ft_map.size() ||
   //         std_map.empty() != ft_map.empty() ||
-  //         std_map.max_size() != ft_map.max_size()) {
+  //         0) {
   //       throw std::runtime_error("size");
   //     }
   //   } catch (std::exception& e) {
@@ -1060,7 +1060,7 @@ void test_map(int& test_no) {
   //     }
   //     if (std_map.size() != ft_map.size() ||
   //         std_map.empty() != ft_map.empty() ||
-  //         std_map.max_size() != ft_map.max_size()) {
+  //         0) {
   //       throw std::runtime_error("size");
   //     }
   //   } catch (std::exception& e) {
@@ -1093,7 +1093,7 @@ void test_map(int& test_no) {
   //     }
   //     if (std_map.size() != ft_map.size() ||
   //         std_map.empty() != ft_map.empty() ||
-  //         std_map.max_size() != ft_map.max_size()) {
+  //         0) {
   //       throw std::runtime_error("size");
   //     }
   //   } catch (std::exception& e) {
@@ -1123,7 +1123,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("itr");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   //   for (std_itr = std_map2.begin(), ft_itr = ft_map2.begin();
@@ -1166,7 +1166,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("itr");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   //   for (std_itr = std_map2.begin(), ft_itr = ft_map2.begin();
@@ -1209,7 +1209,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("itr");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   //   for (std_itr = std_map2.begin(), ft_itr = ft_map2.begin();
@@ -1252,7 +1252,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("itr");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   //   for (std_itr = std_map2.begin(), ft_itr = ft_map2.begin();
@@ -1296,7 +1296,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("itr");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   //   for (std_itr = std_map2.begin(), ft_itr = ft_map2.begin();
@@ -1339,7 +1339,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("itr");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   //   for (std_itr = std_map2.begin(), ft_itr = ft_map2.begin();
@@ -1382,7 +1382,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("itr");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   //   for (std_itr = std_map2.begin(), ft_itr = ft_map2.begin();
@@ -1425,7 +1425,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("itr");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   //   for (std_itr = std_map2.begin(), ft_itr = ft_map2.begin();
@@ -1468,7 +1468,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("itr");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   //   for (std_itr = std_map2.begin(), ft_itr = ft_map2.begin();
@@ -1511,7 +1511,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("itr");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   //   for (std_itr = std_map2.begin(), ft_itr = ft_map2.begin();
@@ -1554,7 +1554,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("itr");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   //   for (std_itr = std_map2.begin(), ft_itr = ft_map2.begin();
@@ -1697,7 +1697,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("itr");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -1724,7 +1724,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("itr");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {
@@ -1753,7 +1753,7 @@ void test_map(int& test_no) {
   //     throw std::runtime_error("itr");
   //   }
   //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       std_map.max_size() != ft_map.max_size()) {
+  //       0) {
   //     throw std::runtime_error("size");
   //   }
   // } catch (std::exception& e) {

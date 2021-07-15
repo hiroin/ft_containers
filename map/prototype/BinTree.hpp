@@ -562,10 +562,10 @@ class BinTree {
       return ft::make_pair(iterator(root), true);
     }
 
-    node_pointer samaNode = searchNode(root, data);
-    if (samaNode != NULL) {
+    node_pointer sameNode = searchNode(root, data);
+    if (sameNode != NULL) {
       // return false;
-      return ft::make_pair(iterator(samaNode), false);
+      return ft::make_pair(iterator(sameNode), false);
     }
     node_pointer parent = searchParentNode(root, data);
 
