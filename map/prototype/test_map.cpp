@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 13:37:31 by dnakano           #+#    #+#             */
-/*   Updated: 2021/07/15 08:31:02 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/18 17:48:42 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,20 @@ void test_map(int& test_no) {
   std::map<int, std::string> persons_sorted_map(persons_sorted,
                                                 persons_sorted + 10);
 
+  ft::pair<int, std::string> ft_persons_sorted[10] = {
+      ft::pair<int, std::string>(0, "dnakano"),
+      ft::pair<int, std::string>(1, "nop"),
+      ft::pair<int, std::string>(2, "bunjiro"),
+      ft::pair<int, std::string>(3, "deedee"),
+      ft::pair<int, std::string>(4, "sataharu"),
+      ft::pair<int, std::string>(5, "marvin"),
+      ft::pair<int, std::string>(6, "hoge"),
+      ft::pair<int, std::string>(7, "fuga"),
+      ft::pair<int, std::string>(8, "foobar"),
+      ft::pair<int, std::string>(9, "norminette")};
+  ft::map<int, std::string> ft_persons_sorted_map(ft_persons_sorted,
+                                                ft_persons_sorted + 10);
+
   std::pair<int, std::string> persons_revsorted[10] = {
       std::pair<int, std::string>(9, "dnakano"),
       std::pair<int, std::string>(8, "nop"),
@@ -83,6 +97,20 @@ void test_map(int& test_no) {
   std::map<int, std::string> persons_revsorted_map(persons_revsorted,
                                                    persons_revsorted + 10);
 
+  ft::pair<int, std::string> ft_persons_revsorted[10] = {
+      ft::pair<int, std::string>(9, "dnakano"),
+      ft::pair<int, std::string>(8, "nop"),
+      ft::pair<int, std::string>(7, "bunjiro"),
+      ft::pair<int, std::string>(6, "deedee"),
+      ft::pair<int, std::string>(5, "sataharu"),
+      ft::pair<int, std::string>(4, "marvin"),
+      ft::pair<int, std::string>(3, "hoge"),
+      ft::pair<int, std::string>(2, "fuga"),
+      ft::pair<int, std::string>(1, "foobar"),
+      ft::pair<int, std::string>(0, "norminette")};
+  ft::map<int, std::string> ft_persons_revsorted_map(ft_persons_revsorted,
+                                                   ft_persons_revsorted + 10);
+
   std::pair<Hoge, Hoge> hoges[10] = {
       std::pair<Hoge, Hoge>(Hoge(0, 7), Hoge(0, 0)),
       std::pair<Hoge, Hoge>(Hoge(1, 2), Hoge(1, 1)),
@@ -96,6 +124,19 @@ void test_map(int& test_no) {
       std::pair<Hoge, Hoge>(Hoge(9, 3), Hoge(9, 9))};
   std::map<Hoge, Hoge> hoges_map(hoges, hoges + 10);
 
+  ft::pair<Hoge, Hoge> ft_hoges[10] = {
+      ft::pair<Hoge, Hoge>(Hoge(0, 7), Hoge(0, 0)),
+      ft::pair<Hoge, Hoge>(Hoge(1, 2), Hoge(1, 1)),
+      ft::pair<Hoge, Hoge>(Hoge(2, 4), Hoge(2, 2)),
+      ft::pair<Hoge, Hoge>(Hoge(3, 0), Hoge(3, 3)),
+      ft::pair<Hoge, Hoge>(Hoge(4, 9), Hoge(4, 4)),
+      ft::pair<Hoge, Hoge>(Hoge(5, 8), Hoge(5, 5)),
+      ft::pair<Hoge, Hoge>(Hoge(6, 5), Hoge(6, 6)),
+      ft::pair<Hoge, Hoge>(Hoge(7, 1), Hoge(7, 7)),
+      ft::pair<Hoge, Hoge>(Hoge(8, 6), Hoge(8, 8)),
+      ft::pair<Hoge, Hoge>(Hoge(9, 3), Hoge(9, 9))};
+  ft::map<Hoge, Hoge> ft_hoges_map(ft_hoges, ft_hoges + 10);
+
   std::pair<Hoge, Hoge> fugas[10] = {
       std::pair<Hoge, Hoge>(Hoge(0, 0), Hoge(0, 5)),
       std::pair<Hoge, Hoge>(Hoge(1, 1), Hoge(1, 1)),
@@ -108,6 +149,19 @@ void test_map(int& test_no) {
       std::pair<Hoge, Hoge>(Hoge(8, 8), Hoge(8, 8)),
       std::pair<Hoge, Hoge>(Hoge(9, 9), Hoge(9, 24))};
   std::map<Hoge, Hoge> fugas_map(fugas, fugas + 10);
+
+  ft::pair<Hoge, Hoge> ft_fugas[10] = {
+      ft::pair<Hoge, Hoge>(Hoge(0, 0), Hoge(0, 5)),
+      ft::pair<Hoge, Hoge>(Hoge(1, 1), Hoge(1, 1)),
+      ft::pair<Hoge, Hoge>(Hoge(2, 2), Hoge(2, 5)),
+      ft::pair<Hoge, Hoge>(Hoge(3, 3), Hoge(3, 589)),
+      ft::pair<Hoge, Hoge>(Hoge(4, 4), Hoge(4, 4)),
+      ft::pair<Hoge, Hoge>(Hoge(5, 5), Hoge(5, 43)),
+      ft::pair<Hoge, Hoge>(Hoge(6, 6), Hoge(6, 6)),
+      ft::pair<Hoge, Hoge>(Hoge(7, 7), Hoge(7, 45)),
+      ft::pair<Hoge, Hoge>(Hoge(8, 8), Hoge(8, 8)),
+      ft::pair<Hoge, Hoge>(Hoge(9, 9), Hoge(9, 24))};
+  ft::map<Hoge, Hoge> ft_fugas_map(ft_fugas, ft_fugas + 10);
 
   putTestInfo(test_no, "map<int, string>: default construction");
   try {
@@ -181,6 +235,7 @@ void test_map(int& test_no) {
       ft_res = ft_map.insert(ft_persons[i]);
       // std::cout << std_res.first->first << std::endl;
       if (std_res.first->first != ft_res.first->first
+        || std_res.first->second != ft_res.first->second
         || std_res.second != ft_res.second) {
         throw std::runtime_error("return value");
       }
@@ -199,127 +254,144 @@ void test_map(int& test_no) {
   }
   std::cout << " => OK :)" << std::endl;
 
-  // putTestInfo(test_no, "map<int, string>: insert 10 sorted to map(0)");
-  // try {
-  //   std::map<int, std::string> std_map;
-  //   ft::map<int, std::string> ft_map;
-  //   std::pair<std::map<int, std::string>::iterator, bool> std_res;
-  //   std::pair<ft::map<int, std::string>::iterator, bool> ft_res;
+  putTestInfo(test_no, "map<int, string>: insert 10 sorted to map(0)");
+  try {
+    std::map<int, std::string> std_map;
+    ft::map<int, std::string> ft_map;
+    std::pair<std::map<int, std::string>::iterator, bool> std_res;
+    ft::pair<ft::map<int, std::string>::iterator, bool> ft_res;
 
-  //   for (int i = 0; i < 10; i++) {
-  //     std_res = std_map.insert(persons_sorted[i]);
-  //     ft_res = ft_map.insert(persons_sorted[i]);
-  //     if (*std_res.first != *ft_res.first || std_res.second != ft_res.second) {
-  //       throw std::runtime_error("return value");
-  //     }
-  //   }
-  //   for (int i = 0; i < 10; i++) {
-  //     if (std_map[i] != ft_map[i]) {
-  //       throw std::runtime_error("value");
-  //     }
-  //   }
-  //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       0) {
-  //     throw std::runtime_error("size");
-  //   }
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error(e.what());
-  // }
-  // std::cout << " => OK :)" << std::endl;
+    for (int i = 0; i < 10; i++) {
+      std_res = std_map.insert(persons_sorted[i]);
+      ft_res = ft_map.insert(ft_persons_sorted[i]);
+      if (std_res.first->first != ft_res.first->first
+        || std_res.first->second != ft_res.first->second
+        || std_res.second != ft_res.second) {
+        throw std::runtime_error("return value");
+      }
+    }
+    for (int i = 0; i < 10; i++) {
+      if (std_map[i] != ft_map[i]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
+        0) {
+      throw std::runtime_error("size");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
 
-  // putTestInfo(test_no, "map<int, string>: insert 10 reverse_sorted to map(0)");
-  // try {
-  //   std::map<int, std::string> std_map;
-  //   ft::map<int, std::string> ft_map;
-  //   std::pair<std::map<int, std::string>::iterator, bool> std_res;
-  //   std::pair<ft::map<int, std::string>::iterator, bool> ft_res;
+  putTestInfo(test_no, "map<int, string>: insert 10 reverse_sorted to map(0)");
+  try {
+    std::map<int, std::string> std_map;
+    ft::map<int, std::string> ft_map;
+    std::pair<std::map<int, std::string>::iterator, bool> std_res;
+    ft::pair<ft::map<int, std::string>::iterator, bool> ft_res;
 
-  //   for (int i = 0; i < 10; i++) {
-  //     std_res = std_map.insert(persons_revsorted[i]);
-  //     ft_res = ft_map.insert(persons_revsorted[i]);
-  //     if (*std_res.first != *ft_res.first || std_res.second != ft_res.second) {
-  //       throw std::runtime_error("return value");
-  //     }
-  //   }
-  //   for (int i = 0; i < 10; i++) {
-  //     if (std_map[i] != ft_map[i]) {
-  //       throw std::runtime_error("value");
-  //     }
-  //   }
-  //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       0) {
-  //     throw std::runtime_error("size");
-  //   }
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error(e.what());
-  // }
-  // std::cout << " => OK :)" << std::endl;
+    for (int i = 0; i < 10; i++) {
+      std_res = std_map.insert(persons_revsorted[i]);
+      ft_res = ft_map.insert(ft_persons_revsorted[i]);
+      if (std_res.first->first != ft_res.first->first
+        || std_res.first->second != ft_res.first->second
+        || std_res.second != ft_res.second) {
+        throw std::runtime_error("return value");
+      }
+    }
+    for (int i = 0; i < 10; i++) {
+      if (std_map[i] != ft_map[i]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
+        0) {
+      throw std::runtime_error("size");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
 
-  // putTestInfo(test_no, "map<int, string>: insert 10 and sorted to map(0)");
-  // try {
-  //   std::map<int, std::string> std_map;
-  //   ft::map<int, std::string> ft_map;
-  //   std::pair<std::map<int, std::string>::iterator, bool> std_res;
-  //   std::pair<ft::map<int, std::string>::iterator, bool> ft_res;
+  putTestInfo(test_no, "map<int, string>: insert 10 and sorted to map(0)");
+  try {
+    std::map<int, std::string> std_map;
+    ft::map<int, std::string> ft_map;
+    std::pair<std::map<int, std::string>::iterator, bool> std_res;
+    ft::pair<ft::map<int, std::string>::iterator, bool> ft_res;
 
-  //   for (int i = 0; i < 10; i++) {
-  //     std_res = std_map.insert(persons[i]);
-  //     ft_res = ft_map.insert(persons[i]);
-  //     if (*std_res.first != *ft_res.first || std_res.second != ft_res.second) {
-  //       throw std::runtime_error("return value");
-  //     }
-  //     std_res = std_map.insert(persons_sorted[i]);
-  //     ft_res = ft_map.insert(persons_sorted[i]);
-  //     if (*std_res.first != *ft_res.first || std_res.second != ft_res.second) {
-  //       throw std::runtime_error("return value");
-  //     }
-  //   }
-  //   for (int i = 0; i < 10; i++) {
-  //     if (std_map[i] != ft_map[i]) {
-  //       throw std::runtime_error("value");
-  //     }
-  //   }
-  //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       0) {
-  //     throw std::runtime_error("size");
-  //   }
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error(e.what());
-  // }
-  // std::cout << " => OK :)" << std::endl;
+    for (int i = 0; i < 10; i++) {
+      std_res = std_map.insert(persons[i]);
+      ft_res = ft_map.insert(ft_persons[i]);
+      if (std_res.first->first != ft_res.first->first
+        || std_res.first->second != ft_res.first->second
+        || std_res.second != ft_res.second) {
+        throw std::runtime_error("return value");
+      }
+      std_res = std_map.insert(persons_sorted[i]);
+      ft_res = ft_map.insert(ft_persons_sorted[i]);
+      if (std_res.first->first != ft_res.first->first
+        || std_res.first->second != ft_res.first->second
+        || std_res.second != ft_res.second) {
+        throw std::runtime_error("return value");
+      }
+    }
+    for (int i = 0; i < 10; i++) {
+      if (std_map[i] != ft_map[i]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
+        0) {
+      throw std::runtime_error("size");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
 
-  // putTestInfo(test_no, "map<Hoge, Hoge>: insert 10 to map(0)");
-  // try {
-  //   std::map<Hoge, Hoge> std_map;
-  //   ft::map<Hoge, Hoge> ft_map;
-  //   std::pair<std::map<Hoge, Hoge>::iterator, bool> std_res;
-  //   std::pair<ft::map<Hoge, Hoge>::iterator, bool> ft_res;
+  putTestInfo(test_no, "map<Hoge, Hoge>: insert 10 to map(0)");
+  try {
+    std::map<Hoge, Hoge> std_map;
+    ft::map<Hoge, Hoge> ft_map;
+    std::pair<std::map<Hoge, Hoge>::iterator, bool> std_res;
+    ft::pair<ft::map<Hoge, Hoge>::iterator, bool> ft_res;
 
-  //   for (int i = 0; i < 10; i++) {
-  //     std_map.insert(hoges[i]);
-  //     ft_map.insert(hoges[i]);
-  //     std_map.insert(fugas[i]);
-  //     ft_map.insert(fugas[i]);
-  //   }
-  //   std_map[Hoge(42, 42)];
-  //   ft_map[Hoge(42, 42)];
-  //   for (int i = 0; i < 10; i++) {
-  //     if (std_map[hoges[i].first] != ft_map[hoges[i].first]) {
-  //       throw std::runtime_error("value");
-  //     }
-  //   }
-  //   if (std_map[Hoge(42, 42)] != ft_map[Hoge(42, 42)] ||
-  //       std_map[Hoge(-42, -42)] != ft_map[Hoge(-42, -42)]) {
-  //     throw std::runtime_error("value");
-  //   }
-  //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       0) {
-  //     throw std::runtime_error("size");
-  //   }
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error(e.what());
-  // }
-  // std::cout << " => OK :)" << std::endl;
+    for (int i = 0; i < 10; i++) {
+      std_map.insert(hoges[i]);
+      ft_map.insert(ft_hoges[i]);
+      std_map.insert(fugas[i]);
+      ft_map.insert(ft_fugas[i]);
+    }
+    // std_map[Hoge(42, 42)];
+    // ft_map[Hoge(42, 42)];
+    for (int i = 0; i < 10; i++) {
+      // std::cout << std::endl;
+      // std::cout << i << std::endl;
+      // std::cout << " " << std_map[hoges[i].first] << std::endl;
+      // std::cout << " " << std_map[fugas[i].first] << std::endl;
+      // std::cout << " " << ft_map[ft_hoges[i].first] << std::endl;
+      // std::cout << " " << ft_map[ft_fugas[i].first] << std::endl;
+      if (std_map[hoges[i].first] != ft_map[ft_hoges[i].first]) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (std_map[Hoge(42, 42)] != ft_map[Hoge(42, 42)] ||
+        std_map[Hoge(-42, -42)] != ft_map[Hoge(-42, -42)]) {
+      throw std::runtime_error("value");
+    }
+    if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
+        0) {
+    {
+      std::cout << std_map.size() << "<=>" << ft_map.size() << std::endl;
+      throw std::runtime_error("size");
+    }
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
 
   // putTestInfo(test_no, "map<Hoge, Hoge>: insert 10 and 10 to map(0)");
   // try {

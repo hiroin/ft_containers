@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include "ft_pair.hpp"
 #include "map.hpp"
+#include "Hoge.hpp"
 
 #define FILENAME "rand.csv"
 
@@ -291,66 +292,85 @@ int main(int argc, char const *argv[]) {
   //     std::cout << "itr_end != itr_end2" << std::endl;
   // }
 
+//   {
+//     std::cout << "------------------------" << std::endl;
+//     ft::map<int, std::string> ft_m;
+//     ft_m.insert(ft::make_pair(100,"one"));
+//     ft_m.insert(ft::make_pair(200,"two"));
+//     ft_m.insert(ft::make_pair(300,"three"));
+//     // ft::map<int, std::string>::iterator itr = ft_m.begin();
+//     // std::cout << "begin(): 100 : " <<  itr->first << std::endl;
+//     // ++itr;
+//     // std::cout << "++itr  : 200 : " <<  itr->first << std::endl;
+//     // ++itr;
+//     // std::cout << "++itr  : 300 : " <<  itr->first << std::endl;
+//     // ++itr;
+//     // std::cout << "end()  : ?   : " <<  itr->first << std::endl;
+//     // --itr;
+//     // std::cout << "--itr  : 300 : " <<  itr->first << std::endl;
+//     // ++itr;
+//     // std::cout << "end()  : ?   : " <<  itr->first << std::endl;
+//     ft::map<int, std::string>::iterator itr_end = ft_m.end();
+//     // if (itr == itr_end)
+//     //   std::cout << "itr == itr_end" << std::endl;
+
+//     // ft::map<int, std::string>::iterator itr_null(NULL);
+//     // if (itr_null == itr_end)
+//     //   std::cout << "itr_null == itr_end" << std::endl;
+//     // else
+//     //   std::cout << "itr_null != itr_end" << std::endl;
+//     std::cout << ft_m.lower_bound(0)->first << std::endl;
+//     std::cout << ft_m.lower_bound(100)->first << std::endl;
+//     std::cout << ft_m.lower_bound(150)->first << std::endl;
+//     std::cout << ft_m.lower_bound(200)->first << std::endl;
+//     std::cout << ft_m.lower_bound(350)->first << std::endl;
+//     std::cout << ((ft_m.lower_bound(350)) == itr_end) << std::endl;
+
+//     std::cout << "ft_m[100]: " << ft_m[100] << std::endl;
+//     std::cout << "ft_m[200]: " << ft_m[200] << std::endl;
+//     std::cout << "ft_m[300]: " << ft_m[300] << std::endl;
+//     std::cout << "ft_m[400]: " << ft_m[400] << std::endl;
+// #ifdef DEBUG
+//     ft_m.print();
+// #endif
+//   }
+  // {
+  //   ft::map<int, std::string> ft_m;
+  //   ft::pair<int, std::string> ft_persons[10] = {
+  //       ft::pair<int, std::string>(7, "dnakano"),
+  //       ft::pair<int, std::string>(2, "nop"),
+  //       ft::pair<int, std::string>(4, "bunjiro"),
+  //       ft::pair<int, std::string>(0, "deedee"),
+  //       ft::pair<int, std::string>(9, "sataharu"),
+  //       ft::pair<int, std::string>(8, "marvin"),
+  //       ft::pair<int, std::string>(5, "hoge"),
+  //       ft::pair<int, std::string>(1, "fuga"),
+  //       ft::pair<int, std::string>(6, "foobar"),
+  //       ft::pair<int, std::string>(3, "norminette")};
+  //   ft_m.insert(ft_persons[0]);
+  //   ft_m.insert(ft_persons, ft_persons + 10);
+  //   // ft::map<int, std::string> ft_persons_map(ft_persons, ft_persons + 10);
+  // }
   {
     std::cout << "------------------------" << std::endl;
-    ft::map<int, std::string> ft_m;
-    ft_m.insert(ft::make_pair(100,"one"));
-    ft_m.insert(ft::make_pair(200,"two"));
-    ft_m.insert(ft::make_pair(300,"three"));
-    // ft::map<int, std::string>::iterator itr = ft_m.begin();
-    // std::cout << "begin(): 100 : " <<  itr->first << std::endl;
-    // ++itr;
-    // std::cout << "++itr  : 200 : " <<  itr->first << std::endl;
-    // ++itr;
-    // std::cout << "++itr  : 300 : " <<  itr->first << std::endl;
-    // ++itr;
-    // std::cout << "end()  : ?   : " <<  itr->first << std::endl;
-    // --itr;
-    // std::cout << "--itr  : 300 : " <<  itr->first << std::endl;
-    // ++itr;
-    // std::cout << "end()  : ?   : " <<  itr->first << std::endl;
-    ft::map<int, std::string>::iterator itr_end = ft_m.end();
-    // if (itr == itr_end)
-    //   std::cout << "itr == itr_end" << std::endl;
+    std::map<Hoge, Hoge> std_map;
+    // std_map.insert(std::pair<Hoge, Hoge>(Hoge(0, 7), Hoge(0, 0)));
+    // std_map.insert(std::pair<Hoge, Hoge>(Hoge(0, 0), Hoge(0, 5)));
+    std_map.insert(std::pair<Hoge, Hoge>(Hoge(1, 2), Hoge(1, 1)));
+    // std_map.insert(std::pair<Hoge, Hoge>(Hoge(1, 1), Hoge(1, 1)));
+    // std_map.insert(std::pair<Hoge, Hoge>(Hoge(2, 4), Hoge(2, 2)));
+    std_map.insert(std::pair<Hoge, Hoge>(Hoge(2, 2), Hoge(2, 5)));
+    std::cout << std_map.size() << std::endl;
 
-    // ft::map<int, std::string>::iterator itr_null(NULL);
-    // if (itr_null == itr_end)
-    //   std::cout << "itr_null == itr_end" << std::endl;
-    // else
-    //   std::cout << "itr_null != itr_end" << std::endl;
-    std::cout << ft_m.lower_bound(0)->first << std::endl;
-    std::cout << ft_m.lower_bound(100)->first << std::endl;
-    std::cout << ft_m.lower_bound(150)->first << std::endl;
-    std::cout << ft_m.lower_bound(200)->first << std::endl;
-    std::cout << ft_m.lower_bound(350)->first << std::endl;
-    std::cout << ((ft_m.lower_bound(350)) == itr_end) << std::endl;
-
-    std::cout << "ft_m[100]: " << ft_m[100] << std::endl;
-    std::cout << "ft_m[200]: " << ft_m[200] << std::endl;
-    std::cout << "ft_m[300]: " << ft_m[300] << std::endl;
-    std::cout << "ft_m[400]: " << ft_m[400] << std::endl;
-#ifdef DEBUG
-    ft_m.print();
-#endif
+    ft::map<Hoge, Hoge> ft_map;
+    // ft_map.insert(ft::pair<Hoge, Hoge>(Hoge(0, 7), Hoge(0, 0)));
+    // ft_map.insert(ft::pair<Hoge, Hoge>(Hoge(0, 0), Hoge(0, 5)));
+    ft_map.insert(ft::pair<Hoge, Hoge>(Hoge(1, 2), Hoge(1, 1)));
+    // ft_map.insert(ft::pair<Hoge, Hoge>(Hoge(1, 1), Hoge(1, 1)));
+    // ft_map.insert(ft::pair<Hoge, Hoge>(Hoge(2, 4), Hoge(2, 2)));
+    ft_map.insert(ft::pair<Hoge, Hoge>(Hoge(2, 2), Hoge(2, 5)));
+    std::cout << ft_map.size() << std::endl;
   }
 
-
-  {
-    ft::map<int, std::string> ft_m;
-    ft::pair<int, std::string> ft_persons[10] = {
-        ft::pair<int, std::string>(7, "dnakano"),
-        ft::pair<int, std::string>(2, "nop"),
-        ft::pair<int, std::string>(4, "bunjiro"),
-        ft::pair<int, std::string>(0, "deedee"),
-        ft::pair<int, std::string>(9, "sataharu"),
-        ft::pair<int, std::string>(8, "marvin"),
-        ft::pair<int, std::string>(5, "hoge"),
-        ft::pair<int, std::string>(1, "fuga"),
-        ft::pair<int, std::string>(6, "foobar"),
-        ft::pair<int, std::string>(3, "norminette")};
-    ft_m.insert(ft_persons[0]);
-    ft_m.insert(ft_persons, ft_persons + 10);
-    // ft::map<int, std::string> ft_persons_map(ft_persons, ft_persons + 10);
-  }
   return 0;
 }

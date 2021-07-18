@@ -491,7 +491,8 @@ class BinTree {
       return node;
     }
     node_pointer tmp = node;
-    while (tmp != NULL && tmp->data->first != data.first) {
+    while (tmp != NULL
+      && (tmp->data->first > data.first || tmp->data->first < data.first)) {
       tmp = data.first < tmp->data->first ? tmp->LHS : tmp->RHS;
     }
     return tmp;
