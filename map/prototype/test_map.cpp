@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 13:37:31 by dnakano           #+#    #+#             */
-/*   Updated: 2021/07/19 09:04:13 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/19 09:26:50 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1058,32 +1058,33 @@ void test_map(int& test_no) {
   }
   std::cout << " => OK :)" << std::endl;
 
-  // putTestInfo(test_no,
-  //             "map<int, string>: map(0 ~ 10) and find all and nonexists");
-  // try {
-  //   std::map<int, std::string> std_map(persons, persons + 10);
-  //   ft::map<int, std::string> ft_map(persons, persons + 10);
-  //   std::map<int, std::string>::iterator std_itr;
-  //   ft::map<int, std::string>::iterator ft_itr;
+  putTestInfo(test_no,
+              "map<int, string>: map(0 ~ 10) and find all and nonexists");
+  try {
+    std::map<int, std::string> std_map(persons, persons + 10);
+    ft::map<int, std::string> ft_map(ft_persons, ft_persons + 10);
+    std::map<int, std::string>::iterator std_itr;
+    ft::map<int, std::string>::iterator ft_itr;
 
-  //   for (int i = 0; i < 10; i++) {
-  //     std_itr = std_map.find(i);
-  //     ft_itr = ft_map.find(i);
-  //     if (*std_itr != *ft_itr) {
-  //       throw std::runtime_error("find");
-  //     }
-  //   }
-  //   if (ft_map.find(42) != ft_map.end() || ft_map.find(-42) != ft_map.end()) {
-  //     throw std::runtime_error("find");
-  //   }
-  //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       0) {
-  //     throw std::runtime_error("size");
-  //   }
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error(e.what());
-  // }
-  // std::cout << " => OK :)" << std::endl;
+    for (int i = 0; i < 10; i++) {
+      std_itr = std_map.find(i);
+      ft_itr = ft_map.find(i);
+      if (std_itr->first != ft_itr->first
+        || std_itr->second != ft_itr->second) {
+        throw std::runtime_error("find1");
+      }
+    }
+    if (ft_map.find(42) != ft_map.end() || ft_map.find(-42) != ft_map.end()) {
+      throw std::runtime_error("find2");
+    }
+    if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
+        0) {
+      throw std::runtime_error("size");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
 
   // for (int i = 0; i < 10; i++) {
   //   std::stringstream sout;

@@ -451,7 +451,6 @@ class BinTree {
     alloc_.construct(newNode, tmpNode);
   }
 
-
   bool empty() const {
     return size_ == 0;
   }
@@ -505,6 +504,32 @@ class BinTree {
 
   const_iterator end() const {
     return const_iterator(nullNode, lastNode_, nullNode);
+  }
+
+  iterator find(const key_type& __k) {
+    node_pointer findNode = searchNodeByKey(root, __k);
+    if (findNode == NULL)
+      return end();
+    return iterator(findNode);
+  }
+
+  const_iterator find(const key_type& __k) const {
+    node_pointer findNode = searchNodeByKey(root, __k);
+    if (findNode == NULL)
+      return end();
+    return iterator(findNode);
+  }
+
+  node_pointer searchNodeByKey(node_pointer node, const key_type& __k) const {
+    if (node == nullNode) {
+      return NULL;
+    }
+    node_pointer tmp = node;
+    while (tmp != NULL
+      && (tmp->data->first > __k || tmp->data->first < __k)) {
+      tmp = __k < tmp->data->first ? tmp->LHS : tmp->RHS;
+    }
+    return tmp;
   }
 
   //--------------------

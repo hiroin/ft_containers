@@ -125,6 +125,12 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
   value_compare value_comp() const
   { return value_compare(_M_t.key_comp()); }
 
+  iterator find(const key_type& __x)
+  { return _M_t.find(__x); }
+
+  const_iterator find(const key_type& __x) const
+  { return _M_t.find(__x); }
+
 #ifdef DEBUG
  public:
   void print() {
