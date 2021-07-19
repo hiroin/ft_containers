@@ -547,6 +547,12 @@ class BinTree {
     return result ? 1 : 0;
   }
 
+  void wrapErase(iterator __first, iterator __last) {
+    while (__first != __last) {
+      erase(*__first++);
+    }
+  }
+
   void swap(BinTree& __t) {
     std::swap(root, __t.root);
     std::swap(nullNode, __t.nullNode);

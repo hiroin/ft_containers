@@ -138,6 +138,9 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
   size_type erase(const key_type& __x)
   { return _M_t.wrapErase(__x); }
 
+  void erase(iterator __first, iterator __last)
+  { _M_t.wrapErase(__first, __last); }
+
   void swap(map& __x)
   { _M_t.swap(__x._M_t); }
 

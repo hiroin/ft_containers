@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 13:37:31 by dnakano           #+#    #+#             */
-/*   Updated: 2021/07/19 15:59:02 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/19 16:35:59 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -2112,29 +2112,31 @@ void test_map(int& test_no) {
   //   }
   // }
 
-  // putTestInfo(test_no, "map<Hoge, Hoge>: map(1).erase(1)");
-  // try {
-  //   std::map<Hoge, Hoge> std_map(hoges, hoges + 1);
-  //   ft::map<Hoge, Hoge> ft_map(hoges, hoges + 1);
+  putTestInfo(test_no, "map<Hoge, Hoge>: map(1).erase(1)");
+  try {
+    std::map<Hoge, Hoge> std_map(hoges, hoges + 1);
+    ft::map<Hoge, Hoge> ft_map(ft_hoges, ft_hoges + 1);
 
-  //   std_map.erase(std_map.begin(), std_map.end());
-  //   ft_map.erase(ft_map.begin(), ft_map.end());
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error(e.what());
-  // }
-  // std::cout << " => OK :)" << std::endl;
+    std_map.erase(std_map.begin(), std_map.end());
+    ft_map.erase(ft_map.begin(), ft_map.end());
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
 
-  // putTestInfo(test_no, "map<Hoge, Hoge>: map(1~2).erase(all)");
-  // try {
-  //   std::map<Hoge, Hoge> std_map(hoges, hoges + 2);
-  //   ft::map<Hoge, Hoge> ft_map(hoges, hoges + 2);
-
-  //   std_map.erase(std_map.begin(), std_map.end());
-  //   ft_map.erase(ft_map.begin(), ft_map.end());
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error(e.what());
-  // }
-  // std::cout << " => OK :)" << std::endl;
+  putTestInfo(test_no, "map<Hoge, Hoge>: map(1~2).erase(all)");
+  try {
+    std::map<Hoge, Hoge> std_map(hoges, hoges + 2);
+    ft::map<Hoge, Hoge> ft_map(ft_hoges, ft_hoges + 2);
+    std_map.erase(std_map.begin(), std_map.end());
+    ft_map.erase(ft_map.begin(), ft_map.end());
+    // ft_map.erase(ft_map.begin());
+    // ft_map.erase(++ft_map.begin());
+    // ft_map.print();
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
 
   // for (int i = 0; i <= 10; i++) {
   //   for (int j = i; j <= 10; j++) {
