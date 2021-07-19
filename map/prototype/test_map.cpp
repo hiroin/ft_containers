@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 13:37:31 by dnakano           #+#    #+#             */
-/*   Updated: 2021/07/19 10:05:41 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/19 10:10:44 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1167,7 +1167,8 @@ void test_map(int& test_no) {
       }
       for (std_itr = std_map.begin(), ft_itr = ft_map.begin();
            std_itr != std_map.end(); std_itr++, ft_itr++) {
-        if (*std_itr != *ft_itr) {
+        if (std_itr->first != ft_itr->first
+          || std_itr->second != ft_itr->second) {
           throw std::runtime_error("value");
         }
       }

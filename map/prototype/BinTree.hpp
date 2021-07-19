@@ -536,6 +536,11 @@ class BinTree {
     erase(*__position);
   }
 
+  size_type wrapErase(const key_type& __x) {
+    bool result = erase(value_type(__x, mapped_type()));
+    return result ? 1 : 0;
+  }
+
   //--------------------
   // search
   //--------------------
