@@ -475,6 +475,10 @@ class BinTree {
     return comp_;
   }
 
+  void set_comp(key_compare comp) {
+    comp_ = comp;
+  }
+
   node_pointer getRoot() {
     return root;
   }
@@ -539,6 +543,14 @@ class BinTree {
   size_type wrapErase(const key_type& __x) {
     bool result = erase(value_type(__x, mapped_type()));
     return result ? 1 : 0;
+  }
+
+  void swap(BinTree& __t) {
+    std::swap(root, __t.root);
+    std::swap(nullNode, __t.nullNode);
+    std::swap(lastNode_, __t.lastNode_);
+    std::swap(comp_, __t.comp_);
+    std::swap(size_, __t.size_);
   }
 
   //--------------------

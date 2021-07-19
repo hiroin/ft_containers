@@ -69,6 +69,7 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
     }
     _M_t.clear();
     insert(__x.begin(), __x.end());
+    _M_t.set_comp(__x.key_comp());
     return *this;
   }
 
@@ -137,6 +138,9 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
   size_type erase(const key_type& __x)
   { return _M_t.wrapErase(__x); }
 
+  void swap(map& __x)
+  { _M_t.swap(__x._M_t); }
+
 #ifdef DEBUG
  public:
   void print() {
@@ -145,6 +149,11 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
 #endif
 
 };
+
+template<typename _Key, typename _Tp, typename _Compare, typename _Alloc>
+void swap(map<_Key, _Tp, _Compare, _Alloc>& __x,
+  map<_Key, _Tp, _Compare, _Alloc>& __y)
+{ __x.swap(__y); }
 
 } // namespace ft
 #endif
