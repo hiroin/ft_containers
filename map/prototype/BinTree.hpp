@@ -436,6 +436,8 @@ class BinTree {
  public:
   void clear()
   {
+    if (root == nullNode)
+      return;
     deleteTree(root);
     root = nullNode;
     lastNode_ = nullNode;
@@ -598,6 +600,29 @@ class BinTree {
     }
     return node;
   }
+
+  iterator upper_bound(const key_type& __x) {
+    if (root == nullNode) {
+      return iterator(nullNode, lastNode_, nullNode);
+    }
+    node_pointer result = findUpperBound(root, __x);
+    if (result == NULL)
+      return end();
+    else
+      return iterator(result, lastNode_, nullNode);
+  }
+
+  node_pointer findUpperBound(node_pointer node, const key_type& k) const {
+    if (node == NULL) {
+      return NULL;
+    } else if (comp_(k, node->data->first)) {
+      node_pointer res = findUpperBound(node->LHS, k);
+      return res ? res : node;
+    } else {
+      return findUpperBound(node->RHS, k);
+    }
+  }
+
 
   void printMaximumNode() {
     if (root != nullNode)

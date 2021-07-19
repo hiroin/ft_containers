@@ -141,6 +141,15 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
   void swap(map& __x)
   { _M_t.swap(__x._M_t); }
 
+  void clear()
+  { _M_t.clear(); }
+
+  size_type count(const key_type& __x) const
+  { return _M_t.find(__x) == _M_t.end() ? 0 : 1; }
+
+  iterator upper_bound(const key_type& __x)
+  { return _M_t.upper_bound(__x); }
+
 #ifdef DEBUG
  public:
   void print() {
