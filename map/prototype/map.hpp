@@ -131,6 +131,12 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
   const_iterator find(const key_type& __x) const
   { return _M_t.find(__x); }
 
+  void erase(iterator __position)
+  { _M_t.wrapErase(__position); } 
+
+  // size_type erase(const key_type& __x)
+  // { return _M_t.erase(__x); }
+
 #ifdef DEBUG
  public:
   void print() {

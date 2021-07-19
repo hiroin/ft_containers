@@ -532,6 +532,10 @@ class BinTree {
     return tmp;
   }
 
+  void wrapErase(iterator __position) {
+    erase(*__position);
+  }
+
   //--------------------
   // search
   //--------------------
