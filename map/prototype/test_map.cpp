@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 13:37:31 by dnakano           #+#    #+#             */
-/*   Updated: 2021/07/19 06:23:26 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/19 07:52:55 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -888,91 +888,93 @@ void test_map(int& test_no) {
   }
   std::cout << " => OK :)" << std::endl;
 
-  // putTestInfo(test_no, "map<int, int>: value_comp to ref");
-  // try {
-  //   std::map<int, std::string> std_map(persons, persons + 10);
-  //   ft::map<int, std::string> ft_map(persons, persons + 10);
-  //   const std::map<int, std::string>::value_compare& comp_std =
-  //       std_map.value_comp();
-  //   const ft::map<int, std::string>::value_compare& comp_ft =
-  //       ft_map.value_comp();
+  putTestInfo(test_no, "map<int, int>: value_comp to ref");
+  try {
+    std::map<int, std::string> std_map(persons, persons + 10);
+    ft::map<int, std::string> ft_map(ft_persons, ft_persons + 10);
+    const std::map<int, std::string>::value_compare& comp_std =
+        std_map.value_comp();
+    const ft::map<int, std::string>::value_compare& comp_ft =
+        ft_map.value_comp();
 
-  //   for (int i = 0; i < 10; i++) {
-  //     for (int j = 0; j < 10; j++) {
-  //       if (comp_std(persons[i], persons[j]) !=
-  //               comp_ft(persons[i], persons[j]) ||
-  //           comp_std(persons[j], persons[i]) != comp_ft(persons[j], persons[i]))
-  //         throw std::runtime_error("comp");
-  //     }
-  //   }
-  // } catch (std::exception& e) {
-  //   throw e;
-  // }
-  // std::cout << " => OK :)" << std::endl;
+    for (int i = 0; i < 10; i++) {
+      for (int j = 0; j < 10; j++) {
+        if (comp_std(persons[i], persons[j]) !=
+              comp_ft(ft_persons[i], ft_persons[j]) ||
+            comp_std(persons[j], persons[i]) !=
+              comp_ft(ft_persons[j], ft_persons[i]))
+          throw std::runtime_error("comp");
+      }
+    }
+  } catch (std::exception& e) {
+    throw e;
+  }
+  std::cout << " => OK :)" << std::endl;
 
-  // putTestInfo(test_no, "map<Hoge>: value_comp");
-  // try {
-  //   std::map<Hoge, Hoge> std_map;
-  //   ft::map<Hoge, Hoge> ft_map;
-  //   std::map<Hoge, Hoge>::value_compare comp_std = std_map.value_comp();
-  //   ft::map<Hoge, Hoge>::value_compare comp_ft = ft_map.value_comp();
+  putTestInfo(test_no, "map<Hoge>: value_comp");
+  try {
+    std::map<Hoge, Hoge> std_map;
+    ft::map<Hoge, Hoge> ft_map;
+    std::map<Hoge, Hoge>::value_compare comp_std = std_map.value_comp();
+    ft::map<Hoge, Hoge>::value_compare comp_ft = ft_map.value_comp();
 
-  //   for (int i = 0; i < 10; i++) {
-  //     for (int j = 0; j < 10; j++) {
-  //       if (comp_std(hoges[i], hoges[j]) != comp_ft(hoges[i], hoges[j]) ||
-  //           comp_std(hoges[j], hoges[i]) != comp_ft(hoges[j], hoges[i]))
-  //         throw std::runtime_error("comp");
-  //     }
-  //   }
-  // } catch (std::exception& e) {
-  //   throw e;
-  // }
-  // std::cout << " => OK :)" << std::endl;
+    for (int i = 0; i < 10; i++) {
+      for (int j = 0; j < 10; j++) {
+        if (comp_std(hoges[i], hoges[j]) != comp_ft(ft_hoges[i], ft_hoges[j]) ||
+            comp_std(hoges[j], hoges[i]) != comp_ft(ft_hoges[j], ft_hoges[i]))
+          throw std::runtime_error("comp");
+      }
+    }
+  } catch (std::exception& e) {
+    throw e;
+  }
+  std::cout << " => OK :)" << std::endl;
 
-  // putTestInfo(test_no, "map<Hoge>: value_comp");
-  // try {
-  //   std::map<Hoge, Hoge> std_map;
-  //   ft::map<Hoge, Hoge> ft_map;
-  //   const std::map<Hoge, Hoge>::value_compare& comp_std = std_map.value_comp();
-  //   ft::map<Hoge, Hoge>::value_compare comp_ft = ft_map.value_comp();
+  putTestInfo(test_no, "map<Hoge>: value_comp");
+  try {
+    std::map<Hoge, Hoge> std_map;
+    ft::map<Hoge, Hoge> ft_map;
+    const std::map<Hoge, Hoge>::value_compare& comp_std = std_map.value_comp();
+    ft::map<Hoge, Hoge>::value_compare comp_ft = ft_map.value_comp();
 
-  //   for (int i = 0; i < 10; i++) {
-  //     for (int j = 0; j < 10; j++) {
-  //       if (comp_std(hoges[i], hoges[j]) != comp_ft(hoges[i], hoges[j]) ||
-  //           comp_std(hoges[j], hoges[i]) != comp_ft(hoges[j], hoges[i]))
-  //         throw std::runtime_error("comp");
-  //     }
-  //   }
-  // } catch (std::exception& e) {
-  //   throw e;
-  // }
-  // std::cout << " => OK :)" << std::endl;
+    for (int i = 0; i < 10; i++) {
+      for (int j = 0; j < 10; j++) {
+        if (comp_std(hoges[i], hoges[j]) != comp_ft(ft_hoges[i], ft_hoges[j]) ||
+            comp_std(hoges[j], hoges[i]) != comp_ft(ft_hoges[j], ft_hoges[i]))
+          throw std::runtime_error("comp");
+      }
+    }
+  } catch (std::exception& e) {
+    throw e;
+  }
+  std::cout << " => OK :)" << std::endl;
 
-  // // check iterator
-  // putTestInfo(test_no, "map<int, string>: map(0 ~ 10) and check by iter");
-  // try {
-  //   std::map<int, std::string> std_map(persons, persons + 10);
-  //   ft::map<int, std::string> ft_map(persons, persons + 10);
-  //   std::map<int, std::string>::iterator std_itr;
-  //   ft::map<int, std::string>::iterator ft_itr;
+  // check iterator
+  putTestInfo(test_no, "map<int, string>: map(0 ~ 10) and check by iter");
+  try {
+    std::map<int, std::string> std_map(persons, persons + 10);
+    ft::map<int, std::string> ft_map(ft_persons, ft_persons + 10);
+    std::map<int, std::string>::iterator std_itr;
+    ft::map<int, std::string>::iterator ft_itr;
 
-  //   for (std_itr = std_map.begin(), ft_itr = ft_map.begin();
-  //        std_itr != std_map.end(); ++std_itr, ++ft_itr) {
-  //     if (*std_itr != *ft_itr) {
-  //       throw std::runtime_error("value");
-  //     }
-  //   }
-  //   if (ft_itr != ft_map.end()) {
-  //     throw std::runtime_error("itr");
-  //   }
-  //   if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
-  //       0) {
-  //     throw std::runtime_error("size");
-  //   }
-  // } catch (std::exception& e) {
-  //   throw e;
-  // }
-  // std::cout << " => OK :)" << std::endl;
+    for (std_itr = std_map.begin(), ft_itr = ft_map.begin();
+         std_itr != std_map.end(); ++std_itr, ++ft_itr) {
+      if (std_itr->first != ft_itr->first
+        || std_itr->second != ft_itr->second) {
+        throw std::runtime_error("value");
+      }
+    }
+    if (ft_itr != ft_map.end()) {
+      throw std::runtime_error("itr");
+    }
+    if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||
+        0) {
+      throw std::runtime_error("size");
+    }
+  } catch (std::exception& e) {
+    throw e;
+  }
+  std::cout << " => OK :)" << std::endl;
 
   // putTestInfo(test_no, "map<int, string>: map(0 ~ 10) and check by iter");
   // try {
