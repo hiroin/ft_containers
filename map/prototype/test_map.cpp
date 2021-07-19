@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 13:37:31 by dnakano           #+#    #+#             */
-/*   Updated: 2021/07/19 01:19:01 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/19 01:20:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -758,7 +758,7 @@ void test_map(int& test_no) {
   try {
     std::map<Hoge, Hoge> std_map(hoges, hoges + 10);
     std::map<Hoge, Hoge> std_map2(fugas, fugas + 10);
-    ft::map<Hoge, Hoge> ft_map(hoges, hoges + 10);
+    ft::map<Hoge, Hoge> ft_map(ft_hoges, ft_hoges + 10);
     ft::map<Hoge, Hoge> ft_map2(ft_fugas, ft_fugas + 10);
 
     for (int i = 0; i < 10; i++) {

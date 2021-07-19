@@ -185,7 +185,6 @@ struct _AVL_tree_iterator
       return tmp;
     return __x;
   }
-
 };
 
 template<typename _Tp>
@@ -200,8 +199,8 @@ struct _AVL_tree_const_iterator
   typedef bidirectional_iterator_tag iterator_category;
   typedef std::ptrdiff_t             difference_type;
 
-  typedef _AVL_tree_const_iterator<_Tp>    _Self;
-  typedef BinTreeNode<_Tp>*          _Base_ptr;
+  typedef _AVL_tree_const_iterator<_Tp> _Self;
+  typedef BinTreeNode<_Tp>*             _Base_ptr;
 
   _Base_ptr _M_node;
   _Base_ptr lastNode_;
@@ -217,9 +216,9 @@ struct _AVL_tree_const_iterator
   _AVL_tree_const_iterator(const iterator& __it)
   : _M_node(__it._M_node) { }
 
-  iterator
-  _M_const_cast() const
-  { return iterator(const_cast<typename iterator::_Base_ptr>(_M_node)); }
+  explicit
+  _AVL_tree_const_iterator(_Base_ptr __x, _Base_ptr lastNode, _Base_ptr nullNode)
+  : _M_node(__x), lastNode_(lastNode), nullNode_(nullNode) { }
 
   reference
   operator*() const
@@ -268,6 +267,18 @@ struct _AVL_tree_const_iterator
   { return _M_node != __x._M_node; }
 
   _Base_ptr
+  _AVL_tree_increment(_Base_ptr __x)
+  {
+    return local_AVL_tree_increment(__x);
+  }
+
+  const _Base_ptr
+  _AVL_tree_increment(const _Base_ptr __x) const
+  {
+    return local_AVL_tree_increment(const_cast<_Base_ptr>(__x));
+  }
+
+  _Base_ptr
   local_AVL_tree_increment(_Base_ptr __x)
   {
     if (__x == lastNode_)
@@ -298,22 +309,22 @@ struct _AVL_tree_const_iterator
   }
 
   _Base_ptr
-  _AVL_tree_increment(_Base_ptr __x)
+  _AVL_tree_decrement(_Base_ptr __x)
   {
-    return local_AVL_tree_increment(__x);
+    return local_AVL_tree_decrement(__x);
   }
 
   const _Base_ptr
-  _AVL_tree_increment(const _Base_ptr __x) const
+  _AVL_tree_decrement(const _Base_ptr __x) const
   {
-    return local_AVL_tree_increment(const_cast<_Base_ptr>(__x));
+    return local_AVL_tree_decrement(const_cast<_Base_ptr>(__x));
   }
 
   _Base_ptr
   local_AVL_tree_decrement(_Base_ptr __x)
   {
     if (__x == nullNode_)
-      return lastNode_;    
+      return lastNode_;
     _Base_ptr tmp = __x;
     if (__x->LHS != NULL)
     {
@@ -336,19 +347,6 @@ struct _AVL_tree_const_iterator
       return tmp;
     return __x;
   }
-
-  _Base_ptr
-  _AVL_tree_decrement(_Base_ptr __x)
-  {
-    return local_AVL_tree_decrement(__x);
-  }
-
-  const _Base_ptr
-  _AVL_tree_decrement(const _Base_ptr __x) const
-  {
-    return local_AVL_tree_decrement(const_cast<_Base_ptr>(__x));
-  }
-
 };
 
 template<typename _Val>
@@ -423,6 +421,34 @@ class BinTree {
     alloc_.destroy(nullNode);
     alloc_.deallocate(nullNode, 1);
   }
+
+ private:
+  BinTree& operator=(const BinTree& other)
+  {
+    if (this == &other) {
+      return *this;
+    }
+    return *this;
+  }
+
+ public:
+  void clear()
+  {
+    deleteTree(root);
+    root = nullNode;
+    lastNode_ = nullNode;
+    size_ = 0;
+  }
+
+  node_pointer cloneNode(node_pointer node)
+  {
+    node_pointer newNode = alloc_.allocate(1);
+    pointer newVal = val_alloc_.allocate(1);
+    val_alloc_.construct(newVal, node->data);
+    node_type tmpNode(newVal);
+    alloc_.construct(newNode, tmpNode);
+  }
+
 
   bool empty() const {
     return size_ == 0;

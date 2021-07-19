@@ -64,6 +64,16 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
     : _M_t(__comp, __a)
   { insert(__first, __last); }
 
+  map& operator=(const map& __x)
+  {
+    if (this == &__x) {
+      return *this;
+    }
+    _M_t.clear();
+    insert(__x.begin(), __x.end());
+    return *this;
+  }
+
   bool empty()
   { return _M_t.empty(); }
 
