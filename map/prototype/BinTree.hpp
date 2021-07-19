@@ -383,6 +383,8 @@ class BinTree {
   typedef node_type*                 node_pointer;
   typedef std::allocator<BinTreeNode<ft::pair<const _Key, _Tp> > > 
     node_allocator_type;
+  typedef _Compare                   key_compare;
+
 
   BinTree() : size_(0) {
     pointer newVal = val_alloc_.allocate(1);
@@ -468,6 +470,10 @@ class BinTree {
         (sizeof(value_type) + sizeof(node_pointer) * 4),
       std::numeric_limits<size_type>::max() / (sizeof(value_type) * 2)
     );
+  }
+
+  key_compare key_comp() const {
+    return comp_;
   }
 
   node_pointer getRoot() {

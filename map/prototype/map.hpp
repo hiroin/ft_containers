@@ -41,13 +41,11 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
   class value_compare
   : public std::binary_function<value_type, value_type, bool>
   {
-    protected:
+   public:
     key_compare comp;
-
     value_compare(key_compare __c)
     : comp(__c) { }
 
-    public:
     bool operator()(const value_type& __x, const value_type& __y) const
     { return comp(__x.first, __y.first); }
   };
@@ -108,8 +106,7 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
   const_iterator lower_bound(const key_type& __x) const
   { return _M_t.lower_bound(__x); }
 
-  mapped_type&
-  operator[](const key_type& __k)
+  mapped_type& operator[](const key_type& __k)
   {
     iterator __i = lower_bound(__k);
     // __i->first is greater than or equivalent to __k.
@@ -121,6 +118,12 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
     }
     return (*__i).second;
   }
+
+  key_compare key_comp() const
+  { return _M_t.key_comp(); }
+
+  value_compare value_comp() const
+  { return value_compare(_M_t.key_comp()); }
 
 #ifdef DEBUG
  public:
