@@ -150,6 +150,16 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
   iterator upper_bound(const key_type& __x)
   { return _M_t.upper_bound(__x); }
 
+  const_iterator upper_bound(const key_type& __x) const
+  { return _M_t.upper_bound(__x); }
+
+  ft::pair<iterator, iterator> equal_range(const key_type& __x)
+  { return _M_t.equal_range(__x); }
+
+  ft::pair<const_iterator, const_iterator>
+  equal_range(const key_type& __x) const
+  { return _M_t.equal_range(__x); }
+
 #ifdef DEBUG
  public:
   void print() {
