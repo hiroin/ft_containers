@@ -446,15 +446,6 @@ class BinTree {
     size_ = 0;
   }
 
-  node_pointer cloneNode(node_pointer node)
-  {
-    node_pointer newNode = alloc_.allocate(1);
-    pointer newVal = val_alloc_.allocate(1);
-    val_alloc_.construct(newVal, node->data);
-    node_type tmpNode(newVal);
-    alloc_.construct(newNode, tmpNode);
-  }
-
   bool empty() const {
     return size_ == 0;
   }
@@ -487,6 +478,14 @@ class BinTree {
     return root;
   }
 
+  allocator_type getAlloc() const {
+    return alloc_;
+  }
+
+  void setAlloc(allocator_type alloc) {
+    alloc_ = alloc;
+  }
+  
   void deleteTree(node_pointer node) {
     if (node == NULL)
       return;

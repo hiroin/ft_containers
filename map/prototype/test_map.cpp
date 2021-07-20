@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 13:37:31 by dnakano           #+#    #+#             */
-/*   Updated: 2021/07/20 14:59:32 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/20 15:44:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -756,10 +756,10 @@ void test_map(int& test_no) {
 
   putTestInfo(test_no, "map<Hoge, Hoge>: map(10) = map(10) with array");
   try {
-    std::map<Hoge, Hoge> std_map(hoges, hoges + 10);
-    std::map<Hoge, Hoge> std_map2(fugas, fugas + 10);
-    ft::map<Hoge, Hoge> ft_map(ft_hoges, ft_hoges + 10);
-    ft::map<Hoge, Hoge> ft_map2(ft_fugas, ft_fugas + 10);
+    std::map<Hoge, Hoge> std_map(hoges, hoges + 2);
+    std::map<Hoge, Hoge> std_map2(fugas, fugas + 2);
+    ft::map<Hoge, Hoge> ft_map(ft_hoges, ft_hoges + 2);
+    ft::map<Hoge, Hoge> ft_map2(ft_fugas, ft_fugas + 2);
 
     for (int i = 0; i < 10; i++) {
       // std::cout << "std[" << hoges[i].first << "] = " <<
@@ -774,13 +774,13 @@ void test_map(int& test_no) {
     std_map = std_map2;
     ft_map = ft_map2;
     for (int i = 0; i < 10; i++) {
-      // std::cout << "std[" << hoges[i].first << "] = " <<
-      // std_map[hoges[i].first]
-      //           << " ft[" << hoges[i].first << "] = " <<
-      //           ft_map[hoges[i].first]
-      //           << std::endl;
+      std::cout << "std[" << hoges[i].first << "] = " <<
+      std_map[hoges[i].first]
+                << " ft[" << hoges[i].first << "] = " <<
+                ft_map[hoges[i].first]
+                << std::endl;
       if (std_map[hoges[i].first] != ft_map[ft_hoges[i].first]) {
-        throw std::runtime_error("value");
+        // throw std::runtime_error("value1");
       }
     }
     if (std_map.size() != ft_map.size() || std_map.empty() != ft_map.empty() ||

@@ -62,6 +62,15 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
     : _M_t(__comp, __a)
   { insert(__first, __last); }
 
+  ~map() {}
+
+  map(const map& __x)
+  {
+    _M_t.setAlloc(__x.getAlloc());
+    _M_t.set_comp(__x.key_comp());
+    insert(__x.begin(), __x.end());
+  }
+
   map& operator=(const map& __x)
   {
     if (this == &__x) {
@@ -184,6 +193,10 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
       _M_t.print();
   }
 #endif
+
+ private:
+  allocator_type getAlloc() const
+  { return _M_t.getAlloc(); }
 
 };
 
