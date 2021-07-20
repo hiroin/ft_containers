@@ -12,7 +12,6 @@
 #include "vectorConstIterator.hpp"
 #include "vector.hpp"
 #include "iterator.hpp"
-#include "vectorBool.hpp"
 
 namespace ft {
 
