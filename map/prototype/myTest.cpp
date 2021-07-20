@@ -8,6 +8,7 @@
 #include "ft_pair.hpp"
 #include "map.hpp"
 #include "Hoge.hpp"
+#include <utility>
 
 #define FILENAME "rand.csv"
 
@@ -351,25 +352,92 @@ int main(int argc, char const *argv[]) {
   //   ft_m.insert(ft_persons, ft_persons + 10);
   //   // ft::map<int, std::string> ft_persons_map(ft_persons, ft_persons + 10);
   // }
-  {
-    std::cout << "------------------------" << std::endl;
-    std::map<Hoge, Hoge> std_map;
-    // std_map.insert(std::pair<Hoge, Hoge>(Hoge(0, 7), Hoge(0, 0)));
-    // std_map.insert(std::pair<Hoge, Hoge>(Hoge(0, 0), Hoge(0, 5)));
-    std_map.insert(std::pair<Hoge, Hoge>(Hoge(1, 2), Hoge(1, 1)));
-    // std_map.insert(std::pair<Hoge, Hoge>(Hoge(1, 1), Hoge(1, 1)));
-    // std_map.insert(std::pair<Hoge, Hoge>(Hoge(2, 4), Hoge(2, 2)));
-    std_map.insert(std::pair<Hoge, Hoge>(Hoge(2, 2), Hoge(2, 5)));
-    std::cout << std_map.size() << std::endl;
+  // {
+  //   std::cout << "------------------------" << std::endl;
+  //   std::map<Hoge, Hoge> std_map;
+  //   // std_map.insert(std::pair<Hoge, Hoge>(Hoge(0, 7), Hoge(0, 0)));
+  //   // std_map.insert(std::pair<Hoge, Hoge>(Hoge(0, 0), Hoge(0, 5)));
+  //   std_map.insert(std::pair<Hoge, Hoge>(Hoge(1, 2), Hoge(1, 1)));
+  //   // std_map.insert(std::pair<Hoge, Hoge>(Hoge(1, 1), Hoge(1, 1)));
+  //   // std_map.insert(std::pair<Hoge, Hoge>(Hoge(2, 4), Hoge(2, 2)));
+  //   std_map.insert(std::pair<Hoge, Hoge>(Hoge(2, 2), Hoge(2, 5)));
+  //   std::cout << std_map.size() << std::endl;
 
-    ft::map<Hoge, Hoge> ft_map;
-    // ft_map.insert(ft::pair<Hoge, Hoge>(Hoge(0, 7), Hoge(0, 0)));
-    // ft_map.insert(ft::pair<Hoge, Hoge>(Hoge(0, 0), Hoge(0, 5)));
-    ft_map.insert(ft::pair<Hoge, Hoge>(Hoge(1, 2), Hoge(1, 1)));
-    // ft_map.insert(ft::pair<Hoge, Hoge>(Hoge(1, 1), Hoge(1, 1)));
-    // ft_map.insert(ft::pair<Hoge, Hoge>(Hoge(2, 4), Hoge(2, 2)));
-    ft_map.insert(ft::pair<Hoge, Hoge>(Hoge(2, 2), Hoge(2, 5)));
-    std::cout << ft_map.size() << std::endl;
+  //   ft::map<Hoge, Hoge> ft_map;
+  //   // ft_map.insert(ft::pair<Hoge, Hoge>(Hoge(0, 7), Hoge(0, 0)));
+  //   // ft_map.insert(ft::pair<Hoge, Hoge>(Hoge(0, 0), Hoge(0, 5)));
+  //   ft_map.insert(ft::pair<Hoge, Hoge>(Hoge(1, 2), Hoge(1, 1)));
+  //   // ft_map.insert(ft::pair<Hoge, Hoge>(Hoge(1, 1), Hoge(1, 1)));
+  //   // ft_map.insert(ft::pair<Hoge, Hoge>(Hoge(2, 4), Hoge(2, 2)));
+  //   ft_map.insert(ft::pair<Hoge, Hoge>(Hoge(2, 2), Hoge(2, 5)));
+  //   std::cout << ft_map.size() << std::endl;
+  // }
+
+  {
+    std::pair<Hoge, Hoge> hoges[10] = {
+        std::pair<Hoge, Hoge>(Hoge(0, 7), Hoge(0, 0)),
+        std::pair<Hoge, Hoge>(Hoge(1, 2), Hoge(1, 1)),
+        std::pair<Hoge, Hoge>(Hoge(2, 4), Hoge(2, 2)),
+        std::pair<Hoge, Hoge>(Hoge(3, 0), Hoge(3, 3)),
+        std::pair<Hoge, Hoge>(Hoge(4, 9), Hoge(4, 4)),
+        std::pair<Hoge, Hoge>(Hoge(5, 8), Hoge(5, 5)),
+        std::pair<Hoge, Hoge>(Hoge(6, 5), Hoge(6, 6)),
+        std::pair<Hoge, Hoge>(Hoge(7, 1), Hoge(7, 7)),
+        std::pair<Hoge, Hoge>(Hoge(8, 6), Hoge(8, 8)),
+        std::pair<Hoge, Hoge>(Hoge(9, 3), Hoge(9, 9))};
+    std::map<Hoge, Hoge> hoges_map(hoges, hoges + 10);
+
+    ft::pair<Hoge, Hoge> ft_hoges[10] = {
+        ft::pair<Hoge, Hoge>(Hoge(0, 7), Hoge(0, 0)),
+        ft::pair<Hoge, Hoge>(Hoge(1, 2), Hoge(1, 1)),
+        ft::pair<Hoge, Hoge>(Hoge(2, 4), Hoge(2, 2)),
+        ft::pair<Hoge, Hoge>(Hoge(3, 0), Hoge(3, 3)),
+        ft::pair<Hoge, Hoge>(Hoge(4, 9), Hoge(4, 4)),
+        ft::pair<Hoge, Hoge>(Hoge(5, 8), Hoge(5, 5)),
+        ft::pair<Hoge, Hoge>(Hoge(6, 5), Hoge(6, 6)),
+        ft::pair<Hoge, Hoge>(Hoge(7, 1), Hoge(7, 7)),
+        ft::pair<Hoge, Hoge>(Hoge(8, 6), Hoge(8, 8)),
+        ft::pair<Hoge, Hoge>(Hoge(9, 3), Hoge(9, 9))};
+    ft::map<Hoge, Hoge> ft_hoges_map(ft_hoges, ft_hoges + 10);
+
+    try {
+      const std::map<Hoge, Hoge> std_map(hoges, hoges + 10);
+      const ft::map<Hoge, Hoge> ft_map(ft_hoges, ft_hoges + 10);
+      std::map<Hoge, Hoge>::const_iterator std_citr;
+      ft::map<Hoge, Hoge>::const_iterator ft_citr;
+      std::map<Hoge, Hoge>::const_reverse_iterator std_critr;
+      ft::map<Hoge, Hoge>::const_reverse_iterator ft_critr;
+
+      size_t i = 0;
+      for (std_citr = std_map.begin(), ft_citr = ft_map.begin();
+            std_citr != std_map.end(); ++std_citr, ++ft_citr) {
+        // if (std_critr->first != ft_critr->first
+        //   || std_critr->second != ft_critr->second) {
+        //   throw std::runtime_error("iterator");
+        // }
+        std::cout << i++ << std::endl;
+        if (std_critr->first != ft_critr->first) {
+          throw std::runtime_error("iterator");
+        }
+      }
+      if (ft_citr != ft_map.end()) {
+        throw std::runtime_error("iterator");
+      }
+
+      for (std_critr = std_map.rbegin(), ft_critr = ft_map.rbegin();
+            std_critr != std_map.rend(); ++std_critr, ++ft_critr) {
+        // if (std_critr->first != ft_critr->first
+        //   || std_critr->second != ft_critr->second) {
+        //   throw std::runtime_error("rev iterator");
+        // }
+      }
+      if (ft_critr != ft_map.rend()) {
+        throw std::runtime_error("rev iterator");
+      }
+    } catch (std::exception& e) {
+      throw std::runtime_error(e.what());
+    }
+    std::cout << " => OK :)" << std::endl;
   }
 
   return 0;

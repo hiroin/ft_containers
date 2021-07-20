@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 13:37:31 by dnakano           #+#    #+#             */
-/*   Updated: 2021/07/19 16:35:59 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/20 14:59:32 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -2077,40 +2077,42 @@ void test_map(int& test_no) {
   }
   std::cout << " => OK :)" << std::endl;
 
-  // for (int i = 0; i <= 20; i++) {
-  //   for (int j = 0; j <= 10; j++) {
-  //     std::stringstream sout;
-  //     sout << "map<int, int>: map(0,2..20).insert to " << i << " with hint "
-  //          << j * 2;
-  //     putTestInfo(test_no, sout.str());
-  //     try {
-  //       std::map<int, int> std_map;
-  //       ft::map<int, int> ft_map;
-  //       std::map<int, int>::iterator std_itr;
-  //       ft::map<int, int>::iterator ft_itr;
+  for (int i = 0; i <= 20; i++) {
+    for (int j = 0; j <= 10; j++) {
+      std::stringstream sout;
+      sout << "map<int, int>: map(0,2..20).insert to " << i << " with hint "
+           << j * 2;
+      putTestInfo(test_no, sout.str());
+      try {
+        std::map<int, int> std_map;
+        ft::map<int, int> ft_map;
+        std::map<int, int>::iterator std_itr;
+        ft::map<int, int>::iterator ft_itr;
 
-  //       for (int k = 0; k <= 10; k++) {
-  //         std_map[k * 2] = k * 2;
-  //         ft_map[k * 2] = k * 2;
-  //       }
-  //       std_itr =
-  //           std_map.insert(std_map.find(j * 2), std::pair<int, int>(i, 42));
-  //       ft_itr = ft_map.insert(ft_map.find(j * 2), std::pair<int, int>(i, 42));
-  //       if (*std_itr != *ft_itr) {
-  //         throw std::runtime_error("return value");
-  //       }
-  //       for (std_itr = std_map.begin(), ft_itr = ft_map.begin();
-  //            std_itr != std_map.end(); ++std_itr, ++ft_itr) {
-  //         if (*std_itr != *ft_itr) {
-  //           throw std::runtime_error("value");
-  //         }
-  //       }
-  //     } catch (std::exception& e) {
-  //       throw std::runtime_error(e.what());
-  //     }
-  //     std::cout << " => OK :)" << std::endl;
-  //   }
-  // }
+        for (int k = 0; k <= 10; k++) {
+          std_map[k * 2] = k * 2;
+          ft_map[k * 2] = k * 2;
+        }
+        std_itr =
+            std_map.insert(std_map.find(j * 2), std::pair<int, int>(i, 42));
+        ft_itr = ft_map.insert(ft_map.find(j * 2), ft::pair<int, int>(i, 42));
+        if (std_itr->first != ft_itr->first
+          || std_itr->second != ft_itr->second) {
+          throw std::runtime_error("return value");
+        }
+        for (std_itr = std_map.begin(), ft_itr = ft_map.begin();
+             std_itr != std_map.end(); ++std_itr, ++ft_itr) {
+        if (std_itr->first != ft_itr->first
+          || std_itr->second != ft_itr->second) {
+            throw std::runtime_error("value");
+          }
+        }
+      } catch (std::exception& e) {
+        throw std::runtime_error(e.what());
+      }
+      std::cout << " => OK :)" << std::endl;
+    }
+  }
 
   putTestInfo(test_no, "map<Hoge, Hoge>: map(1).erase(1)");
   try {
@@ -2138,140 +2140,153 @@ void test_map(int& test_no) {
   }
   std::cout << " => OK :)" << std::endl;
 
-  // for (int i = 0; i <= 10; i++) {
-  //   for (int j = i; j <= 10; j++) {
-  //     std::stringstream sout;
-  //     sout << "map<Hoge, Hoge>: map(0,10).erase(" << i << " ~ " << j << ")";
-  //     putTestInfo(test_no, sout.str());
-  //     try {
-  //       std::map<Hoge, Hoge> std_map(hoges, hoges + 10);
-  //       ft::map<Hoge, Hoge> ft_map(hoges, hoges + 10);
+  for (int i = 0; i <= 10; i++) {
+    for (int j = i; j <= 10; j++) {
+      std::stringstream sout;
+      sout << "map<Hoge, Hoge>: map(0,10).erase(" << i << " ~ " << j << ")";
+      putTestInfo(test_no, sout.str());
+      try {
+        std::map<Hoge, Hoge> std_map(hoges, hoges + 10);
+        ft::map<Hoge, Hoge> ft_map(ft_hoges, ft_hoges + 10);
 
-  //       std::map<Hoge, Hoge>::iterator std_first = std_map.begin();
-  //       ft::map<Hoge, Hoge>::iterator ft_first = ft_map.begin();
-  //       for (int k = 0; k < i; k++) {
-  //         ++std_first;
-  //         ++ft_first;
-  //       }
+        std::map<Hoge, Hoge>::iterator std_first = std_map.begin();
+        ft::map<Hoge, Hoge>::iterator ft_first = ft_map.begin();
+        for (int k = 0; k < i; k++) {
+          ++std_first;
+          ++ft_first;
+        }
 
-  //       std::map<Hoge, Hoge>::iterator std_last = std_first;
-  //       ft::map<Hoge, Hoge>::iterator ft_last = ft_first;
-  //       for (int k = i; k < j; k++) {
-  //         ++std_last;
-  //         ++ft_last;
-  //       }
-  //       std_map.erase(std_first, std_last);
-  //       ft_map.erase(ft_first, ft_last);
-  //       for (std_first = std_map.begin(), ft_first = ft_map.begin();
-  //            std_first != std_map.end(); ++std_first, ++ft_first) {
-  //         if (*std_first != *ft_first) {
-  //           throw std::runtime_error("value");
-  //         }
-  //       }
-  //     } catch (std::exception& e) {
-  //       throw std::runtime_error(e.what());
-  //     }
-  //     std::cout << " => OK :)" << std::endl;
-  //   }
-  // }
+        std::map<Hoge, Hoge>::iterator std_last = std_first;
+        ft::map<Hoge, Hoge>::iterator ft_last = ft_first;
+        for (int k = i; k < j; k++) {
+          ++std_last;
+          ++ft_last;
+        }
+        std_map.erase(std_first, std_last);
+        ft_map.erase(ft_first, ft_last);
+        for (std_first = std_map.begin(), ft_first = ft_map.begin();
+             std_first != std_map.end(); ++std_first, ++ft_first) {
+          if (std_first->first != ft_first->first
+            || std_first->second != ft_first->second) {
+            throw std::runtime_error("value");
+          }
+        }
+      } catch (std::exception& e) {
+        throw std::runtime_error(e.what());
+      }
+      std::cout << " => OK :)" << std::endl;
+    }
+  }
 
-  // putTestInfo(test_no, "map<int,int>: check iterators");
-  // try {
-  //   int key;
-  //   std::map<int, int> std_map;
-  //   ft::map<int, int> ft_map;
-  //   std::map<int, int>::iterator std_itr;
-  //   ft::map<int, int>::iterator ft_itr;
-  //   std::map<int, int>::reverse_iterator std_ritr;
-  //   ft::map<int, int>::reverse_iterator ft_ritr;
-  //   std::map<int, int>::const_iterator std_citr;
-  //   ft::map<int, int>::const_iterator ft_citr;
-  //   std::map<int, int>::const_reverse_iterator std_critr;
-  //   ft::map<int, int>::const_reverse_iterator ft_critr;
+  putTestInfo(test_no, "map<int,int>: check iterators");
+  try {
+    int key;
+    std::map<int, int> std_map;
+    ft::map<int, int> ft_map;
+    std::map<int, int>::iterator std_itr;
+    ft::map<int, int>::iterator ft_itr;
+    std::map<int, int>::reverse_iterator std_ritr;
+    ft::map<int, int>::reverse_iterator ft_ritr;
+    std::map<int, int>::const_iterator std_citr;
+    ft::map<int, int>::const_iterator ft_citr;
+    std::map<int, int>::const_reverse_iterator std_critr;
+    ft::map<int, int>::const_reverse_iterator ft_critr;
 
-  //   for (int i = 0; i < 1000; i++) {
-  //     key = rand() % 1000;
-  //     std_map[key] = i;
-  //     ft_map[key] = i;
-  //   }
+    for (int i = 0; i < 2; i++) {
+      key = rand() % 2;
+      std_map[key] = i;
+      ft_map[key] = i;
+    }
 
-  //   for (std_itr = std_map.begin(), ft_itr = ft_map.begin();
-  //        std_itr != std_map.end(); ++std_itr, ++ft_itr) {
-  //     if (*std_itr != *ft_itr) {
-  //       throw std::runtime_error("iterator");
-  //     }
-  //   }
-  //   if (ft_itr != ft_map.end()) {
-  //     throw std::runtime_error("iterator");
-  //   }
+    for (std_itr = std_map.begin(), ft_itr = ft_map.begin();
+         std_itr != std_map.end(); ++std_itr, ++ft_itr) {
+      if (std_itr->first != ft_itr->first
+        || std_itr->second != ft_itr->second) {
+        throw std::runtime_error("iterator1");
+      }
+    }
+    if (ft_itr != ft_map.end()) {
+      throw std::runtime_error("iterator2");
+    }
 
-  //   for (std_ritr = std_map.rbegin(), ft_ritr = ft_map.rbegin();
-  //        std_ritr != std_map.rend(); ++std_ritr, ++ft_ritr) {
-  //     if (*std_ritr != *ft_ritr) {
-  //       throw std::runtime_error("rev iterator");
-  //     }
-  //   }
-  //   if (ft_ritr != ft_map.rend()) {
-  //     throw std::runtime_error("rev iterator");
-  //   }
+    for (std_ritr = std_map.rbegin(), ft_ritr = ft_map.rbegin();
+         std_ritr != std_map.rend(); ++std_ritr, ++ft_ritr) {
+      if (std_ritr->first != ft_ritr->first
+        || std_ritr->second != ft_ritr->second) {
+        throw std::runtime_error("rev iterator1");
+      }
+    }
+    if (ft_ritr != ft_map.rend()) {
+      throw std::runtime_error("rev iterator2");
+    }
 
-  //   for (std_citr = std_map.begin(), ft_citr = ft_map.begin();
-  //        std_citr != std_map.end(); ++std_citr, ++ft_citr) {
-  //     if (*std_citr != *ft_citr) {
-  //       throw std::runtime_error("iterator");
-  //     }
-  //   }
-  //   if (ft_citr != ft_map.end()) {
-  //     throw std::runtime_error("iterator");
-  //   }
+    for (std_citr = std_map.begin(), ft_citr = ft_map.begin();
+         std_citr != std_map.end(); ++std_citr, ++ft_citr) {
+      if (std_citr->first != ft_citr->first
+        || std_citr->second != ft_citr->second) {
+        throw std::runtime_error("iterator3");
+      }
+    }
+    if (ft_citr != ft_map.end()) {
+      std::cout << std::endl;
+      std::cout << ft_citr->first << std::endl;
+      std::cout << ft_map.end()->first << std::endl;
+      throw std::runtime_error("iterator4");
+    }
 
-  //   for (std_critr = std_map.rbegin(), ft_critr = ft_map.rbegin();
-  //        std_critr != std_map.rend(); ++std_critr, ++ft_critr) {
-  //     if (*std_critr != *ft_critr) {
-  //       throw std::runtime_error("rev iterator");
-  //     }
-  //   }
-  //   if (ft_critr != ft_map.rend()) {
-  //     throw std::runtime_error("rev iterator");
-  //   }
+    for (std_critr = std_map.rbegin(), ft_critr = ft_map.rbegin();
+         std_critr != std_map.rend(); ++std_critr, ++ft_critr) {
+      if (std_critr->first != ft_critr->first
+        || std_critr->second != ft_critr->second) {
+        throw std::runtime_error("rev iterator3");
+      }
+    }
+    if (ft_critr != ft_map.rend()) {
+      throw std::runtime_error("rev iterator4");
+    }
 
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error(e.what());
-  // }
-  // std::cout << " => OK :)" << std::endl;
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
 
-  // putTestInfo(test_no, "map<int,int>: check const");
-  // try {
-  //   const std::map<Hoge, Hoge> std_map(hoges, hoges + 10);
-  //   const ft::map<Hoge, Hoge> ft_map(hoges, hoges + 10);
-  //   std::map<Hoge, Hoge>::const_iterator std_citr;
-  //   ft::map<Hoge, Hoge>::const_iterator ft_citr;
-  //   std::map<Hoge, Hoge>::const_reverse_iterator std_critr;
-  //   ft::map<Hoge, Hoge>::const_reverse_iterator ft_critr;
+  putTestInfo(test_no, "map<int,int>: check const");
+  try {
+    const std::map<Hoge, Hoge> std_map(hoges, hoges + 10);
+    const ft::map<Hoge, Hoge> ft_map(ft_hoges, ft_hoges + 10);
+    std::map<Hoge, Hoge>::const_iterator std_citr;
+    ft::map<Hoge, Hoge>::const_iterator ft_citr;
+    std::map<Hoge, Hoge>::const_reverse_iterator std_critr;
+    ft::map<Hoge, Hoge>::const_reverse_iterator ft_critr;
 
-  //   for (std_citr = std_map.begin(), ft_citr = ft_map.begin();
-  //        std_citr != std_map.end(); ++std_citr, ++ft_citr) {
-  //     if (*std_citr != *ft_citr) {
-  //       throw std::runtime_error("iterator");
-  //     }
-  //   }
-  //   if (ft_citr != ft_map.end()) {
-  //     throw std::runtime_error("iterator");
-  //   }
+    for (std_citr = std_map.begin(), ft_citr = ft_map.begin();
+         std_citr != std_map.end(); ++std_citr, ++ft_citr) {
+      if (std_citr->first != ft_citr->first
+        || std_citr->second != ft_citr->second) {
+        throw std::runtime_error("iterator");
+      }
+      if (std_citr->first != ft_citr->first) {
+        throw std::runtime_error("iterator");
+      }
+    }
+    if (ft_citr != ft_map.end()) {
+      throw std::runtime_error("iterator");
+    }
 
-  //   for (std_critr = std_map.rbegin(), ft_critr = ft_map.rbegin();
-  //        std_critr != std_map.rend(); ++std_critr, ++ft_critr) {
-  //     if (*std_critr != *ft_critr) {
-  //       throw std::runtime_error("rev iterator");
-  //     }
-  //   }
-  //   if (ft_critr != ft_map.rend()) {
-  //     throw std::runtime_error("rev iterator");
-  //   }
-  // } catch (std::exception& e) {
-  //   throw std::runtime_error(e.what());
-  // }
-  // std::cout << " => OK :)" << std::endl;
+    for (std_critr = std_map.rbegin(), ft_critr = ft_map.rbegin();
+         std_critr != std_map.rend(); ++std_critr, ++ft_critr) {
+      if (std_critr->first != ft_critr->first
+        || std_critr->second != ft_critr->second) {
+        throw std::runtime_error("rev iterator");
+      }
+    }
+    if (ft_critr != ft_map.rend()) {
+      throw std::runtime_error("rev iterator");
+    }
+  } catch (std::exception& e) {
+    throw std::runtime_error(e.what());
+  }
+  std::cout << " => OK :)" << std::endl;
 
   return;
 }

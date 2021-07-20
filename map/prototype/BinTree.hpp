@@ -214,10 +214,12 @@ struct _AVL_tree_const_iterator
   : _M_node(__x) { }
 
   _AVL_tree_const_iterator(const iterator& __it)
-  : _M_node(__it._M_node) { }
+  : _M_node(__it._M_node), lastNode_(__it.lastNode_),
+    nullNode_(__it.nullNode_) { }
 
   explicit
-  _AVL_tree_const_iterator(_Base_ptr __x, _Base_ptr lastNode, _Base_ptr nullNode)
+  _AVL_tree_const_iterator(_Base_ptr __x, _Base_ptr lastNode,
+                          _Base_ptr nullNode)
   : _M_node(__x), lastNode_(lastNode), nullNode_(nullNode) { }
 
   reference
@@ -512,6 +514,22 @@ class BinTree {
     return const_iterator(nullNode, lastNode_, nullNode);
   }
 
+  reverse_iterator rbegin() {
+    return reverse_iterator(end());
+  }
+
+  const_reverse_iterator rbegin() const {
+    return const_reverse_iterator(end());
+  }
+
+  reverse_iterator rend() {
+    return reverse_iterator(begin());
+  }
+
+  const_reverse_iterator rend() const {
+    return const_reverse_iterator(begin());
+  }
+
   iterator find(const key_type& __k) {
     node_pointer findNode = searchNodeByKey(root, __k);
     if (findNode == NULL)
@@ -665,7 +683,6 @@ class BinTree {
   //--------------------
   // append
   //--------------------
-  // bool append(value_type data) {
   ft::pair<iterator, bool> append(value_type data) {
     // initial append
     if (root == nullNode) {
@@ -677,28 +694,15 @@ class BinTree {
       root = newNode;
       lastNode_ = newNode;
       ++size_;
-      // return true;
       return ft::make_pair(iterator(root), true);
     }
 
     node_pointer sameNode = searchNode(root, data);
     if (sameNode != NULL) {
-      // return false;
       return ft::make_pair(iterator(sameNode), false);
     }
+
     node_pointer parent = searchParentNode(root, data);
-
-    // 念の為のガード、ありえないパターン
-    // if (data.first < parent->data->first) {
-    //   if (parent->LHS != NULL) {
-    //     return ft::make_pair(iterator(parent), false);
-    //   }
-    // } else {
-    //   if (parent->RHS != NULL) {
-    //     return ft::make_pair(iterator(parent), false>);
-    //   }
-    // }
-
     pointer newVal = val_alloc_.allocate(1);
     val_alloc_.construct(newVal, data);
     node_pointer newNode = alloc_.allocate(1);
@@ -716,6 +720,50 @@ class BinTree {
     lastNode_ = getMaximumNode(root);
     ++size_;
     return ft::make_pair(iterator(newNode), true);
+  }
+
+  iterator append(iterator __position, value_type data) {
+    // initial append
+    if (root == nullNode) {
+      node_pointer newNode = alloc_.allocate(1);
+      pointer newVal = val_alloc_.allocate(1);
+      val_alloc_.construct(newVal, data);
+      node_type tmpNode(newVal);
+      alloc_.construct(newNode, tmpNode);
+      root = newNode;
+      lastNode_ = newNode;
+      ++size_;
+      return iterator(root);
+    }
+
+    node_pointer sameNode = searchNode(root, data);
+    if (sameNode != NULL) {
+      return iterator(sameNode);
+    }
+
+    if (!(comp_(data.first, __position->first)
+      && comp_(__position->first, data.first))) {
+      return append(data).first;
+    }
+
+    node_pointer parent = searchParentNode(root, data);
+    pointer newVal = val_alloc_.allocate(1);
+    val_alloc_.construct(newVal, data);
+    node_pointer newNode = alloc_.allocate(1);
+    node_type tmpNode(newVal);
+    alloc_.construct(newNode, tmpNode);
+    newNode->Parent = parent;
+
+    if (data.first < parent->data->first) {
+      parent->LHS = newNode;
+      BalanceA(parent->LHS);
+    } else {
+      parent->RHS = newNode;
+      BalanceA(parent->RHS);
+    }
+    lastNode_ = getMaximumNode(root);
+    ++size_;
+    return iterator(newNode);
   }
 
   // return parent node's pointer whose child will have "data".
