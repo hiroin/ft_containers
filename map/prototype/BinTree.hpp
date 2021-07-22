@@ -1,7 +1,6 @@
 #ifndef _FT_BINTREE_H_
 #define _FT_BINTREE_H_
 
-#include <fstream>
 #include <iostream>
 #include <limits>
 #include "iterator.hpp"
@@ -24,8 +23,7 @@ template <typename _Val> struct BinTreeNode
   BinTreeNode()
     : data(NULL), Parent(NULL), LHS(NULL), RHS(NULL), height(1), bias(0) {}
   BinTreeNode(_Val *val)
-    : data(val), Parent(NULL), LHS(NULL), RHS(NULL), height(1), bias(0) {
-  }
+    : data(val), Parent(NULL), LHS(NULL), RHS(NULL), height(1), bias(0) {}
   ~BinTreeNode() {}
 };
 
@@ -387,14 +385,8 @@ class BinTree {
     node_allocator_type;
   typedef _Compare                   key_compare;
 
-
   BinTree() : size_(0) {
-    pointer newVal = val_alloc_.allocate(1);
-    val_alloc_.construct(newVal, value_type());
-    node_type tmpNode(newVal);
-
-    nullNode = alloc_.allocate(1);
-    alloc_.construct(nullNode, tmpNode);
+    nullNode = createNewNode(value_type());
     root = nullNode;
     lastNode_ = nullNode;
   }
@@ -403,12 +395,7 @@ class BinTree {
     const allocator_type& __a = allocator_type())
     : val_alloc_(__a), comp_(__comp), size_(0)
   {
-    pointer newVal = val_alloc_.allocate(1);
-    val_alloc_.construct(newVal, value_type());
-    node_type tmpNode(newVal);
-
-    nullNode = alloc_.allocate(1);
-    alloc_.construct(nullNode, tmpNode);
+    nullNode = createNewNode(value_type());
     root = nullNode;
     lastNode_ = nullNode;
   }
@@ -578,9 +565,121 @@ class BinTree {
     std::swap(size_, __t.size_);
   }
 
-  //--------------------
-  // search
-  //--------------------
+  iterator lower_bound(const key_type& __x) {
+    if (root == nullNode) {
+      return iterator(nullNode, lastNode_, nullNode);
+    }
+    node_pointer result = findLowerBound(root, __x);
+    if (result == NULL)
+      return end();
+    else
+      return iterator(result, lastNode_, nullNode);
+  }
+
+  iterator upper_bound(const key_type& __x) {
+    if (root == nullNode) {
+      return iterator(nullNode, lastNode_, nullNode);
+    }
+    node_pointer result = findUpperBound(root, __x);
+    if (result == NULL)
+      return end();
+    else
+      return iterator(result, lastNode_, nullNode);
+  }
+
+  ft::pair<iterator, iterator> equal_range(const key_type& k) {
+    return ft::pair<iterator, iterator>(lower_bound(k), upper_bound(k));
+  }
+
+  ft::pair<const_iterator, const_iterator> equal_range(
+      const key_type& k) const {
+    return ft::pair<const_iterator, const_iterator>(lower_bound(k),
+                                                     upper_bound(k));
+  }
+
+  ft::pair<iterator, bool> append(const value_type& data) {
+    // initial append
+    if (root == nullNode) {
+      node_pointer newNode = createNewNode(data);
+      root = newNode;
+      lastNode_ = newNode;
+      ++size_;
+      return ft::make_pair(iterator(root), true);
+    }
+
+    node_pointer sameNode = searchNode(root, data);
+    if (sameNode != NULL) {
+      return ft::make_pair(iterator(sameNode), false);
+    }
+
+    node_pointer parent = searchParentNode(root, data);
+    node_pointer newNode = createNewNode(data);
+    newNode->Parent = parent;
+
+    if (comp_(data.first, parent->data->first)) {
+      parent->LHS = newNode;
+      BalanceA(parent->LHS);
+    } else {
+      parent->RHS = newNode;
+      BalanceA(parent->RHS);
+    }
+    lastNode_ = getMaximumNode(root);
+    ++size_;
+    return ft::make_pair(iterator(newNode), true);
+  }
+
+  iterator append(iterator __position, const value_type& data) {
+    // initial append
+    if (root == nullNode) {
+      node_pointer newNode = createNewNode(data);
+      root = newNode;
+      lastNode_ = newNode;
+      ++size_;
+      return iterator(root);
+    }
+
+    node_pointer sameNode = searchNode(root, data);
+    if (sameNode != NULL) {
+      return iterator(sameNode);
+    }
+
+    if (!(comp_(data.first, __position->first)
+      && comp_(__position->first, data.first))) {
+      return append(data).first;
+    }
+
+    node_pointer parent = searchParentNode(root, data);
+    node_pointer newNode = createNewNode(data);
+    newNode->Parent = parent;
+
+    if (comp_(data.first, parent->data->first)) {
+      parent->LHS = newNode;
+      BalanceA(parent->LHS);
+    } else {
+      parent->RHS = newNode;
+      BalanceA(parent->RHS);
+    }
+    lastNode_ = getMaximumNode(root);
+    ++size_;
+    return iterator(newNode);
+  }
+
+  template<typename _InputIterator>
+  void append(_InputIterator __first, _InputIterator __last) {
+    for (_InputIterator itr = __first; itr != __last; ++itr) {
+      append(*itr);
+    }
+  }
+
+ private:
+  allocator_type val_alloc_;
+  node_allocator_type alloc_;
+  node_pointer root;
+  node_pointer nullNode;
+  node_pointer lastNode_;
+  _Compare comp_;
+  size_t size_;
+
   bool search(node_pointer data) {
     node_pointer result = searchNode(root, data);
     if (result == NULL) {
@@ -595,21 +694,28 @@ class BinTree {
     }
     node_pointer tmp = node;
     while (tmp != NULL
-      && (tmp->data->first > data.first || tmp->data->first < data.first)) {
-      tmp = data.first < tmp->data->first ? tmp->LHS : tmp->RHS;
+      && (comp_(data.first, tmp->data->first)
+        || comp_(tmp->data->first, data.first))) {
+      tmp = comp_(data.first, tmp->data->first) ? tmp->LHS : tmp->RHS;
     }
     return tmp;
   }
 
-  iterator lower_bound(const key_type& __x) {
-    if (root == nullNode) {
-      return iterator(nullNode, lastNode_, nullNode);
+  node_pointer searchParentNode(node_pointer node, const value_type& data) {
+    // if node is root or NULL,return themself.
+    if (node->data->first == data.first || node == NULL) {
+      return node;
     }
-    node_pointer result = findLowerBound(root, __x);
-    if (result == NULL)
-      return end();
-    else
-      return iterator(result, lastNode_, nullNode);
+    node_pointer parent = node;
+    node_pointer canditate
+      = comp_(data.first, node->data->first) ? node->LHS : node->RHS;
+
+    while (canditate != NULL && canditate->data->first != data.first) {
+      parent = canditate;
+      canditate = comp_(data.first, canditate->data->first)
+        ? canditate->LHS : canditate->RHS;
+    }
+    return parent;
   }
 
   node_pointer findLowerBound(node_pointer node, const key_type& k) const {
@@ -624,17 +730,6 @@ class BinTree {
     return node;
   }
 
-  iterator upper_bound(const key_type& __x) {
-    if (root == nullNode) {
-      return iterator(nullNode, lastNode_, nullNode);
-    }
-    node_pointer result = findUpperBound(root, __x);
-    if (result == NULL)
-      return end();
-    else
-      return iterator(result, lastNode_, nullNode);
-  }
-
   node_pointer findUpperBound(node_pointer node, const key_type& k) const {
     if (node == NULL) {
       return NULL;
@@ -644,16 +739,6 @@ class BinTree {
     } else {
       return findUpperBound(node->RHS, k);
     }
-  }
-
-  ft::pair<iterator, iterator> equal_range(const key_type& k) {
-    return ft::pair<iterator, iterator>(lower_bound(k), upper_bound(k));
-  }
-
-  ft::pair<const_iterator, const_iterator> equal_range(
-      const key_type& k) const {
-    return ft::pair<const_iterator, const_iterator>(lower_bound(k),
-                                                     upper_bound(k));
   }
 
   void printMaximumNode() {
@@ -679,121 +764,6 @@ class BinTree {
     return node;
   }
 
-  //--------------------
-  // append
-  //--------------------
-  ft::pair<iterator, bool> append(value_type data) {
-    // initial append
-    if (root == nullNode) {
-      node_pointer newNode = alloc_.allocate(1);
-      pointer newVal = val_alloc_.allocate(1);
-      val_alloc_.construct(newVal, data);
-      node_type tmpNode(newVal);
-      alloc_.construct(newNode, tmpNode);
-      root = newNode;
-      lastNode_ = newNode;
-      ++size_;
-      return ft::make_pair(iterator(root), true);
-    }
-
-    node_pointer sameNode = searchNode(root, data);
-    if (sameNode != NULL) {
-      return ft::make_pair(iterator(sameNode), false);
-    }
-
-    node_pointer parent = searchParentNode(root, data);
-    pointer newVal = val_alloc_.allocate(1);
-    val_alloc_.construct(newVal, data);
-    node_pointer newNode = alloc_.allocate(1);
-    node_type tmpNode(newVal);
-    alloc_.construct(newNode, tmpNode);
-    newNode->Parent = parent;
-
-    if (data.first < parent->data->first) {
-      parent->LHS = newNode;
-      BalanceA(parent->LHS);
-    } else {
-      parent->RHS = newNode;
-      BalanceA(parent->RHS);
-    }
-    lastNode_ = getMaximumNode(root);
-    ++size_;
-    return ft::make_pair(iterator(newNode), true);
-  }
-
-  iterator append(iterator __position, value_type data) {
-    // initial append
-    if (root == nullNode) {
-      node_pointer newNode = alloc_.allocate(1);
-      pointer newVal = val_alloc_.allocate(1);
-      val_alloc_.construct(newVal, data);
-      node_type tmpNode(newVal);
-      alloc_.construct(newNode, tmpNode);
-      root = newNode;
-      lastNode_ = newNode;
-      ++size_;
-      return iterator(root);
-    }
-
-    node_pointer sameNode = searchNode(root, data);
-    if (sameNode != NULL) {
-      return iterator(sameNode);
-    }
-
-    if (!(comp_(data.first, __position->first)
-      && comp_(__position->first, data.first))) {
-      return append(data).first;
-    }
-
-    node_pointer parent = searchParentNode(root, data);
-    pointer newVal = val_alloc_.allocate(1);
-    val_alloc_.construct(newVal, data);
-    node_pointer newNode = alloc_.allocate(1);
-    node_type tmpNode(newVal);
-    alloc_.construct(newNode, tmpNode);
-    newNode->Parent = parent;
-
-    if (data.first < parent->data->first) {
-      parent->LHS = newNode;
-      BalanceA(parent->LHS);
-    } else {
-      parent->RHS = newNode;
-      BalanceA(parent->RHS);
-    }
-    lastNode_ = getMaximumNode(root);
-    ++size_;
-    return iterator(newNode);
-  }
-
-  // return parent node's pointer whose child will have "data".
-  node_pointer searchParentNode(node_pointer node, value_type data) {
-    // if node is root or NULL,return themself.
-    if (node->data->first == data.first || node == NULL) {
-      return node;
-    }
-    node_pointer parent = node;
-    node_pointer canditate
-      = data.first < node->data->first ? node->LHS : node->RHS;
-
-    while (canditate != NULL && canditate->data->first != data.first) {
-      parent = canditate;
-      canditate = data.first < canditate->data->first
-        ? canditate->LHS : canditate->RHS;
-    }
-    return parent;
-  }
-
-  template<typename _InputIterator>
-  void append(_InputIterator __first, _InputIterator __last) {
-    for (_InputIterator itr = __first; itr != __last; ++itr) {
-      append(*itr);
-    }
-  }
-
-  //--------------------
-  // erase
-  //--------------------
-  // bool erase(value_type data) {
   bool erase(value_type data) {
     node_pointer deleteNode = searchNode(root, data);
     if (deleteNode == NULL || deleteNode == nullNode) {
@@ -806,32 +776,23 @@ class BinTree {
         deleteParentNode->LHS = NULL;
       if (deleteParentNode->RHS == deleteNode)
         deleteParentNode->RHS = NULL;
-      val_alloc_.destroy(deleteNode->data);
-      val_alloc_.deallocate(deleteNode->data, 1);
-      alloc_.destroy(deleteNode);
-      alloc_.deallocate(deleteNode, 1);
       if (deleteNode == root)
         root = nullNode;
+      freeNode(deleteNode);
     // LHSがNULLの場合
     } else if (deleteNode->LHS == NULL) {
       Replace(deleteNode, deleteNode->RHS);
       BalanceE(deleteNode->RHS);
-      val_alloc_.destroy(deleteNode->data);
-      val_alloc_.deallocate(deleteNode->data, 1);
-      alloc_.destroy(deleteNode);
-      alloc_.deallocate(deleteNode, 1);
       if (deleteNode == root)
         root = deleteNode->RHS;
+      freeNode(deleteNode);
     // RHSがNULLの場合
     } else if (deleteNode->RHS == NULL) {
       Replace(deleteNode, deleteNode->LHS);
       BalanceE(deleteNode->LHS);
-      val_alloc_.destroy(deleteNode->data);
-      val_alloc_.deallocate(deleteNode->data, 1);
-      alloc_.destroy(deleteNode);
-      alloc_.deallocate(deleteNode, 1);
       if (deleteNode == root)
         root = deleteNode->LHS;
+      freeNode(deleteNode);
     // RHSもLHSもいる場合
     } else {
       node_pointer leftMaxNode = LeftMax(deleteNode);
@@ -851,35 +812,6 @@ class BinTree {
       val_alloc_.deallocate(tmp, 1);
       alloc_.destroy(leftMaxNode);
       alloc_.deallocate(leftMaxNode, 1);
-
-      // // leftMaxNodeの親と子のリンク張替え
-      // if (leftMaxNode->LHS)
-      // {
-      //   leftMaxNode->LHS->Parent = leftMaxNode->Parent;
-      //   leftMaxNode->Parent->RHS = leftMaxNode->LHS;
-      // }
-
-      // // deleteNodeの位置にleftMaxNodeを移動
-      // leftMaxNode->Parent = deleteNode->Parent;
-      // leftMaxNode->LHS = deleteNode->LHS;
-      // leftMaxNode->RHS = deleteNode->RHS;
-
-      // // 移動したleftMaxNodeに親と子からリンクを設定
-      // if (deleteNode->LHS)
-      //   deleteNode->LHS->Parent = leftMaxNode;
-      // if (deleteNode->RHS)
-      //   deleteNode->RHS->Parent = leftMaxNode;
-      // if (deleteNode->Parent)
-      // {
-      //   if (deleteNode->Parent->LHS == deleteNode)
-      //     deleteNode->Parent->LHS = leftMaxNode;
-      //   if (deleteNode->Parent->RHS == deleteNode)
-      //     deleteNode->Parent->RHS = leftMaxNode;
-      // }
-      // BalanceE(leftMaxNode->LHS);
-      // alloc_.destroy(deleteNode);
-      // alloc_.deallocate(deleteNode, 1);
-      // deleteNode = NULL;
     }
     lastNode_ = getMaximumNode(root);
     --size_;
@@ -888,21 +820,26 @@ class BinTree {
 
   node_pointer LeftMax(node_pointer node) {
     node_pointer leftMaxNode = node->LHS;
-
     while (leftMaxNode->RHS != NULL) {
       leftMaxNode = leftMaxNode->RHS;
     }
     return leftMaxNode;
   }
 
-private:
-  allocator_type val_alloc_;
-  node_allocator_type alloc_;
-  node_pointer root;
-  node_pointer nullNode;
-  node_pointer lastNode_;
-  _Compare comp_;
-  size_t size_;
+  node_pointer createNewNode(const value_type& data) {
+    pointer newVal = val_alloc_.allocate(1);
+    val_alloc_.construct(newVal, data);
+    node_pointer newNode = alloc_.allocate(1);
+    alloc_.construct(newNode, node_type(newVal));
+    return newNode;
+  }
+
+  void freeNode(node_pointer deleteNode) {
+    val_alloc_.destroy(deleteNode->data);
+    val_alloc_.deallocate(deleteNode->data, 1);
+    alloc_.destroy(deleteNode);
+    alloc_.deallocate(deleteNode, 1);
+  }
 
   int bias(node_pointer node) {
     if (node->LHS == NULL) {
@@ -941,7 +878,6 @@ private:
   //--------------------
   // rotate
   //--------------------
-
   //      node            LHS
   //   LHS    Z   -->    X   node
   //  X   Y                 Y    Z
@@ -1013,13 +949,12 @@ private:
       // when target node is LHS
       if (parentNode->LHS == targetNode) {
         if (bias(parentNode) == 2) {
-
           parentNode = bias(parentNode->LHS) >= 0 ? RotateR(parentNode)
                                                   : RotateLR(parentNode);
         } else {
           modHeight(parentNode);
         }
-        // when target node is RHS
+      // when target node is RHS
       } else {
         if (bias(parentNode) == -2) {
           parentNode = bias(parentNode->RHS) <= 0 ? RotateL(parentNode)
@@ -1047,13 +982,12 @@ private:
       // when objective node is RHS
       if (parentNode->RHS == targetNode) {
         if (bias(parentNode) == 2) {
-
           parentNode = bias(parentNode->LHS) >= 0 ? RotateR(parentNode)
                                                   : RotateLR(parentNode);
         } else {
           modHeight(parentNode);
         }
-        // when objective node is LHS
+      // when objective node is LHS
       } else {
         if (bias(parentNode) == -2) {
           parentNode = bias(parentNode->RHS) <= 0 ? RotateL(parentNode)
@@ -1074,6 +1008,7 @@ private:
   //--------------------
   // debug
   //--------------------
+#ifdef DEBUG
  public:
   void print() {
       printTree(root, 1);
@@ -1110,6 +1045,7 @@ private:
       std::cout << "root node" << std::endl;
     }
   }
+#endif
 };
 
 }
