@@ -453,7 +453,65 @@ int main(int argc, char const *argv[]) {
     p[1].second = 'b';
     std::cout << p[0].second << std::endl;
     std::cout << p[1].second << std::endl;
-    m.get_allocator().deallocate(p, 2);
+    m.get_allocator().deallocate(p, 2);  
+  }
+  {
+    ft::map<int,char> m1;
+    m1[0] = 'a';
+    ft::map<int,char> m2 = m1;
+    std::cout << "1->" << (m1 == m2) << std::endl;
+    m2[0] = 'b';
+    std::cout << "0->" << (m1 == m2) << std::endl;    
+  }
+  {
+    ft::map<int,char> m1, m2;
+    m1.insert(ft::make_pair(1,'a'));
+    m1.insert(ft::make_pair(2,'b'));
+    m1.insert(ft::make_pair(3,'c'));
+    m2 = m1;
+    std::cout << "0->" << (m1 != m2) << std::endl;
+    m2.insert(ft::make_pair(4,'d'));
+    std::cout << "1->" << (m1 != m2) << std::endl;
+  }
+  {
+    std::map<char,int> m1, m2;
+    m1.insert(std::make_pair('a',10));
+    m1.insert(std::make_pair('b',20));
+    m1.insert(std::make_pair('c',30));
+    m2 = m1;
+    std::cout << "0->" << (m1 < m2) << std::endl;
+    m2.insert(std::make_pair('d',40));
+    std::cout << "1->" << (m1 < m2) << std::endl;
+  }
+  {
+    std::map<char,int> m1, m2;
+    m1.insert(std::make_pair('a',10));
+    m1.insert(std::make_pair('b',20));
+    m1.insert(std::make_pair('c',30));
+    m2 = m1;
+    std::cout << "1->" << (m1 >= m2) << std::endl;
+    m2.insert(std::make_pair('d',40));
+    std::cout << "0->" << (m1 >= m2) << std::endl;
+  }
+  {
+    std::map<char,int> m1, m2;
+    m1.insert(std::make_pair('a',10));
+    m1.insert(std::make_pair('b',20));
+    m1.insert(std::make_pair('c',30));
+    m2 = m1;
+    std::cout << "0->" << (m1 > m2) << std::endl;
+    m1.insert(std::make_pair('d',40));
+    std::cout << "1->" << (m1 > m2) << std::endl;
+  }
+  {
+    std::map<char,int> m1, m2;
+    m1.insert(std::make_pair('a',10));
+    m1.insert(std::make_pair('b',20));
+    m1.insert(std::make_pair('c',30));
+    m2 = m1;
+    std::cout << "1->" << (m1 >= m2) << std::endl;
+    m2.insert(std::make_pair('d',40));
+    std::cout << "0->" << (m1 >= m2) << std::endl;
   }
   return 0;
 }

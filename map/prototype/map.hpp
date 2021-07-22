@@ -88,7 +88,7 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
   bool empty()
   { return _M_t.empty(); }
 
-  size_type size()
+  size_type size() const
   { return _M_t.size(); }
 
   size_type max_size() const
@@ -139,9 +139,7 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
     iterator __i = lower_bound(__k);
     // __i->first is greater than or equivalent to __k.
     if (__i == end() || key_comp()(__k, (*__i).first))
-    {
       __i = insert(__i, value_type(__k, mapped_type()));
-    }
     return (*__i).second;
   }
 
@@ -200,6 +198,43 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
   { return _M_t.getAlloc(); }
 
 };
+
+template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
+bool operator==(const map<_Key, _Val, _Compare, _Alloc>& __x,
+                const map<_Key, _Val, _Compare, _Alloc>& __y)
+{
+  return __x.size() == __y.size()
+    && std::equal(__x.begin(), __x.end(), __y.begin());
+}
+
+template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
+bool operator!=(const map<_Key, _Val, _Compare, _Alloc>& __x,
+                const map<_Key, _Val, _Compare, _Alloc>& __y)
+{ return !(__x == __y); }
+
+template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
+bool operator<(const map<_Key, _Val, _Compare, _Alloc>& __x,
+              const map<_Key, _Val, _Compare, _Alloc>& __y)
+{
+  return std::lexicographical_compare(__x.begin(), __x.end(), 
+        __y.begin(), __y.end());
+}
+
+template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
+bool operator>(const map<_Key, _Val, _Compare, _Alloc>& __x,
+              const map<_Key, _Val, _Compare, _Alloc>& __y)
+{ return __y < __x; }
+
+template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
+bool operator<=(const map<_Key, _Val, _Compare, _Alloc>& __x,
+                const map<_Key, _Val, _Compare, _Alloc>& __y)
+{ return !(__y < __x); }
+
+template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
+bool operator>=(const map<_Key, _Val, _Compare, _Alloc>& __x,
+                const map<_Key, _Val, _Compare, _Alloc>& __y)
+{ return !(__x < __y); }
+
 
 template<typename _Key, typename _Tp, typename _Compare, typename _Alloc>
 void swap(map<_Key, _Tp, _Compare, _Alloc>& __x,
