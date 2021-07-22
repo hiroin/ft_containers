@@ -82,6 +82,9 @@ template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,
     return *this;
   }
 
+  allocator_type get_allocator() const
+  { return allocator_type(_M_t.get_allocator()); }
+
   bool empty()
   { return _M_t.empty(); }
 

@@ -423,8 +423,11 @@ class BinTree {
   }
 
  public:
-  void clear()
-  {
+  allocator_type get_allocator() const {
+    return alloc_;
+  }
+
+  void clear() {
     if (root == nullNode)
       return;
     deleteTree(root);

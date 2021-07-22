@@ -439,13 +439,21 @@ int main(int argc, char const *argv[]) {
   //   }
   //   std::cout << " => OK :)" << std::endl;
   // }
+  // {
+  //   ft::map<int, int> m;
+  //   m.insert(ft::make_pair(1,1));
+  //   m.insert(ft::make_pair(2,2));
+  //   ft::map<int, int> m2(m);
+  //   m2.print();
+  // }
   {
-    ft::map<int, int> m;
-    m.insert(ft::make_pair(1,1));
-    m.insert(ft::make_pair(2,2));
-    ft::map<int, int> m2(m);
-    m2.print();
+    ft::map<int,char> m;
+    ft::pair<const int,char>* p = m.get_allocator().allocate(2);
+    p[0].second = 'a';
+    p[1].second = 'b';
+    std::cout << p[0].second << std::endl;
+    std::cout << p[1].second << std::endl;
+    m.get_allocator().deallocate(p, 2);
   }
-
   return 0;
 }
