@@ -3,6 +3,8 @@
 
 #include "iterator.hpp"
 #include "ft_pair.hpp"
+#include "ft_equal.hpp"
+#include "ft_lexicographical_compare.hpp"
 #include "BinTree.hpp"
 
 namespace ft
@@ -204,7 +206,7 @@ bool operator==(const map<_Key, _Val, _Compare, _Alloc>& __x,
                 const map<_Key, _Val, _Compare, _Alloc>& __y)
 {
   return __x.size() == __y.size()
-    && std::equal(__x.begin(), __x.end(), __y.begin());
+    && ft::equal(__x.begin(), __x.end(), __y.begin());
 }
 
 template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
@@ -216,7 +218,7 @@ template<typename _Key, typename _Val, typename _Compare, typename _Alloc>
 bool operator<(const map<_Key, _Val, _Compare, _Alloc>& __x,
               const map<_Key, _Val, _Compare, _Alloc>& __y)
 {
-  return std::lexicographical_compare(__x.begin(), __x.end(), 
+  return ft::lexicographical_compare(__x.begin(), __x.end(), 
         __y.begin(), __y.end());
 }
 
