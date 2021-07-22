@@ -231,7 +231,7 @@ class constBitIterator
   constBitIterator(){};
   constBitIterator(Bit_type_* ptr, size_t index) : ref_(ptr, index){};
   constBitIterator(BitReference_& ref) : ref_(ref.ptr_, ref.index_){};
-  constBitIterator(const BitReference_& ref) : ref_(){};
+  // constBitIterator(const BitReference_& ref) : ref_(){};
   constBitIterator(const bitIterator& x) : ref_(*x) {};
   constBitIterator(const constBitIterator& x) : ref_(x.ref_) {};
   ~constBitIterator(){};
@@ -714,8 +714,8 @@ public :
 
   template <typename InputIterator>
   void assign(InputIterator first,
-    typename ft_enable_if<!ft_is_integral<InputIterator>::value, InputIterator>::type last,
-    const allocator_type & alloc_ = allocator_type())
+    typename ft_enable_if<!ft_is_integral<InputIterator>::value,
+                          InputIterator>::type last)
   {
     size_t n = getSizeFromIterator(first, last);
     if (n == 0)
