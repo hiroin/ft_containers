@@ -766,6 +766,11 @@ public :
     return storageSize_ * S_word_bit_ ;
   }
 
+  allocator_type get_allocator() const
+  {
+    return alloc_;
+  }
+
   // イテレーターアクセス
   iterator begin()
   {
