@@ -46,8 +46,9 @@ public :
   vector(const allocator_type & alloc_ = allocator_type())
     : first_(NULL), last_(NULL), reserved_last_(NULL), alloc_(alloc_)
   {};
-  vector( size_type size, const_reference value = value_type(), const allocator_type & alloc_ = allocator_type() )
-    : first_(NULL), last_(NULL), reserved_last_(NULL)
+  vector( size_type size, const_reference value = value_type(),
+    const allocator_type & alloc_ = allocator_type() )
+    : first_(NULL), last_(NULL), reserved_last_(NULL), alloc_(alloc_)
   {
     resize(size, value);
   }
@@ -74,7 +75,7 @@ public :
 
   // コピー
   vector(const vector & r)
-    : alloc_(r.alloc_), first_(NULL), last_(NULL), reserved_last_(NULL)
+    : first_(NULL), last_(NULL), reserved_last_(NULL), alloc_(r.alloc_)
   {
     reserve(r.size());
     pointer dest = first_;
