@@ -107,20 +107,9 @@ public :
     return true;
   }
 
-  bool operator==(const vector<T, Allocator>& r)
-  {
-    return (this->size() == r.size()
-      && equal(this->begin(), this->end(), r.begin()));
-  }
-
   bool operator!=(const vector<T, Allocator>& r)
   {
     return !(*this == r);
-  }
-
-  bool operator<(const vector<T, Allocator>& r)
-  {
-    return lexicographical_compare(begin(), end(), r.begin(), r.end());
   }
 
   bool operator<=(const vector<T, Allocator>& r)
@@ -700,6 +689,20 @@ public :
     return n;
   }
 };
+
+template <class T, class Alloc>
+bool	operator==(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+{
+  return (lhs.size() == rhs.size()
+    && equal(lhs.begin(), lhs.end(), rhs.begin()));
+}
+
+template <class T, class Alloc>
+bool	operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+{
+  return lexicographical_compare(lhs.begin(), lhs.end(),
+                                rhs.begin(), rhs.end());
+}
 
 template < typename T, class Allocator >
 void swap(vector<T, Allocator>& lhs, vector<T, Allocator>& rhs)

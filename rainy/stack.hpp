@@ -7,14 +7,6 @@ namespace ft {
 template<typename _Tp, typename _Sequence = ft::vector<_Tp> >
 class stack
 {
-  template<typename _Tp1, typename _Seq1>
-	friend bool
-	operator==(const stack<_Tp1, _Seq1>&, const stack<_Tp1, _Seq1>&);
-
-  template<typename _Tp1, typename _Seq1>
-	friend bool
-	operator<(const stack<_Tp1, _Seq1>&, const stack<_Tp1, _Seq1>&);
-
  public:
   typedef typename _Sequence::value_type      value_type;
   typedef typename _Sequence::reference       reference;
@@ -48,30 +40,31 @@ class stack
 
   void pop()
   { c.pop_back(); }
+
+  friend bool operator==(const ft::stack<_Tp, _Sequence>& __x,
+                        const ft::stack<_Tp, _Sequence>& __y)
+  { return __x.c == __y.c; }
+
+  friend bool operator<(const ft::stack<_Tp, _Sequence>& __x,
+                        const ft::stack<_Tp, _Sequence>& __y)
+  { return __x.c < __y.c; }
+
 };
 
 template<typename _Tp, typename _Seq>
-bool operator==(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
-{ return __x.c == __y.c; }
-
-template<typename _Tp, typename _Seq>
-bool operator<(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
-{ return __x.c < __y.c; }
-
-template<typename _Tp, typename _Seq>
-bool operator!=(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
+bool operator!=(const ft::stack<_Tp, _Seq>& __x, const ft::stack<_Tp, _Seq>& __y)
 { return !(__x == __y); }
 
 template<typename _Tp, typename _Seq>
-bool operator>(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
+bool operator>(const ft::stack<_Tp, _Seq>& __x, const ft::stack<_Tp, _Seq>& __y)
 { return __y < __x; }
 
 template<typename _Tp, typename _Seq>
-bool operator<=(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
+bool operator<=(const ft::stack<_Tp, _Seq>& __x, const ft::stack<_Tp, _Seq>& __y)
 { return !(__y < __x); }
 
 template<typename _Tp, typename _Seq>
-bool operator>=(const stack<_Tp, _Seq>& __x, const stack<_Tp, _Seq>& __y)
+bool operator>=(const ft::stack<_Tp, _Seq>& __x, const ft::stack<_Tp, _Seq>& __y)
 { return !(__x < __y); }
 
 }; // namespace ft
