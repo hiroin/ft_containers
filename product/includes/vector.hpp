@@ -1336,10 +1336,7 @@ public :
     // 現在の要素数より少ない
     if (sz < size())
     {
-      // 後で実装
-      // size_type diff = size() - sz;
-      // destroy_until(rbegin() + diff) ;
-      // last_ = first_ + sz ;
+      erase(begin() + sz, end());
     }
     // 現在の要素数より大きい
     else if (sz > size())
