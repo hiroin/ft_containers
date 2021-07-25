@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <deque>
-#if 0 //CREATE A REAL STL EXAMPLE
+#if 1 //CREATE A REAL STL EXAMPLE
 	#include <map>
 	#include <stack>
 	#include <vector>
@@ -849,7 +849,6 @@ int main(int argc, char** argv) {
     ft_map.erase(ft_map.begin());
     std::cout << "  ft_map.size()  : " << ft_map.size() << std::endl;
     std::cout << "  ft_map.count(1): " << ft_map.count(1) << std::endl;
-    std::cout << "  ft_map.find(1) : " << ft_map.find(1)->first << std::endl;
     std::cout << "  ft_map.erase(3)" << std::endl;
     ft_map.erase(3);
     std::cout << "  ft_map.size()  : " << ft_map.size() << std::endl;
@@ -957,6 +956,40 @@ int main(int argc, char** argv) {
 			std::cout << "   ft_map[" << i << "]: " << ft_map[i] << std::endl;
 		for (size_t i = 0; i < 5; ++i)
 			std::cout << "   ft_map2[" << i << "]: " << ft_map2[i] << std::endl;
+		std::cout << std::endl;
+	}
+
+	std::cout << " There are never two of the same Key in one map." << std::endl;
+	{
+		ft::map<int, std::string> ft_map;
+		for (size_t i = 0; i < 5; ++i)
+		{
+			ft_map[i] = static_cast<char>(i + 'A');
+			std::cout << "   ft_map[" << i << "]: " << ft_map[i] << std::endl;
+		}
+		ft::pair<ft::map<int, std::string>::iterator, bool> result = ft_map.insert(ft::make_pair(0, "A"));
+		std::cout << "  ft_map.insert(ft::make_pair(0, \"A\"): " << result.second << std::endl;
+		std::cout << std::endl;
+	}
+
+	std::cout << " Check that insert or delete do not invalidate iterators." << std::endl;
+	{
+		ft::map<int, std::string> ft_map;
+		for (size_t i = 0; i < 5; ++i)
+		{
+			ft_map[i * 2] = static_cast<char>(i + 'A');
+			std::cout << "   ft_map[" << i * 2 << "]: " << ft_map[i * 2] << std::endl;
+		}
+		std::cout << "  itr = ft_map.begin()" << std::endl;
+		ft::map<int, std::string>::iterator itr = ft_map.begin();
+		std::cout << "  ft_map[1] = \"ONE\"" << std::endl;
+		ft_map[1] = "ONE";
+		std::cout << "  (++itr)->first: " << (++itr)->first << std::endl;
+		std::cout << "  itr = ft_map.begin()" << std::endl;
+		itr = ft_map.begin();
+		std::cout << "  ft_map.erase(1)" << std::endl;
+		ft_map.erase(1);
+		std::cout << "  (++itr)->first: " << (++itr)->first << std::endl;
 		std::cout << std::endl;
 	}
 
