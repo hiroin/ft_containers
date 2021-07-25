@@ -134,13 +134,247 @@ int main(int argc, char** argv) {
 		std::cout << std::endl;
 	}
 	{
+		std::cout << "  ft_vec(10, false)" << std::endl;
+		ft::vector<bool> ft_vec(10, false);
+		std::cout << "   empty(): " << ft_vec.empty() << std::endl;
+		std::cout << "   size(): " << ft_vec.size() << std::endl;
+		for (size_t i = 0; i < 10; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+	}
+	{
 		std::cout << "  ft_vec(10, true)" << std::endl;
 		ft::vector<bool> ft_vec(10, true);
 		std::cout << "   empty(): " << ft_vec.empty() << std::endl;
 		std::cout << "   size(): " << ft_vec.size() << std::endl;
-		std::cout << "   ft_vec[0]: " << ft_vec[0] << std::endl;
-		std::cout << "   ft_vec[9]: " << ft_vec[9] << std::endl;
+		for (size_t i = 0; i < 10; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
 		std::cout << std::endl;
+
+		std::cout << " operator=" << std::endl;
+		std::cout << "  ft_vec2 = ft_vec" << std::endl;
+		ft::vector<bool> ft_vec2;
+		ft_vec2 = ft_vec;
+		for (size_t i = 0; i < 10; ++i)
+			std::cout << "   ft_vec2[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << " assign" << std::endl;
+		ft::vector<bool> ft_vec(10);
+		std::cout << "  assign(10, true)" << std::endl;
+		ft_vec.assign(10, true);
+		for (size_t i = 0; i < 10; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+		std::cout << "  assign(10, false)" << std::endl;
+		ft_vec.assign(10, false);
+		for (size_t i = 0; i < 10; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+
+		std::cout << " get_allocator" << std::endl;
+		std::cout << "  no outout" << std::endl;
+		ft_vec.get_allocator();
+		std::cout << std::endl;
+	}
+	{
+		ft::vector<bool> ft_vec(10);
+		ft_vec[0] = true;
+		ft_vec[2] = true;
+		ft_vec[4] = true;
+		ft_vec[5] = true;
+		ft_vec[6] = true;
+		try
+		{
+			std::cout << " at" << std::endl;
+			std::cout << "  0,1,2,3,4,5,6,7,8,9" << std::endl;
+			std::cout << "  -------------------" << std::endl;
+			std::cout << "  1,0,1,0,1,1,1,0,0,0" << std::endl;
+			for (size_t i = 0; i < 11; ++i)
+				std::cout << "   ft_vec.at(" << i << "): " << ft_vec.at(i) << std::endl;
+		}
+		catch (std::exception& e)
+		{
+			std::cout << "catch exception" << std::endl;
+		}
+		std::cout << std::endl;
+		std::cout << "  front" << std::endl;
+		std::cout << "   " << ft_vec.front() << std::endl;
+		std::cout << "  back" << std::endl;
+		std::cout << "   " << ft_vec.back() << std::endl;
+		std::cout << std::endl;
+
+		std::cout << " Iterators" << std::endl;
+		std::cout << "  ft_vec.begin()  : " << *ft_vec.begin() << std::endl;
+		std::cout << "  ft_vec.end() - 1: " << *(ft_vec.end() - 1) << std::endl;
+		std::cout << "  ft_vec.rbegin()  : " << *ft_vec.rbegin() << std::endl;
+		std::cout << "  ft_vec.rend() - 1: " << *(ft_vec.rend() - 1) << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << " reserve / capacity" << std::endl;
+		std::cout << "  ft_vec(10)" << std::endl;
+		ft::vector<bool> ft_vec(10);
+		std::cout << "   capacity(): " << ft_vec.capacity() << std::endl;
+		std::cout << "  ft_vec.reserve(100)" << std::endl;
+		ft_vec.reserve(100);
+		std::cout << "   capacity(): " << ft_vec.capacity() << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << " clear" << std::endl;
+		std::cout << "  ft_vec(10, true)" << std::endl;
+		ft::vector<bool> ft_vec(10, true);
+		std::cout << "  ft_vec.size(): " << ft_vec.size() << std::endl;
+		try
+		{
+			ft_vec.at(0);
+			std::cout << "  ft_vec.at(0) : " << ft_vec.at(0) << std::endl;
+		}
+		catch (std::exception& e)
+		{
+			std::cout << "catch exception" << std::endl;
+		}
+		std::cout << "  ft_vec.clear()" << std::endl;
+		ft_vec.clear();
+		std::cout << "  ft_vec.size(): " << ft_vec.size() << std::endl;
+		try
+		{
+			ft_vec.at(0);
+			std::cout << "  ft_vec.at(0) : " << ft_vec.at(0) << std::endl;
+		}
+		catch (std::exception& e)
+		{
+			std::cout << "  ft_vec.at(0) : catch exception" << std::endl;
+		}
+		std::cout << std::endl;
+	}
+	{
+		std::cout << " insert" << std::endl;
+		std::cout << "  ft_vec(10, true)" << std::endl;
+		ft::vector<bool> ft_vec(10, true);
+		std::cout << "  ft_vec.insert(ft_vec.begin() + 1, false)" << std::endl;
+		ft_vec.insert(ft_vec.begin() + 1, false);
+		for (size_t i = 0; i < 11; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+		std::cout << "  ft_vec.insert(ft_vec.begin() + 2, 5, false)" << std::endl;
+		ft_vec.insert(ft_vec.begin() + 2, 5, false);
+		for (size_t i = 0; i < 16; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << "  ft_vec(10, true)" << std::endl;
+		ft::vector<bool> ft_vec(10, true);
+		std::cout << "  ft_vec2(10, false)" << std::endl;
+		ft::vector<bool> ft_vec2(10, false);
+		std::cout << "  ft_vec.insert(ft_vec.begin() + 2, ft_vec2.begin(), ft_vec2.end())" << std::endl;
+		ft_vec.insert(ft_vec.begin() + 2, ft_vec2.begin(), ft_vec2.end());
+		for (size_t i = 0; i < 20; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+		std::cout << " erase" << std::endl;
+		std::cout << "  ft_vec.erase(ft_vec.begin())" << std::endl;
+		ft_vec.erase(ft_vec.begin());
+		for (size_t i = 0; i < 19; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+		std::cout << "  ft_vec.erase(ft_vec.begin(), ft_vec.begin() + 1)" << std::endl;
+		ft_vec.erase(ft_vec.begin(), ft_vec.begin() + 1);
+		for (size_t i = 0; i < 17; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << " push_back" << std::endl;
+		std::cout << "  ft::vector<bool> ft_vec" << std::endl;
+		ft::vector<bool> ft_vec;
+		std::cout << "  ft_vec.push_back(true)" << std::endl;
+		ft_vec.push_back(true);
+		std::cout << "  ft_vec[0]: " << ft_vec[0] << std::endl;
+		std::cout << std::endl;
+
+		std::cout << " pop_back" << std::endl;
+		std::cout << "  ft_vec.pop_back()" << std::endl;
+		ft_vec.pop_back();
+		std::cout << "  ft_vec.size(): " << ft_vec.size() << std::endl;
+		std::cout << std::endl;
+
+		std::cout << " resize" << std::endl;
+		std::cout << "  ft_vec.resize(10)" << std::endl;
+		ft_vec.resize(10);
+		std::cout << "  ft_vec.size(): " << ft_vec.size() << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << " swap" << std::endl;
+		std::cout << "  ft_vec(10, true)" << std::endl;
+		ft::vector<bool> ft_vec(10, true);
+		std::cout << "  ft_vec2(10, false)" << std::endl;
+		ft::vector<bool> ft_vec2(10, false);
+		std::cout << "  ft_vec.swap(ft_vec2)" << std::endl;
+		ft_vec.swap(ft_vec2);
+		std::cout << "  ft_vec[0]: " << ft_vec[0] << std::endl;
+		std::cout << "  ft_vec2[0]: " << ft_vec2[0] << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << " flip" << std::endl;
+		std::cout << "  ft_vec(10, true)" << std::endl;
+		ft::vector<bool> ft_vec(10, true);
+		for (size_t i = 0; i < 10; i = i + 2)
+		{
+			std::cout << "  ft_vec[" << i << "] = false" << std::endl;
+			ft_vec[i] = false;
+		}
+		for (size_t i = 0; i < 10; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+		std::cout << "  flip" << std::endl;
+		ft_vec.flip();
+		for (size_t i = 0; i < 10; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+		std::cout << " swap" << std::endl;
+		ft_vec.swap(ft_vec[0], ft_vec[1]);
+		for (size_t i = 0; i < 10; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+	}
+	std::cout << " Non-member functions" << std::endl;
+	{
+		std::cout << "  ft_vec(10, true)" << std::endl;
+		ft::vector<bool> ft_vec(10, true);
+		std::cout << "  ft_vec2(10, false)" << std::endl;
+		ft::vector<bool> ft_vec2(10, true);
+		std::cout << "  ft_vec == ft_vec2: " << (ft_vec == ft_vec2) << std::endl;
+		std::cout << "  ft_vec != ft_vec2: " << (ft_vec != ft_vec2) << std::endl;
+		std::cout << "  ft_vec <  ft_vec2: " << (ft_vec <  ft_vec2) << std::endl;
+		std::cout << "  ft_vec <= ft_vec2: " << (ft_vec <= ft_vec2) << std::endl;
+		std::cout << "  ft_vec >  ft_vec2: " << (ft_vec > ft_vec2) << std::endl;
+		std::cout << "  ft_vec >= ft_vec2: " << (ft_vec >= ft_vec2) << std::endl;
+		std::cout << std::endl;
+
+		std::cout << "  ft_vec2[0] = false" << std::endl;
+		ft_vec2[0] = false;
+		std::cout << "  ft_vec == ft_vec2: " << (ft_vec == ft_vec2) << std::endl;
+		std::cout << "  ft_vec != ft_vec2: " << (ft_vec != ft_vec2) << std::endl;
+		std::cout << "  ft_vec <  ft_vec2: " << (ft_vec <  ft_vec2) << std::endl;
+		std::cout << "  ft_vec <= ft_vec2: " << (ft_vec <= ft_vec2) << std::endl;
+		std::cout << "  ft_vec >  ft_vec2: " << (ft_vec > ft_vec2) << std::endl;
+		std::cout << "  ft_vec >= ft_vec2: " << (ft_vec >= ft_vec2) << std::endl;
+		std::cout << std::endl;
+
+		std::cout << "  swap(ft_vec, ft_vec2)" << std::endl;
+		ft::swap(ft_vec, ft_vec2);
+		for (size_t i = 0; i < 10; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		for (size_t i = 0; i < 10; ++i)
+			std::cout << "   ft_vec2[" << i << "]: " << ft_vec2[i] << std::endl;
+
+
 	}
 
 

@@ -1,0 +1,324 @@
+
+vector<bool> test
+ constructor
+  default
+   empty(): 1
+   size(): 0
+   capacity(): 0
+   max_size(): 9223372036854775744
+
+  ft_vec(10)
+   empty(): 0
+   size(): 10
+   ft_vec[0]: 0
+   ft_vec[9]: 0
+
+  ft_vec(10, false)
+   empty(): 0
+   size(): 10
+   ft_vec[0]: 0
+   ft_vec[1]: 0
+   ft_vec[2]: 0
+   ft_vec[3]: 0
+   ft_vec[4]: 0
+   ft_vec[5]: 0
+   ft_vec[6]: 0
+   ft_vec[7]: 0
+   ft_vec[8]: 0
+   ft_vec[9]: 0
+
+  ft_vec(10, true)
+   empty(): 0
+   size(): 10
+   ft_vec[0]: 1
+   ft_vec[1]: 1
+   ft_vec[2]: 1
+   ft_vec[3]: 1
+   ft_vec[4]: 1
+   ft_vec[5]: 1
+   ft_vec[6]: 1
+   ft_vec[7]: 1
+   ft_vec[8]: 1
+   ft_vec[9]: 1
+
+ operator=
+  ft_vec2 = ft_vec
+   ft_vec2[0]: 1
+   ft_vec2[1]: 1
+   ft_vec2[2]: 1
+   ft_vec2[3]: 1
+   ft_vec2[4]: 1
+   ft_vec2[5]: 1
+   ft_vec2[6]: 1
+   ft_vec2[7]: 1
+   ft_vec2[8]: 1
+   ft_vec2[9]: 1
+
+ assign
+  assign(10, true)
+   ft_vec[0]: 1
+   ft_vec[1]: 1
+   ft_vec[2]: 1
+   ft_vec[3]: 1
+   ft_vec[4]: 1
+   ft_vec[5]: 1
+   ft_vec[6]: 1
+   ft_vec[7]: 1
+   ft_vec[8]: 1
+   ft_vec[9]: 1
+
+  assign(10, false)
+   ft_vec[0]: 0
+   ft_vec[1]: 0
+   ft_vec[2]: 0
+   ft_vec[3]: 0
+   ft_vec[4]: 0
+   ft_vec[5]: 0
+   ft_vec[6]: 0
+   ft_vec[7]: 0
+   ft_vec[8]: 0
+   ft_vec[9]: 0
+
+ get_allocator
+  no outout
+
+ at
+  0,1,2,3,4,5,6,7,8,9
+  -------------------
+  1,0,1,0,1,1,1,0,0,0
+   ft_vec.at(0): 1
+   ft_vec.at(1): 0
+   ft_vec.at(2): 1
+   ft_vec.at(3): 0
+   ft_vec.at(4): 1
+   ft_vec.at(5): 1
+   ft_vec.at(6): 1
+   ft_vec.at(7): 0
+   ft_vec.at(8): 0
+   ft_vec.at(9): 0
+   ft_vec.at(10): catch exception
+
+  front
+   1
+  back
+   0
+
+ Iterators
+  ft_vec.begin()  : 1
+  ft_vec.end() - 1: 0
+  ft_vec.rbegin()  : 0
+  ft_vec.rend() - 1: 1
+
+ reserve / capacity
+  ft_vec(10)
+   capacity(): 64
+  ft_vec.reserve(100)
+   capacity(): 128
+
+ clear
+  ft_vec(10, true)
+  ft_vec.size(): 10
+  ft_vec.at(0) : 1
+  ft_vec.clear()
+  ft_vec.size(): 0
+  ft_vec.at(0) : catch exception
+
+ insert
+  ft_vec(10, true)
+  ft_vec.insert(ft_vec.begin() + 1, false)
+   ft_vec[0]: 1
+   ft_vec[1]: 0
+   ft_vec[2]: 1
+   ft_vec[3]: 1
+   ft_vec[4]: 1
+   ft_vec[5]: 1
+   ft_vec[6]: 1
+   ft_vec[7]: 1
+   ft_vec[8]: 1
+   ft_vec[9]: 1
+   ft_vec[10]: 1
+
+  ft_vec.insert(ft_vec.begin() + 2, 5, false)
+   ft_vec[0]: 1
+   ft_vec[1]: 0
+   ft_vec[2]: 0
+   ft_vec[3]: 0
+   ft_vec[4]: 0
+   ft_vec[5]: 0
+   ft_vec[6]: 0
+   ft_vec[7]: 1
+   ft_vec[8]: 1
+   ft_vec[9]: 1
+   ft_vec[10]: 1
+   ft_vec[11]: 1
+   ft_vec[12]: 1
+   ft_vec[13]: 1
+   ft_vec[14]: 1
+   ft_vec[15]: 1
+
+  ft_vec(10, true)
+  ft_vec2(10, false)
+  ft_vec.insert(ft_vec.begin() + 2, ft_vec2.begin(), ft_vec2.end())
+   ft_vec[0]: 1
+   ft_vec[1]: 1
+   ft_vec[2]: 0
+   ft_vec[3]: 0
+   ft_vec[4]: 0
+   ft_vec[5]: 0
+   ft_vec[6]: 0
+   ft_vec[7]: 0
+   ft_vec[8]: 0
+   ft_vec[9]: 0
+   ft_vec[10]: 0
+   ft_vec[11]: 0
+   ft_vec[12]: 1
+   ft_vec[13]: 1
+   ft_vec[14]: 1
+   ft_vec[15]: 1
+   ft_vec[16]: 1
+   ft_vec[17]: 1
+   ft_vec[18]: 1
+   ft_vec[19]: 1
+
+ erase
+  ft_vec.erase(ft_vec.begin())
+   ft_vec[0]: 1
+   ft_vec[1]: 0
+   ft_vec[2]: 0
+   ft_vec[3]: 0
+   ft_vec[4]: 0
+   ft_vec[5]: 0
+   ft_vec[6]: 0
+   ft_vec[7]: 0
+   ft_vec[8]: 0
+   ft_vec[9]: 0
+   ft_vec[10]: 0
+   ft_vec[11]: 1
+   ft_vec[12]: 1
+   ft_vec[13]: 1
+   ft_vec[14]: 1
+   ft_vec[15]: 1
+   ft_vec[16]: 1
+   ft_vec[17]: 1
+   ft_vec[18]: 1
+
+  ft_vec.erase(ft_vec.begin(), ft_vec.begin() + 1)
+   ft_vec[0]: 0
+   ft_vec[1]: 0
+   ft_vec[2]: 0
+   ft_vec[3]: 0
+   ft_vec[4]: 0
+   ft_vec[5]: 0
+   ft_vec[6]: 0
+   ft_vec[7]: 0
+   ft_vec[8]: 0
+   ft_vec[9]: 0
+   ft_vec[10]: 1
+   ft_vec[11]: 1
+   ft_vec[12]: 1
+   ft_vec[13]: 1
+   ft_vec[14]: 1
+   ft_vec[15]: 1
+   ft_vec[16]: 1
+
+ push_back
+  ft::vector<bool> ft_vec
+  ft_vec.push_back(true)
+  ft_vec[0]: 1
+
+ pop_back
+  ft_vec.pop_back()
+  ft_vec.size(): 0
+
+ resize
+  ft_vec.resize(10)
+  ft_vec.size(): 10
+
+ swap
+  ft_vec(10, true)
+  ft_vec2(10, false)
+  ft_vec.swap(ft_vec2)
+  ft_vec[0]: 0
+  ft_vec2[0]: 1
+
+ flip
+  ft_vec(10, true)
+  ft_vec[0] = false
+  ft_vec[2] = false
+  ft_vec[4] = false
+  ft_vec[6] = false
+  ft_vec[8] = false
+   ft_vec[0]: 0
+   ft_vec[1]: 1
+   ft_vec[2]: 0
+   ft_vec[3]: 1
+   ft_vec[4]: 0
+   ft_vec[5]: 1
+   ft_vec[6]: 0
+   ft_vec[7]: 1
+   ft_vec[8]: 0
+   ft_vec[9]: 1
+
+  flip
+   ft_vec[0]: 1
+   ft_vec[1]: 0
+   ft_vec[2]: 1
+   ft_vec[3]: 0
+   ft_vec[4]: 1
+   ft_vec[5]: 0
+   ft_vec[6]: 1
+   ft_vec[7]: 0
+   ft_vec[8]: 1
+   ft_vec[9]: 0
+
+ swap
+   ft_vec[0]: 0
+   ft_vec[1]: 1
+   ft_vec[2]: 1
+   ft_vec[3]: 0
+   ft_vec[4]: 1
+   ft_vec[5]: 0
+   ft_vec[6]: 1
+   ft_vec[7]: 0
+   ft_vec[8]: 1
+   ft_vec[9]: 0
+
+ Non-member functions
+  ft_vec(10, true)
+  ft_vec2(10, false)
+  ft_vec == ft_vec2: 1
+  ft_vec != ft_vec2: 0
+  ft_vec <  ft_vec2: 0
+  ft_vec <= ft_vec2: 1
+  ft_vec >  ft_vec2: 0
+  ft_vec >= ft_vec2: 1
+
+  ft_vec2[0] = false
+  ft_vec == ft_vec2: 0
+  ft_vec != ft_vec2: 1
+  ft_vec <  ft_vec2: 0
+  ft_vec <= ft_vec2: 0
+  ft_vec >  ft_vec2: 1
+  ft_vec >= ft_vec2: 1
+
+  swap(ft_vec, ft_vec2)
+   ft_vec[0]: 0
+   ft_vec[1]: 1
+   ft_vec[2]: 1
+   ft_vec[3]: 1
+   ft_vec[4]: 1
+   ft_vec[5]: 1
+   ft_vec[6]: 1
+   ft_vec[7]: 1
+   ft_vec[8]: 1
+   ft_vec[9]: 1
+   ft_vec2[0]: 1
+   ft_vec2[1]: 1
+   ft_vec2[2]: 1
+   ft_vec2[3]: 1
+   ft_vec2[4]: 1
+   ft_vec2[5]: 1
+   ft_vec2[6]: 1
+   ft_vec2[7]: 1
+   ft_vec2[8]: 1
+   ft_vec2[9]: 1
