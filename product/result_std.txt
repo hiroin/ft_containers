@@ -1,11 +1,11 @@
 
-vector<bool> test
+vector test
  constructor
   default
    empty(): 1
    size(): 0
    capacity(): 0
-   max_size(): 9223372036854775744
+   max_size(): 4611686018427387903
 
   ft_vec(10)
    empty(): 0
@@ -13,114 +13,129 @@ vector<bool> test
    ft_vec[0]: 0
    ft_vec[9]: 0
 
-  ft_vec(10, false)
-   empty(): 0
-   size(): 10
-   ft_vec[0]: 0
-   ft_vec[1]: 0
-   ft_vec[2]: 0
-   ft_vec[3]: 0
-   ft_vec[4]: 0
-   ft_vec[5]: 0
-   ft_vec[6]: 0
-   ft_vec[7]: 0
-   ft_vec[8]: 0
-   ft_vec[9]: 0
+  ft_vec(10, 42)
+   ft_vec[0]: 42
+   ft_vec[1]: 42
+   ft_vec[2]: 42
+   ft_vec[3]: 42
+   ft_vec[4]: 42
+   ft_vec[5]: 42
+   ft_vec[6]: 42
+   ft_vec[7]: 42
+   ft_vec[8]: 42
+   ft_vec[9]: 42
 
-  ft_vec(10, true)
-   empty(): 0
-   size(): 10
-   ft_vec[0]: 1
-   ft_vec[1]: 1
-   ft_vec[2]: 1
-   ft_vec[3]: 1
-   ft_vec[4]: 1
-   ft_vec[5]: 1
-   ft_vec[6]: 1
-   ft_vec[7]: 1
-   ft_vec[8]: 1
-   ft_vec[9]: 1
+  ft_vec2(ft_vec.begin(), ft_vec.end()
+   ft_vec2[0]: 42
+   ft_vec2[1]: 42
+   ft_vec2[2]: 42
+   ft_vec2[3]: 42
+   ft_vec2[4]: 42
+   ft_vec2[5]: 42
+   ft_vec2[6]: 42
+   ft_vec2[7]: 42
+   ft_vec2[8]: 42
+   ft_vec2[9]: 42
 
  operator=
+  ft_vec(10, 42)
+   empty(): 0
+   size(): 10
+   ft_vec[0]: 42
+   ft_vec[1]: 42
+   ft_vec[2]: 42
+   ft_vec[3]: 42
+   ft_vec[4]: 42
+   ft_vec[5]: 42
+   ft_vec[6]: 42
+   ft_vec[7]: 42
+   ft_vec[8]: 42
+   ft_vec[9]: 42
+
   ft_vec2 = ft_vec
-   ft_vec2[0]: 1
-   ft_vec2[1]: 1
-   ft_vec2[2]: 1
-   ft_vec2[3]: 1
-   ft_vec2[4]: 1
-   ft_vec2[5]: 1
-   ft_vec2[6]: 1
-   ft_vec2[7]: 1
-   ft_vec2[8]: 1
-   ft_vec2[9]: 1
+   ft_vec2[0]: 42
+   ft_vec2[1]: 42
+   ft_vec2[2]: 42
+   ft_vec2[3]: 42
+   ft_vec2[4]: 42
+   ft_vec2[5]: 42
+   ft_vec2[6]: 42
+   ft_vec2[7]: 42
+   ft_vec2[8]: 42
+   ft_vec2[9]: 42
 
  assign
-  assign(10, true)
-   ft_vec[0]: 1
-   ft_vec[1]: 1
-   ft_vec[2]: 1
-   ft_vec[3]: 1
-   ft_vec[4]: 1
-   ft_vec[5]: 1
-   ft_vec[6]: 1
-   ft_vec[7]: 1
-   ft_vec[8]: 1
-   ft_vec[9]: 1
+  ft_vec.assign(10, 42)
+   ft_vec[0]: 42
+   ft_vec[1]: 42
+   ft_vec[2]: 42
+   ft_vec[3]: 42
+   ft_vec[4]: 42
+   ft_vec[5]: 42
+   ft_vec[6]: 42
+   ft_vec[7]: 42
+   ft_vec[8]: 42
+   ft_vec[9]: 42
 
-  assign(10, false)
-   ft_vec[0]: 0
-   ft_vec[1]: 0
-   ft_vec[2]: 0
-   ft_vec[3]: 0
-   ft_vec[4]: 0
-   ft_vec[5]: 0
-   ft_vec[6]: 0
-   ft_vec[7]: 0
-   ft_vec[8]: 0
-   ft_vec[9]: 0
+  ft_vec2.assign(ft_vec.begin(), ft_vec.end())
+   ft_vec2[0]: 42
+   ft_vec2[1]: 42
+   ft_vec2[2]: 42
+   ft_vec2[3]: 42
+   ft_vec2[4]: 42
+   ft_vec2[5]: 42
+   ft_vec2[6]: 42
+   ft_vec2[7]: 42
+   ft_vec2[8]: 42
+   ft_vec2[9]: 42
 
  get_allocator
   no outout
 
  at
-  0,1,2,3,4,5,6,7,8,9
-  -------------------
-  1,0,1,0,1,1,1,0,0,0
-   ft_vec.at(0): 1
-   ft_vec.at(1): 0
-   ft_vec.at(2): 1
-   ft_vec.at(3): 0
-   ft_vec.at(4): 1
-   ft_vec.at(5): 1
-   ft_vec.at(6): 1
-   ft_vec.at(7): 0
-   ft_vec.at(8): 0
-   ft_vec.at(9): 0
+  ft_vec[0]: 0
+  ft_vec[1]: 1
+  ft_vec[2]: 2
+  ft_vec[3]: 3
+  ft_vec[4]: 4
+  ft_vec[5]: 5
+  ft_vec[6]: 6
+  ft_vec[7]: 7
+  ft_vec[8]: 8
+  ft_vec[9]: 9
+   ft_vec.at(0): 0
+   ft_vec.at(1): 1
+   ft_vec.at(2): 2
+   ft_vec.at(3): 3
+   ft_vec.at(4): 4
+   ft_vec.at(5): 5
+   ft_vec.at(6): 6
+   ft_vec.at(7): 7
+   ft_vec.at(8): 8
+   ft_vec.at(9): 9
    ft_vec.at(10): catch exception
 
-  front
-   1
-  back
-   0
+  front: 0
+  back : 9
 
  Iterators
-  ft_vec.begin()  : 1
-  ft_vec.end() - 1: 0
-  ft_vec.rbegin() : 0
-  ft_vec.rend() -1: 1
-  ft_vec.begin() const   : 1
-  ft_vec.end() - 1 const : 0
-  ft_vec.rbegin() const  : 0
-  ft_vec.rend() - 1 const: 1
+  ft_vec.begin()  : 0
+  ft_vec.end() - 1: 9
+  ft_vec.rbegin() : 9
+  ft_vec.rend() -1: 0
+  ft_vec.begin() const   : 0
+  ft_vec.end() - 1 const : 9
+  ft_vec.rbegin() const  : 9
+  ft_vec.rend() - 1 const: 0
 
  reserve / capacity
   ft_vec(10)
-   capacity(): 64
+   capacity(): 10
   ft_vec.reserve(100)
-   capacity(): 128
+   capacity(): 100
 
  clear
-  ft_vec(10, true)
+  ft_vec(10, 42)
   ft_vec.size(): 10
   ft_vec.at(0) : 1
   ft_vec.clear()
@@ -128,107 +143,107 @@ vector<bool> test
   ft_vec.at(0) : catch exception
 
  insert
-  ft_vec(10, true)
+  ft_vec(10, 42)
   ft_vec.insert(ft_vec.begin() + 1, false)
-   ft_vec[0]: 1
-   ft_vec[1]: 0
-   ft_vec[2]: 1
-   ft_vec[3]: 1
-   ft_vec[4]: 1
-   ft_vec[5]: 1
-   ft_vec[6]: 1
-   ft_vec[7]: 1
-   ft_vec[8]: 1
-   ft_vec[9]: 1
-   ft_vec[10]: 1
+   ft_vec[0]: 42
+   ft_vec[1]: 88
+   ft_vec[2]: 42
+   ft_vec[3]: 42
+   ft_vec[4]: 42
+   ft_vec[5]: 42
+   ft_vec[6]: 42
+   ft_vec[7]: 42
+   ft_vec[8]: 42
+   ft_vec[9]: 42
+   ft_vec[10]: 42
 
-  ft_vec.insert(ft_vec.begin() + 2, 5, false)
-   ft_vec[0]: 1
-   ft_vec[1]: 0
-   ft_vec[2]: 0
-   ft_vec[3]: 0
-   ft_vec[4]: 0
-   ft_vec[5]: 0
-   ft_vec[6]: 0
-   ft_vec[7]: 1
-   ft_vec[8]: 1
-   ft_vec[9]: 1
-   ft_vec[10]: 1
-   ft_vec[11]: 1
-   ft_vec[12]: 1
-   ft_vec[13]: 1
-   ft_vec[14]: 1
-   ft_vec[15]: 1
+  ft_vec.insert(ft_vec.begin() + 2, 5, 77)
+   ft_vec[0]: 42
+   ft_vec[1]: 88
+   ft_vec[2]: 77
+   ft_vec[3]: 77
+   ft_vec[4]: 77
+   ft_vec[5]: 77
+   ft_vec[6]: 77
+   ft_vec[7]: 42
+   ft_vec[8]: 42
+   ft_vec[9]: 42
+   ft_vec[10]: 42
+   ft_vec[11]: 42
+   ft_vec[12]: 42
+   ft_vec[13]: 42
+   ft_vec[14]: 42
+   ft_vec[15]: 42
 
-  ft_vec(10, true)
-  ft_vec2(10, false)
+  ft_vec(10, 42)
+  ft_vec2(10, 88)
   ft_vec.insert(ft_vec.begin() + 2, ft_vec2.begin(), ft_vec2.end())
-   ft_vec[0]: 1
-   ft_vec[1]: 1
-   ft_vec[2]: 0
-   ft_vec[3]: 0
-   ft_vec[4]: 0
-   ft_vec[5]: 0
-   ft_vec[6]: 0
-   ft_vec[7]: 0
-   ft_vec[8]: 0
-   ft_vec[9]: 0
-   ft_vec[10]: 0
-   ft_vec[11]: 0
-   ft_vec[12]: 1
-   ft_vec[13]: 1
-   ft_vec[14]: 1
-   ft_vec[15]: 1
-   ft_vec[16]: 1
-   ft_vec[17]: 1
-   ft_vec[18]: 1
-   ft_vec[19]: 1
+   ft_vec[0]: 42
+   ft_vec[1]: 42
+   ft_vec[2]: 88
+   ft_vec[3]: 88
+   ft_vec[4]: 88
+   ft_vec[5]: 88
+   ft_vec[6]: 88
+   ft_vec[7]: 88
+   ft_vec[8]: 88
+   ft_vec[9]: 88
+   ft_vec[10]: 88
+   ft_vec[11]: 88
+   ft_vec[12]: 42
+   ft_vec[13]: 42
+   ft_vec[14]: 42
+   ft_vec[15]: 42
+   ft_vec[16]: 42
+   ft_vec[17]: 42
+   ft_vec[18]: 42
+   ft_vec[19]: 42
 
  erase
   ft_vec.erase(ft_vec.begin())
-   ft_vec[0]: 1
-   ft_vec[1]: 0
-   ft_vec[2]: 0
-   ft_vec[3]: 0
-   ft_vec[4]: 0
-   ft_vec[5]: 0
-   ft_vec[6]: 0
-   ft_vec[7]: 0
-   ft_vec[8]: 0
-   ft_vec[9]: 0
-   ft_vec[10]: 0
-   ft_vec[11]: 1
-   ft_vec[12]: 1
-   ft_vec[13]: 1
-   ft_vec[14]: 1
-   ft_vec[15]: 1
-   ft_vec[16]: 1
-   ft_vec[17]: 1
-   ft_vec[18]: 1
+   ft_vec[0]: 42
+   ft_vec[1]: 88
+   ft_vec[2]: 88
+   ft_vec[3]: 88
+   ft_vec[4]: 88
+   ft_vec[5]: 88
+   ft_vec[6]: 88
+   ft_vec[7]: 88
+   ft_vec[8]: 88
+   ft_vec[9]: 88
+   ft_vec[10]: 88
+   ft_vec[11]: 42
+   ft_vec[12]: 42
+   ft_vec[13]: 42
+   ft_vec[14]: 42
+   ft_vec[15]: 42
+   ft_vec[16]: 42
+   ft_vec[17]: 42
+   ft_vec[18]: 42
 
   ft_vec.erase(ft_vec.begin(), ft_vec.begin() + 1)
-   ft_vec[0]: 0
-   ft_vec[1]: 0
-   ft_vec[2]: 0
-   ft_vec[3]: 0
-   ft_vec[4]: 0
-   ft_vec[5]: 0
-   ft_vec[6]: 0
-   ft_vec[7]: 0
-   ft_vec[8]: 0
-   ft_vec[9]: 0
-   ft_vec[10]: 1
-   ft_vec[11]: 1
-   ft_vec[12]: 1
-   ft_vec[13]: 1
-   ft_vec[14]: 1
-   ft_vec[15]: 1
-   ft_vec[16]: 1
+   ft_vec[0]: 88
+   ft_vec[1]: 88
+   ft_vec[2]: 88
+   ft_vec[3]: 88
+   ft_vec[4]: 88
+   ft_vec[5]: 88
+   ft_vec[6]: 88
+   ft_vec[7]: 88
+   ft_vec[8]: 88
+   ft_vec[9]: 88
+   ft_vec[10]: 42
+   ft_vec[11]: 42
+   ft_vec[12]: 42
+   ft_vec[13]: 42
+   ft_vec[14]: 42
+   ft_vec[15]: 42
+   ft_vec[16]: 42
 
  push_back
-  ft::vector<bool> ft_vec
-  ft_vec.push_back(true)
-  ft_vec[0]: 1
+  ft::vector<int> ft_vec
+  ft_vec.push_back(42)
+  ft_vec[0]: 42
 
  pop_back
   ft_vec.pop_back()
@@ -239,57 +254,15 @@ vector<bool> test
   ft_vec.size(): 10
 
  swap
-  ft_vec(10, true)
-  ft_vec2(10, false)
+  ft_vec(10, 42)
+  ft_vec2(10, 88)
   ft_vec.swap(ft_vec2)
-  ft_vec[0]: 0
-  ft_vec2[0]: 1
-
- flip
-  ft_vec(10, true)
-  ft_vec[0] = false
-  ft_vec[2] = false
-  ft_vec[4] = false
-  ft_vec[6] = false
-  ft_vec[8] = false
-   ft_vec[0]: 0
-   ft_vec[1]: 1
-   ft_vec[2]: 0
-   ft_vec[3]: 1
-   ft_vec[4]: 0
-   ft_vec[5]: 1
-   ft_vec[6]: 0
-   ft_vec[7]: 1
-   ft_vec[8]: 0
-   ft_vec[9]: 1
-
-  flip
-   ft_vec[0]: 1
-   ft_vec[1]: 0
-   ft_vec[2]: 1
-   ft_vec[3]: 0
-   ft_vec[4]: 1
-   ft_vec[5]: 0
-   ft_vec[6]: 1
-   ft_vec[7]: 0
-   ft_vec[8]: 1
-   ft_vec[9]: 0
-
- swap
-   ft_vec[0]: 0
-   ft_vec[1]: 1
-   ft_vec[2]: 1
-   ft_vec[3]: 0
-   ft_vec[4]: 1
-   ft_vec[5]: 0
-   ft_vec[6]: 1
-   ft_vec[7]: 0
-   ft_vec[8]: 1
-   ft_vec[9]: 0
+  ft_vec[0]: 88
+  ft_vec2[0]: 42
 
  Non-member functions
-  ft_vec(10, true)
-  ft_vec2(10, false)
+  ft_vec(10, 42)
+  ft_vec2(10, 42)
   ft_vec == ft_vec2: 1
   ft_vec != ft_vec2: 0
   ft_vec <  ft_vec2: 0
@@ -297,83 +270,83 @@ vector<bool> test
   ft_vec >  ft_vec2: 0
   ft_vec >= ft_vec2: 1
 
-  ft_vec2[0] = false
+  ft_vec2[0] = 88
   ft_vec == ft_vec2: 0
   ft_vec != ft_vec2: 1
-  ft_vec <  ft_vec2: 0
-  ft_vec <= ft_vec2: 0
-  ft_vec >  ft_vec2: 1
-  ft_vec >= ft_vec2: 1
+  ft_vec <  ft_vec2: 1
+  ft_vec <= ft_vec2: 1
+  ft_vec >  ft_vec2: 0
+  ft_vec >= ft_vec2: 0
 
   swap(ft_vec, ft_vec2)
-   ft_vec[0]: 0
-   ft_vec[1]: 1
-   ft_vec[2]: 1
-   ft_vec[3]: 1
-   ft_vec[4]: 1
-   ft_vec[5]: 1
-   ft_vec[6]: 1
-   ft_vec[7]: 1
-   ft_vec[8]: 1
-   ft_vec[9]: 1
-   ft_vec2[0]: 1
-   ft_vec2[1]: 1
-   ft_vec2[2]: 1
-   ft_vec2[3]: 1
-   ft_vec2[4]: 1
-   ft_vec2[5]: 1
-   ft_vec2[6]: 1
-   ft_vec2[7]: 1
-   ft_vec2[8]: 1
-   ft_vec2[9]: 1
+   ft_vec[0]: 88
+   ft_vec[1]: 42
+   ft_vec[2]: 42
+   ft_vec[3]: 42
+   ft_vec[4]: 42
+   ft_vec[5]: 42
+   ft_vec[6]: 42
+   ft_vec[7]: 42
+   ft_vec[8]: 42
+   ft_vec[9]: 42
+   ft_vec2[0]: 42
+   ft_vec2[1]: 42
+   ft_vec2[2]: 42
+   ft_vec2[3]: 42
+   ft_vec2[4]: 42
+   ft_vec2[5]: 42
+   ft_vec2[6]: 42
+   ft_vec2[7]: 42
+   ft_vec2[8]: 42
+   ft_vec2[9]: 42
 
  const_iterator and iterators should be comparable.
-   ft_vec.at(0): 1
-   ft_vec.at(1): 0
-   ft_vec.at(2): 1
-   ft_vec.at(3): 0
-   ft_vec.at(4): 1
-   ft_vec.at(5): 1
-   ft_vec.at(6): 1
-   ft_vec.at(7): 0
-   ft_vec.at(8): 0
-   ft_vec.at(9): 0
-  ft::vector<bool>::iterator itr = ft_vec.begin()
-  ft::vector<bool>::const_iterator citr = ft_vec.begin()
-  ft::vector<bool>::iterator == ft::vector<bool>::const_iterator
+   ft_vec.at(0): 42
+   ft_vec.at(1): 42
+   ft_vec.at(2): 42
+   ft_vec.at(3): 42
+   ft_vec.at(4): 42
+   ft_vec.at(5): 42
+   ft_vec.at(6): 42
+   ft_vec.at(7): 42
+   ft_vec.at(8): 42
+   ft_vec.at(9): 42
+  ft::vector<int>::iterator itr = ft_vec.begin()
+  ft::vector<int>::const_iterator citr = ft_vec.begin()
+  ft::vector<int>::iterator == ft::vector<int>::const_iterator
 
  Test the swap function.
-   ft_vec.at(0): 0
-   ft_vec.at(1): 0
-   ft_vec.at(2): 0
-   ft_vec.at(3): 1
-   ft_vec.at(4): 1
-   ft_vec.at(5): 1
-   ft_vec2.at(0): 1
-   ft_vec2.at(1): 1
-   ft_vec2.at(2): 1
-   ft_vec2.at(3): 0
-   ft_vec2.at(4): 0
-   ft_vec2.at(5): 0
+   ft_vec.at(0): 42
+   ft_vec.at(1): 42
+   ft_vec.at(2): 42
+   ft_vec.at(3): 88
+   ft_vec.at(4): 88
+   ft_vec.at(5): 88
+   ft_vec2.at(0): 88
+   ft_vec2.at(1): 88
+   ft_vec2.at(2): 88
+   ft_vec2.at(3): 42
+   ft_vec2.at(4): 42
+   ft_vec2.at(5): 42
 
-  ft::vector<bool> *ft_vec_pointer = &ft_vec
-  ft::vector<bool>& ft_vec_reference = ft_vec
-  ft::vector<bool>::iterator itr = ft_vec.begin()
-   *itr: 0
+  ft::vector<int> *ft_vec_pointer = &ft_vec
+  ft::vector<int>& ft_vec_reference = ft_vec
+  ft::vector<int>::iterator itr = ft_vec.begin()
+   *itr: 42
 
   ft_vec.swap(ft_vec2);
 
-   *itr: 0
+   *itr: 42
 
-   ft_vec_pointer->at(0): 1
-   ft_vec_pointer->at(1): 1
-   ft_vec_pointer->at(2): 1
-   ft_vec_pointer->at(3): 0
-   ft_vec_pointer->at(4): 0
-   ft_vec_pointer->at(5): 0
-   ft_vec_reference.at(0): 1
-   ft_vec_reference.at(1): 1
-   ft_vec_reference.at(2): 1
-   ft_vec_reference.at(3): 0
-   ft_vec_reference.at(4): 0
-   ft_vec_reference.at(5): 0
+   ft_vec_pointer->at(0): 88
+   ft_vec_pointer->at(1): 88
+   ft_vec_pointer->at(2): 88
+   ft_vec_pointer->at(3): 42
+   ft_vec_pointer->at(4): 42
+   ft_vec_pointer->at(5): 42
+   ft_vec_reference.at(0): 88
+   ft_vec_reference.at(1): 88
+   ft_vec_reference.at(2): 88
+   ft_vec_reference.at(3): 42
+   ft_vec_reference.at(4): 42
+   ft_vec_reference.at(5): 42

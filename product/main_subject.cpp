@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <deque>
-#if 1 //CREATE A REAL STL EXAMPLE
+#if 0 //CREATE A REAL STL EXAMPLE
 	#include <map>
 	#include <stack>
 	#include <vector>
@@ -112,6 +112,307 @@ int main(int argc, char** argv) {
 	// {
 	// 	std::cout << *it;
 	// }
+
+	std::cout << std::endl;
+	std::cout << "vector test" << std::endl;
+	std::cout << " constructor" << std::endl;
+	{
+		std::cout << "  default" << std::endl;
+		ft::vector<int> ft_vec;
+		std::cout << "   empty(): " << ft_vec.empty() << std::endl;
+		std::cout << "   size(): " << ft_vec.size() << std::endl;
+		std::cout << "   capacity(): " << ft_vec.capacity() << std::endl;
+		std::cout << "   max_size(): " << ft_vec.max_size() << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << "  ft_vec(10)" << std::endl;
+		ft::vector<int> ft_vec(10);
+		std::cout << "   empty(): " << ft_vec.empty() << std::endl;
+		std::cout << "   size(): " << ft_vec.size() << std::endl;
+		std::cout << "   ft_vec[0]: " << ft_vec[0] << std::endl;
+		std::cout << "   ft_vec[9]: " << ft_vec[9] << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << "  ft_vec(10, 42)" << std::endl;
+		ft::vector<int> ft_vec(10, 42);
+		for (size_t i = 0; i < 10; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+
+		std::cout << "  ft_vec2(ft_vec.begin(), ft_vec.end()" << std::endl;
+		ft::vector<int> ft_vec2(ft_vec.begin(), ft_vec.end());
+		for (size_t i = 0; i < 10; ++i)
+			std::cout << "   ft_vec2[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << " operator=" << std::endl;
+		std::cout << "  ft_vec(10, 42)" << std::endl;
+		ft::vector<int> ft_vec(10, 42);
+		std::cout << "   empty(): " << ft_vec.empty() << std::endl;
+		std::cout << "   size(): " << ft_vec.size() << std::endl;
+		for (size_t i = 0; i < 10; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+		std::cout << "  ft_vec2 = ft_vec" << std::endl;
+		ft::vector<int> ft_vec2;
+		ft_vec2 = ft_vec;
+		for (size_t i = 0; i < 10; ++i)
+			std::cout << "   ft_vec2[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+	}	
+	{
+		std::cout << " assign" << std::endl;
+		ft::vector<int> ft_vec(10);
+		std::cout << "  ft_vec.assign(10, 42)" << std::endl;
+		ft_vec.assign(10, 42);
+		for (size_t i = 0; i < 10; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+
+		std::cout << "  ft_vec2.assign(ft_vec.begin(), ft_vec.end())" << std::endl;
+		ft::vector<int> ft_vec2;
+		ft_vec2.assign(ft_vec.begin(), ft_vec.end());
+		for (size_t i = 0; i < 10; ++i)
+			std::cout << "   ft_vec2[" << i << "]: " << ft_vec2[i] << std::endl;
+		std::cout << std::endl;
+
+		std::cout << " get_allocator" << std::endl;
+		std::cout << "  no outout" << std::endl;
+		ft_vec.get_allocator();
+		std::cout << std::endl;
+	}
+	{
+		std::cout << " at" << std::endl;
+		ft::vector<int> ft_vec(10);
+		for (size_t i = 0; i < 10; ++i)
+		{
+			ft_vec[i] = i;
+			std::cout << "  ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		}
+		try
+		{
+			for (size_t i = 0; i < 11; ++i)
+				std::cout << "   ft_vec.at(" << i << "): " << ft_vec.at(i) << std::endl;
+		}
+		catch (std::exception& e)
+		{
+			std::cout << "catch exception" << std::endl;
+		}
+		std::cout << std::endl;
+		std::cout << "  front: " << ft_vec.front() << std::endl;
+		std::cout << "  back : " << ft_vec.back() << std::endl;
+		std::cout << std::endl;
+
+		std::cout << " Iterators" << std::endl;
+		std::cout << "  ft_vec.begin()  : " << *ft_vec.begin() << std::endl;
+		std::cout << "  ft_vec.end() - 1: " << *(ft_vec.end() - 1) << std::endl;
+		std::cout << "  ft_vec.rbegin() : " << *ft_vec.rbegin() << std::endl;
+		std::cout << "  ft_vec.rend() -1: " << *(ft_vec.rend() - 1) << std::endl;
+		ft::vector<int>::const_iterator citr = ft_vec.begin();
+		std::cout << "  ft_vec.begin() const   : " << *citr << std::endl;
+		citr = ft_vec.end() - 1;
+		std::cout << "  ft_vec.end() - 1 const : " << *citr << std::endl;
+		ft::vector<int>::const_reverse_iterator critr = ft_vec.rbegin();
+		std::cout << "  ft_vec.rbegin() const  : " << *critr << std::endl;
+		critr = ft_vec.rend() - 1;
+		std::cout << "  ft_vec.rend() - 1 const: " << *critr << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << " reserve / capacity" << std::endl;
+		std::cout << "  ft_vec(10)" << std::endl;
+		ft::vector<int> ft_vec(10);
+		std::cout << "   capacity(): " << ft_vec.capacity() << std::endl;
+		std::cout << "  ft_vec.reserve(100)" << std::endl;
+		ft_vec.reserve(100);
+		std::cout << "   capacity(): " << ft_vec.capacity() << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << " clear" << std::endl;
+		std::cout << "  ft_vec(10, 42)" << std::endl;
+		ft::vector<bool> ft_vec(10, 42);
+		std::cout << "  ft_vec.size(): " << ft_vec.size() << std::endl;
+		try
+		{
+			ft_vec.at(0);
+			std::cout << "  ft_vec.at(0) : " << ft_vec.at(0) << std::endl;
+		}
+		catch (std::exception& e)
+		{
+			std::cout << "catch exception" << std::endl;
+		}
+		std::cout << "  ft_vec.clear()" << std::endl;
+		ft_vec.clear();
+		std::cout << "  ft_vec.size(): " << ft_vec.size() << std::endl;
+		try
+		{
+			ft_vec.at(0);
+			std::cout << "  ft_vec.at(0) : " << ft_vec.at(0) << std::endl;
+		}
+		catch (std::exception& e)
+		{
+			std::cout << "  ft_vec.at(0) : catch exception" << std::endl;
+		}
+		std::cout << std::endl;
+	}
+	{
+		std::cout << " insert" << std::endl;
+		std::cout << "  ft_vec(10, 42)" << std::endl;
+		ft::vector<int> ft_vec(10, 42);
+		std::cout << "  ft_vec.insert(ft_vec.begin() + 1, false)" << std::endl;
+		ft_vec.insert(ft_vec.begin() + 1, 88);
+		for (size_t i = 0; i < 11; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+		std::cout << "  ft_vec.insert(ft_vec.begin() + 2, 5, 77)" << std::endl;
+		ft_vec.insert(ft_vec.begin() + 2, 5, 77);
+		for (size_t i = 0; i < 16; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << "  ft_vec(10, 42)" << std::endl;
+		ft::vector<int> ft_vec(10, 42);
+		std::cout << "  ft_vec2(10, 88)" << std::endl;
+		ft::vector<int> ft_vec2(10, 88);
+		std::cout << "  ft_vec.insert(ft_vec.begin() + 2, ft_vec2.begin(), ft_vec2.end())" << std::endl;
+		ft_vec.insert(ft_vec.begin() + 2, ft_vec2.begin(), ft_vec2.end());
+		for (size_t i = 0; i < 20; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+		std::cout << " erase" << std::endl;
+		std::cout << "  ft_vec.erase(ft_vec.begin())" << std::endl;
+		ft_vec.erase(ft_vec.begin());
+		for (size_t i = 0; i < 19; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+		std::cout << "  ft_vec.erase(ft_vec.begin(), ft_vec.begin() + 1)" << std::endl;
+		ft_vec.erase(ft_vec.begin(), ft_vec.begin() + 1);
+		for (size_t i = 0; i < 17; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << " push_back" << std::endl;
+		std::cout << "  ft::vector<int> ft_vec" << std::endl;
+		ft::vector<int> ft_vec;
+		std::cout << "  ft_vec.push_back(42)" << std::endl;
+		ft_vec.push_back(42);
+		std::cout << "  ft_vec[0]: " << ft_vec[0] << std::endl;
+		std::cout << std::endl;
+
+		std::cout << " pop_back" << std::endl;
+		std::cout << "  ft_vec.pop_back()" << std::endl;
+		ft_vec.pop_back();
+		std::cout << "  ft_vec.size(): " << ft_vec.size() << std::endl;
+		std::cout << std::endl;
+
+		std::cout << " resize" << std::endl;
+		std::cout << "  ft_vec.resize(10)" << std::endl;
+		ft_vec.resize(10);
+		std::cout << "  ft_vec.size(): " << ft_vec.size() << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << " swap" << std::endl;
+		std::cout << "  ft_vec(10, 42)" << std::endl;
+		ft::vector<int> ft_vec(10, 42);
+		std::cout << "  ft_vec2(10, 88)" << std::endl;
+		ft::vector<int> ft_vec2(10, 88);
+		std::cout << "  ft_vec.swap(ft_vec2)" << std::endl;
+		ft_vec.swap(ft_vec2);
+		std::cout << "  ft_vec[0]: " << ft_vec[0] << std::endl;
+		std::cout << "  ft_vec2[0]: " << ft_vec2[0] << std::endl;
+		std::cout << std::endl;
+	}
+	std::cout << " Non-member functions" << std::endl;
+	{
+		std::cout << "  ft_vec(10, 42)" << std::endl;
+		ft::vector<int> ft_vec(10, 42);
+		std::cout << "  ft_vec2(10, 42)" << std::endl;
+		ft::vector<int> ft_vec2(10, 42);
+		std::cout << "  ft_vec == ft_vec2: " << (ft_vec == ft_vec2) << std::endl;
+		std::cout << "  ft_vec != ft_vec2: " << (ft_vec != ft_vec2) << std::endl;
+		std::cout << "  ft_vec <  ft_vec2: " << (ft_vec <  ft_vec2) << std::endl;
+		std::cout << "  ft_vec <= ft_vec2: " << (ft_vec <= ft_vec2) << std::endl;
+		std::cout << "  ft_vec >  ft_vec2: " << (ft_vec > ft_vec2) << std::endl;
+		std::cout << "  ft_vec >= ft_vec2: " << (ft_vec >= ft_vec2) << std::endl;
+		std::cout << std::endl;
+
+		std::cout << "  ft_vec2[0] = 88" << std::endl;
+		ft_vec2[0] = 88;
+		std::cout << "  ft_vec == ft_vec2: " << (ft_vec == ft_vec2) << std::endl;
+		std::cout << "  ft_vec != ft_vec2: " << (ft_vec != ft_vec2) << std::endl;
+		std::cout << "  ft_vec <  ft_vec2: " << (ft_vec <  ft_vec2) << std::endl;
+		std::cout << "  ft_vec <= ft_vec2: " << (ft_vec <= ft_vec2) << std::endl;
+		std::cout << "  ft_vec >  ft_vec2: " << (ft_vec > ft_vec2) << std::endl;
+		std::cout << "  ft_vec >= ft_vec2: " << (ft_vec >= ft_vec2) << std::endl;
+		std::cout << std::endl;
+
+		std::cout << "  swap(ft_vec, ft_vec2)" << std::endl;
+		ft::swap(ft_vec, ft_vec2);
+		for (size_t i = 0; i < 10; ++i)
+			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
+		for (size_t i = 0; i < 10; ++i)
+			std::cout << "   ft_vec2[" << i << "]: " << ft_vec2[i] << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << " const_iterator and iterators should be comparable." << std::endl;
+		ft::vector<int> ft_vec(10, 42);
+		for (size_t i = 0; i < 10; ++i)
+			std::cout << "   ft_vec.at(" << i << "): " << ft_vec.at(i) << std::endl;
+
+		std::cout << "  ft::vector<int>::iterator itr = ft_vec.begin()" << std::endl;
+		ft::vector<int>::iterator itr = ft_vec.begin();
+		std::cout << "  ft::vector<int>::const_iterator citr = ft_vec.begin()" << std::endl;
+		ft::vector<int>::const_iterator citr = ft_vec.begin();
+		if (itr == citr)
+			std::cout << "  ft::vector<int>::iterator == ft::vector<int>::const_iterator" << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << " Test the swap function." << std::endl;
+		ft::vector<int> ft_vec(6, 42);
+		ft_vec[3] = 88;
+		ft_vec[4] = 88;
+		ft_vec[5] = 88;
+		ft::vector<int> ft_vec2(6, 42);
+		ft_vec2[0] = 88;
+		ft_vec2[1] = 88;
+		ft_vec2[2] = 88;
+		for (size_t i = 0; i < 6; ++i)
+			std::cout << "   ft_vec.at(" << i << "): " << ft_vec.at(i) << std::endl;
+		for (size_t i = 0; i < 6; ++i)
+			std::cout << "   ft_vec2.at(" << i << "): " << ft_vec2.at(i) << std::endl;
+		std::cout << std::endl;
+		
+		std::cout << "  ft::vector<int> *ft_vec_pointer = &ft_vec" << std::endl;
+		ft::vector<int> *ft_vec_pointer = &ft_vec;
+		std::cout << "  ft::vector<int>& ft_vec_reference = ft_vec" << std::endl;
+		ft::vector<int>& ft_vec_reference = ft_vec;
+
+		std::cout << "  ft::vector<int>::iterator itr = ft_vec.begin()" << std::endl;
+		ft::vector<int>::iterator itr = ft_vec.begin();
+		std::cout << "   *itr: " << *itr << std::endl;
+		std::cout << std::endl;
+
+		std::cout << "  ft_vec.swap(ft_vec2);" << std::endl;
+		ft_vec.swap(ft_vec2);
+		std::cout << std::endl;
+
+		std::cout << "   *itr: " << *itr << std::endl;
+		std::cout << std::endl;
+		for (size_t i = 0; i < 6; ++i)
+			std::cout << "   ft_vec_pointer->at(" << i << "): " << ft_vec_pointer->at(i) << std::endl;
+		for (size_t i = 0; i < 6; ++i)
+			std::cout << "   ft_vec_reference.at(" << i << "): " << ft_vec_reference.at(i) << std::endl;
+	}
+	std::cout << "----------------------------------------------" << std::endl;
 	std::cout << std::endl;
 	std::cout << "vector<bool> test" << std::endl;
 	std::cout << " constructor" << std::endl;
@@ -439,8 +740,6 @@ int main(int argc, char** argv) {
 			std::cout << "   ft_vec_pointer->at(" << i << "): " << ft_vec_pointer->at(i) << std::endl;
 		for (size_t i = 0; i < 6; ++i)
 			std::cout << "   ft_vec_reference.at(" << i << "): " << ft_vec_reference.at(i) << std::endl;
-
-
 	}
 
 

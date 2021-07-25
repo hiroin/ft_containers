@@ -908,9 +908,6 @@ class bitIterator
   {
     return lhs.ref_.index_ - rhs.ref_.index_;
   }
-
-  // 作っていないもの
-  //  swap
 };
 
 class constBitIterator
@@ -1043,10 +1040,6 @@ class constBitIterator
   {
     return x + n;
   }
-
-  // 作っていないもの
-  //  イテレーター同士の引き算
-  //  swap
 };
 
 template < typename Allocator >
