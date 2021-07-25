@@ -1,6 +1,9 @@
 #ifndef _FT_LEXICOGRAPHICAL_COMPARE_H_
 #define _FT_LEXICOGRAPHICAL_COMPARE_H_
 
+namespace ft
+{
+
 template <class InputIterator1, class InputIterator2>
 bool lexicographical_compare(
         InputIterator1 first1,
@@ -16,4 +19,5 @@ bool lexicographical_compare(
   return first1 == last1 && first2 != last2;
 }
 
+}
 #endif

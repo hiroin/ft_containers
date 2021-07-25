@@ -1,5 +1,7 @@
 #ifndef _FT_EQUAL_H_
 #define _FT_EQUAL_H_
+namespace ft
+{
 
 template<class InputIterator1, class InputIterator2>
 bool equal(InputIterator1 first1, InputIterator1 last1,
@@ -19,4 +21,5 @@ bool equal(InputIterator1 first1, InputIterator1 last1,
   return true;
 }
 
+}
 #endif

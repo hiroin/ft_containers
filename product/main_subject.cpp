@@ -880,41 +880,85 @@ int main(int argc, char** argv) {
 		std::cout << "  ft_map2.begin()->first: " << ft_map2.begin()->first << std::endl;
 		std::cout << std::endl;
 	}
-  return 0;
+	{
+		std::cout << " equal_range" << std::endl;
+		ft::map<int, std::string> ft_map;
+		for (size_t i = 0; i < 5; ++i)
+		{
+			ft_map[i * 2] = static_cast<char>(i + 'A');
+			std::cout << "   ft_map[" << i * 2 << "]: " << ft_map[i * 2] << std::endl;
+		}
+		ft::map<int, std::string> ft_map2;
+		for (size_t i = 5; i < 10; ++i)
+		{
+			ft_map2[i * 2] = static_cast<char>(i + 'A');
+			std::cout << "   ft_map2[" << i * 2 << "]: " << ft_map2[i * 2] << std::endl;
+		}
+		std::cout << "  ft_map.equal_range(2).first->first: " << ft_map.equal_range(2).first->first << std::endl;
+		std::cout << "  ft_map.lower_bound(3).first->first: " << ft_map.lower_bound(3)->first << std::endl;
+		std::cout << "  ft_map.lower_bound(4).first->first: " << ft_map.lower_bound(4)->first << std::endl;
+		std::cout << "  ft_map.upper_bound(4).first->first: " << ft_map.upper_bound(4)->first << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << " key_comp" << std::endl;
+		ft::map<int, std::string> ft_map;
+		std::cout << "  ft_map.key_comp()(1, 2) is if(1 < 2): " << ft_map.key_comp()(1, 2) << std::endl;
+		std::cout << std::endl;
+  }
+	{
+		std::cout << " value_comp" << std::endl;
+		ft::map<int, char> c;
+		const ft::map<int, char>::value_compare& comp = c.value_comp();
+		ft::pair<int, char> p1 = ft::make_pair(1,'a');
+		ft::pair<int, char> p2 = ft::make_pair(2,'b');
+		ft::pair<int, char> p3 = ft::make_pair(3,'c');
+		std::cout << "  comp(p1, p2) is if(1 < 2): " << comp(p1, p2) << std::endl;
+		std::cout << "  comp(p3, p2) is if(3 < 2): " << comp(p3, p2) << std::endl;
+		std::cout << std::endl;
+	}
+	std::cout << " Non-member functions" << std::endl;
+	{
+		ft::map<int, std::string> ft_map;
+		for (size_t i = 0; i < 5; ++i)
+		{
+			ft_map[i] = static_cast<char>(i + 'A');
+			std::cout << "   ft_map[" << i << "]: " << ft_map[i] << std::endl;
+		}
+		ft::map<int, std::string> ft_map2;
+		for (size_t i = 0; i < 5; ++i)
+		{
+			ft_map2[i] = static_cast<char>(i + 'A');
+			std::cout << "   ft_map2[" << i << "]: " << ft_map2[i] << std::endl;
+		}
+		std::cout << std::endl;
+		std::cout << "  ft_map == ft_map2: " << (ft_map == ft_map2) << std::endl;
+		std::cout << "  ft_map != ft_map2: " << (ft_map != ft_map2) << std::endl;
+		std::cout << "  ft_map <  ft_map2: " << (ft_map <  ft_map2) << std::endl;
+		std::cout << "  ft_map <= ft_map2: " << (ft_map <= ft_map2) << std::endl;
+		std::cout << "  ft_map >  ft_map2: " << (ft_map > ft_map2) << std::endl;
+		std::cout << "  ft_map >= ft_map2: " << (ft_map >= ft_map2) << std::endl;
+		std::cout << std::endl;
 
+		std::cout << "  ft_map2[1] = \"A\"" << std::endl;
+		ft_map2[1] = "A";
+		std::cout << std::endl;
+		std::cout << "  ft_map == ft_map2: " << (ft_map == ft_map2) << std::endl;
+		std::cout << "  ft_map != ft_map2: " << (ft_map != ft_map2) << std::endl;
+		std::cout << "  ft_map <  ft_map2: " << (ft_map <  ft_map2) << std::endl;
+		std::cout << "  ft_map <= ft_map2: " << (ft_map <= ft_map2) << std::endl;
+		std::cout << "  ft_map >  ft_map2: " << (ft_map > ft_map2) << std::endl;
+		std::cout << "  ft_map >= ft_map2: " << (ft_map >= ft_map2) << std::endl;
+		std::cout << std::endl;
 
-	// std::cout << " Non-member functions" << std::endl;
-	// {
-	// 	std::cout << "  ft_map(10, 42)" << std::endl;
-	// 	ft::map<int, std::string> ft_map(10, 42);
-	// 	std::cout << "  ft_map2(10, 42)" << std::endl;
-	// 	ft::map<int, std::string> ft_map2(10, 42);
-	// 	std::cout << "  ft_map == ft_map2: " << (ft_map == ft_map2) << std::endl;
-	// 	std::cout << "  ft_map != ft_map2: " << (ft_map != ft_map2) << std::endl;
-	// 	std::cout << "  ft_map <  ft_map2: " << (ft_map <  ft_map2) << std::endl;
-	// 	std::cout << "  ft_map <= ft_map2: " << (ft_map <= ft_map2) << std::endl;
-	// 	std::cout << "  ft_map >  ft_map2: " << (ft_map > ft_map2) << std::endl;
-	// 	std::cout << "  ft_map >= ft_map2: " << (ft_map >= ft_map2) << std::endl;
-	// 	std::cout << std::endl;
-
-	// 	std::cout << "  ft_map2[0] = 88" << std::endl;
-	// 	ft_map2[0] = 88;
-	// 	std::cout << "  ft_map == ft_map2: " << (ft_map == ft_map2) << std::endl;
-	// 	std::cout << "  ft_map != ft_map2: " << (ft_map != ft_map2) << std::endl;
-	// 	std::cout << "  ft_map <  ft_map2: " << (ft_map <  ft_map2) << std::endl;
-	// 	std::cout << "  ft_map <= ft_map2: " << (ft_map <= ft_map2) << std::endl;
-	// 	std::cout << "  ft_map >  ft_map2: " << (ft_map > ft_map2) << std::endl;
-	// 	std::cout << "  ft_map >= ft_map2: " << (ft_map >= ft_map2) << std::endl;
-	// 	std::cout << std::endl;
-
-	// 	std::cout << "  swap(ft_map, ft_map2)" << std::endl;
-	// 	ft::swap(ft_map, ft_map2);
-	// 	for (size_t i = 0; i < 10; ++i)
-	// 		std::cout << "   ft_map[" << i << "]: " << ft_map[i] << std::endl;
-	// 	for (size_t i = 0; i < 10; ++i)
-	// 		std::cout << "   ft_map2[" << i << "]: " << ft_map2[i] << std::endl;
-	// 	std::cout << std::endl;
-	// }
+		std::cout << "  swap(ft_map, ft_map2)" << std::endl;
+		ft::swap(ft_map, ft_map2);
+		for (size_t i = 0; i < 5; ++i)
+			std::cout << "   ft_map[" << i << "]: " << ft_map[i] << std::endl;
+		for (size_t i = 0; i < 5; ++i)
+			std::cout << "   ft_map2[" << i << "]: " << ft_map2[i] << std::endl;
+		std::cout << std::endl;
+	}
 
 
 	return (0);
