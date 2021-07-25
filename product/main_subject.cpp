@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <deque>
-#if 0 //CREATE A REAL STL EXAMPLE
+#if 1 //CREATE A REAL STL EXAMPLE
 	#include <map>
 	#include <stack>
 	#include <vector>
@@ -219,7 +219,6 @@ int main(int argc, char** argv) {
 		critr = ft_vec.rend() - 1;
 		std::cout << "  ft_vec.rend() - 1 const: " << *critr << std::endl;
 		std::cout << std::endl;
-		return 0;
 	}
 	{
 		std::cout << " reserve / capacity" << std::endl;
@@ -382,9 +381,68 @@ int main(int argc, char** argv) {
 			std::cout << "   ft_vec[" << i << "]: " << ft_vec[i] << std::endl;
 		for (size_t i = 0; i < 10; ++i)
 			std::cout << "   ft_vec2[" << i << "]: " << ft_vec2[i] << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << " const_iterator and iterators should be comparable." << std::endl;
+		ft::vector<bool> ft_vec(10, false);
+		ft_vec[0] = true;
+		ft_vec[2] = true;
+		ft_vec[4] = true;
+		ft_vec[5] = true;
+		ft_vec[6] = true;
+		for (size_t i = 0; i < 10; ++i)
+			std::cout << "   ft_vec.at(" << i << "): " << ft_vec.at(i) << std::endl;
+
+		std::cout << "  ft::vector<bool>::iterator itr = ft_vec.begin()" << std::endl;
+		ft::vector<bool>::iterator itr = ft_vec.begin();
+		std::cout << "  ft::vector<bool>::const_iterator citr = ft_vec.begin()" << std::endl;
+		ft::vector<bool>::const_iterator citr = ft_vec.begin();
+		if (itr == citr)
+			std::cout << "  ft::vector<bool>::iterator == ft::vector<bool>::const_iterator" << std::endl;
+		std::cout << std::endl;
+	}
+
+	{
+		std::cout << " Test the swap function." << std::endl;
+		ft::vector<bool> ft_vec(6, false);
+		ft_vec[3] = true;
+		ft_vec[4] = true;
+		ft_vec[5] = true;
+		ft::vector<bool> ft_vec2(6, false);
+		ft_vec2[0] = true;
+		ft_vec2[1] = true;
+		ft_vec2[2] = true;
+		for (size_t i = 0; i < 6; ++i)
+			std::cout << "   ft_vec.at(" << i << "): " << ft_vec.at(i) << std::endl;
+		for (size_t i = 0; i < 6; ++i)
+			std::cout << "   ft_vec2.at(" << i << "): " << ft_vec2.at(i) << std::endl;
+		std::cout << std::endl;
+		
+		std::cout << "  ft::vector<bool> *ft_vec_pointer = &ft_vec" << std::endl;
+		ft::vector<bool> *ft_vec_pointer = &ft_vec;
+		std::cout << "  ft::vector<bool>& ft_vec_reference = ft_vec" << std::endl;
+		ft::vector<bool>& ft_vec_reference = ft_vec;
+
+		std::cout << "  ft::vector<bool>::iterator itr = ft_vec.begin()" << std::endl;
+		ft::vector<bool>::iterator itr = ft_vec.begin();
+		std::cout << "   *itr: " << *itr << std::endl;
+		std::cout << std::endl;
+
+		std::cout << "  ft_vec.swap(ft_vec2);" << std::endl;
+		ft_vec.swap(ft_vec2);
+		std::cout << std::endl;
+
+		std::cout << "   *itr: " << *itr << std::endl;
+		std::cout << std::endl;
+		for (size_t i = 0; i < 6; ++i)
+			std::cout << "   ft_vec_pointer->at(" << i << "): " << ft_vec_pointer->at(i) << std::endl;
+		for (size_t i = 0; i < 6; ++i)
+			std::cout << "   ft_vec_reference.at(" << i << "): " << ft_vec_reference.at(i) << std::endl;
 
 
 	}
+
 
 
 	return (0);

@@ -106,8 +106,12 @@ vector<bool> test
  Iterators
   ft_vec.begin()  : 1
   ft_vec.end() - 1: 0
-  ft_vec.rbegin()  : 0
-  ft_vec.rend() - 1: 1
+  ft_vec.rbegin() : 0
+  ft_vec.rend() -1: 1
+  ft_vec.begin() const   : 1
+  ft_vec.end() - 1 const : 0
+  ft_vec.rbegin() const  : 0
+  ft_vec.rend() - 1 const: 1
 
  reserve / capacity
   ft_vec(10)
@@ -322,3 +326,54 @@ vector<bool> test
    ft_vec2[7]: 1
    ft_vec2[8]: 1
    ft_vec2[9]: 1
+
+ const_iterator and iterators should be comparable.
+   ft_vec.at(0): 1
+   ft_vec.at(1): 0
+   ft_vec.at(2): 1
+   ft_vec.at(3): 0
+   ft_vec.at(4): 1
+   ft_vec.at(5): 1
+   ft_vec.at(6): 1
+   ft_vec.at(7): 0
+   ft_vec.at(8): 0
+   ft_vec.at(9): 0
+  ft::vector<bool>::iterator itr = ft_vec.begin()
+  ft::vector<bool>::const_iterator citr = ft_vec.begin()
+  ft::vector<bool>::iterator == ft::vector<bool>::const_iterator
+
+ Test the swap function.
+   ft_vec.at(0): 0
+   ft_vec.at(1): 0
+   ft_vec.at(2): 0
+   ft_vec.at(3): 1
+   ft_vec.at(4): 1
+   ft_vec.at(5): 1
+   ft_vec2.at(0): 1
+   ft_vec2.at(1): 1
+   ft_vec2.at(2): 1
+   ft_vec2.at(3): 0
+   ft_vec2.at(4): 0
+   ft_vec2.at(5): 0
+
+  ft::vector<bool> *ft_vec_pointer = &ft_vec
+  ft::vector<bool>& ft_vec_reference = ft_vec
+  ft::vector<bool>::iterator itr = ft_vec.begin()
+   *itr: 0
+
+  ft_vec.swap(ft_vec2);
+
+   *itr: 0
+
+   ft_vec_pointer->at(0): 1
+   ft_vec_pointer->at(1): 1
+   ft_vec_pointer->at(2): 1
+   ft_vec_pointer->at(3): 0
+   ft_vec_pointer->at(4): 0
+   ft_vec_pointer->at(5): 0
+   ft_vec_reference.at(0): 1
+   ft_vec_reference.at(1): 1
+   ft_vec_reference.at(2): 1
+   ft_vec_reference.at(3): 0
+   ft_vec_reference.at(4): 0
+   ft_vec_reference.at(5): 0
