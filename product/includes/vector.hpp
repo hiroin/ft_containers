@@ -1349,10 +1349,13 @@ public :
         else
           reserve(sz);
       }
-      for (size_type idx = oldSize; idx < size(); ++idx)
-      {
-        storage_[idx] = value;
-      }
+      size_t bit;
+      if (value)
+        bit = -1;
+      else
+        bit = 0;
+      for (size_t i = oldSize; i < getNeedStrageSize(sz); ++i)
+        storage_[i] = bit;
     }
     size_ = sz;
   }
@@ -1403,10 +1406,8 @@ public :
       bit = -1;
     else
       bit = 0;
-    for (size_t i = 0; i < getNeedStrageSize(n); i++)
-    {
+    for (size_t i = 0; i < getNeedStrageSize(n); ++i)
       storage_[i] = bit;
-    }
     size_ = n;
   }
 

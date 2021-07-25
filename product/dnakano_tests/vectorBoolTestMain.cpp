@@ -167,8 +167,8 @@ void test_vector_bool(int& test_no) {
     sout << "Vector<bool>: vector(" << size << ", true)";
     putTestInfo(test_no, sout.str());
     try {
-      std::vector<bool> std_vec(size, false);
-      ft::vector<bool> ft_vec(size, false);
+      std::vector<bool> std_vec(size, true);
+      ft::vector<bool> ft_vec(size, true);
 
       for (size_t idx = 0; idx < size; ++idx) {
         if (std_vec[idx] != ft_vec[idx]) {

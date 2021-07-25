@@ -7,9 +7,9 @@
 	#include <vector>
 	namespace ft = std;
 #else
-	#include "map.hpp"
-	#include "stack.hpp"
-	#include "vector.hpp"
+	#include "includes/map.hpp"
+	#include "includes/stack.hpp"
+	#include "includes/vector.hpp"
 #endif
 
 #include <stdlib.h>
@@ -62,55 +62,87 @@ int main(int argc, char** argv) {
 	ft::stack<Buffer, std::deque<Buffer> > stack_deq_buffer;
 	ft::map<int, int> map_int;
 
-	for (int i = 0; i < COUNT; i++)
-	{
-		vector_buffer.push_back(Buffer());
-	}
+	// for (int i = 0; i < COUNT; i++)
+	// {
+	// 	vector_buffer.push_back(Buffer());
+	// }
 
-	for (int i = 0; i < COUNT; i++)
-	{
-		const int idx = rand() % COUNT;
-		vector_buffer[idx].idx = 5;
-	}
-	ft::vector<Buffer>().swap(vector_buffer);
+	// for (int i = 0; i < COUNT; i++)
+	// {
+	// 	const int idx = rand() % COUNT;
+	// 	vector_buffer[idx].idx = 5;
+	// }
+	// ft::vector<Buffer>().swap(vector_buffer);
 
-	try
-	{
-		for (int i = 0; i < COUNT; i++)
-		{
-			const int idx = rand() % COUNT;
-			vector_buffer.at(idx);
-			std::cerr << "Error: THIS VECTOR SHOULD BE EMPTY!!" <<std::endl;
-		}
-	}
-	catch(const std::exception& e)
-	{
-		//NORMAL ! :P
-	}
+	// try
+	// {
+	// 	for (int i = 0; i < COUNT; i++)
+	// 	{
+	// 		const int idx = rand() % COUNT;
+	// 		vector_buffer.at(idx);
+	// 		std::cerr << "Error: THIS VECTOR SHOULD BE EMPTY!!" <<std::endl;
+	// 	}
+	// }
+	// catch(const std::exception& e)
+	// {
+	// 	//NORMAL ! :P
+	// }
 	
-	for (int i = 0; i < COUNT; ++i)
-	{
-		map_int.insert(ft::make_pair(rand(), rand()));
-	}
+	// for (int i = 0; i < COUNT; ++i)
+	// {
+	// 	map_int.insert(ft::make_pair(rand(), rand()));
+	// }
 
-	int sum = 0;
-	for (int i = 0; i < 10000; i++)
-	{
-		int access = rand();
-		sum += map_int[access];
-	}
-	std::cout << "should be constant with the same seed: " << sum << std::endl;
+	// int sum = 0;
+	// for (int i = 0; i < 10000; i++)
+	// {
+	// 	int access = rand();
+	// 	sum += map_int[access];
+	// }
 
-	{
-		ft::map<int, int> copy = map_int;
-	}
-	MutantStack<char> iterable_stack;
-	for (char letter = 'a'; letter <= 'z'; letter++)
-		iterable_stack.push(letter);
-	for (MutantStack<char>::iterator it = iterable_stack.begin(); it != iterable_stack.end(); it++)
-	{
-		std::cout << *it;
-	}
+	// std::cout << "should be constant with the same seed: " << sum << std::endl;
+
+	// {
+	// 	ft::map<int, int> copy = map_int;
+	// }
+	// MutantStack<char> iterable_stack;
+	// for (char letter = 'a'; letter <= 'z'; letter++)
+	// 	iterable_stack.push(letter);
+	// for (MutantStack<char>::iterator it = iterable_stack.begin(); it != iterable_stack.end(); it++)
+	// {
+	// 	std::cout << *it;
+	// }
 	std::cout << std::endl;
+	std::cout << "vector<bool> test" << std::endl;
+	std::cout << " constructor" << std::endl;
+	{
+		std::cout << "  default" << std::endl;
+		ft::vector<bool> ft_vec;
+		std::cout << "   empty(): " << ft_vec.empty() << std::endl;
+		std::cout << "   size(): " << ft_vec.size() << std::endl;
+		std::cout << "   capacity(): " << ft_vec.capacity() << std::endl;
+		std::cout << "   max_size(): " << ft_vec.max_size() << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << "  ft_vec(10)" << std::endl;
+		ft::vector<bool> ft_vec(10);
+		std::cout << "   empty(): " << ft_vec.empty() << std::endl;
+		std::cout << "   size(): " << ft_vec.size() << std::endl;
+		std::cout << "   ft_vec[0]: " << ft_vec[0] << std::endl;
+		std::cout << "   ft_vec[9]: " << ft_vec[9] << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << "  ft_vec(10, true)" << std::endl;
+		ft::vector<bool> ft_vec(10, true);
+		std::cout << "   empty(): " << ft_vec.empty() << std::endl;
+		std::cout << "   size(): " << ft_vec.size() << std::endl;
+		std::cout << "   ft_vec[0]: " << ft_vec[0] << std::endl;
+		std::cout << "   ft_vec[9]: " << ft_vec[9] << std::endl;
+		std::cout << std::endl;
+	}
+
+
 	return (0);
 }
