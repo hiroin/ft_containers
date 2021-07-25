@@ -208,9 +208,18 @@ int main(int argc, char** argv) {
 		std::cout << " Iterators" << std::endl;
 		std::cout << "  ft_vec.begin()  : " << *ft_vec.begin() << std::endl;
 		std::cout << "  ft_vec.end() - 1: " << *(ft_vec.end() - 1) << std::endl;
-		std::cout << "  ft_vec.rbegin()  : " << *ft_vec.rbegin() << std::endl;
-		std::cout << "  ft_vec.rend() - 1: " << *(ft_vec.rend() - 1) << std::endl;
+		std::cout << "  ft_vec.rbegin() : " << *ft_vec.rbegin() << std::endl;
+		std::cout << "  ft_vec.rend() -1: " << *(ft_vec.rend() - 1) << std::endl;
+		ft::vector<bool>::const_iterator citr = ft_vec.begin();
+		std::cout << "  ft_vec.begin() const   : " << *citr << std::endl;
+		citr = ft_vec.end() - 1;
+		std::cout << "  ft_vec.end() - 1 const : " << *citr << std::endl;
+		ft::vector<bool>::const_reverse_iterator critr = ft_vec.rbegin();
+		std::cout << "  ft_vec.rbegin() const  : " << *critr << std::endl;
+		critr = ft_vec.rend() - 1;
+		std::cout << "  ft_vec.rend() - 1 const: " << *critr << std::endl;
 		std::cout << std::endl;
+		return 0;
 	}
 	{
 		std::cout << " reserve / capacity" << std::endl;

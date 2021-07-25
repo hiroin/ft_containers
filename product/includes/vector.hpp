@@ -785,7 +785,6 @@ class bitIterator
   typedef BitReference_* pointer;
   typedef BitReference_  reference;
   typedef bitIterator    iterator;
-  // typedef random_access_iterator_tag iterator_category;
 
  private:
   BitReference_ ref_;
@@ -793,9 +792,6 @@ class bitIterator
  public:
   bitIterator(){};
   bitIterator(Bit_type_* ptr, size_t index) : ref_(ptr, index){};
-  // bitIterator(BitReference_& ref) : ref_(ref.ptr_, ref.index_){};
-  // bitIterator(const BitReference_& ref) : ref_(){};
-  // bitIterator(bitIterator& x) : ref_(x.ref_) {};
   bitIterator(const bitIterator& x) : ref_(x.ref_) {};
   ~bitIterator(){};
 
@@ -828,6 +824,8 @@ class bitIterator
 
   iterator& operator--()
   {
+    if(ref_.index_ == 0)
+      return *this;
     --(ref_.index_);
     return *this;
   }
@@ -966,6 +964,8 @@ class constBitIterator
 
   iterator& operator--()
   {
+    if(ref_.index_ == 0)
+      return *this;
     --(ref_.index_);
     return *this;
   }
