@@ -484,14 +484,12 @@ public :
       reserve(c) ;
       for (size_t i = 0; i < numOfMove; ++i)
       {
-        // *(end() + n - 1 - i) = *(end() - 1 - i);
         construct(&*(end() + n - 1 - i), *(end() - i - 1));
         destroy(&*(end() - i - 1));        
       }
       for (size_t i = 0; i < n; ++i)
       {
         construct(&first_[index++], x);
-        // first_[index++] = x;
         last_++;
       }
     }
@@ -541,14 +539,12 @@ public :
 
       for (size_t i = 0; i < numOfMove; ++i)
       {
-        // *(end() - i) = *(end() - i - 1);
         construct(&*(end() + n - 1 - i), *(end() - i - 1));
         destroy(&*(end() - i - 1));
       }
       for (size_t i = 0; i < n; ++i)
       {
         construct(&first_[index++], *first++);
-        // first_[index++] = *first;
         last_++;
       }      
     }
@@ -561,8 +557,6 @@ public :
       for (size_t i = 0; i < n; ++i)
       {
         construct(&first_[index++], *first++);
-        // first_[index++] = *first;
-        // first++;
         last_++;
       }
     }
@@ -587,7 +581,6 @@ public :
     {
       *first++ = *last++;
     }
-    // last_ -= last - first;
     for (size_t i = 0; i < getSizeFromIterator(first, last); ++i)
     {
       last_--;
@@ -623,14 +616,12 @@ public :
  private :
   pointer allocate(size_type n)
   {
-    // return traits::allocate(alloc_, n);
     return alloc_.allocate(n);
   }
 
   void deallocate()
   {
     if (capacity() > 0)
-      // traits::deallocate(alloc_, first_, capacity());
       alloc_.deallocate(first_, capacity());
   }
 
@@ -734,7 +725,6 @@ struct BitReference_
 
   BitReference_(Bit_type_ * ptr, Bit_type_ index) : ptr_(ptr), index_(index) {}
   BitReference_() : ptr_(NULL), index_(0) {}
-  // BitReference_(const BitReference_& x) : ptr_(x.ptr_), index_(x.index_) {}
   ~BitReference_(){};
 
   operator bool() const
@@ -918,7 +908,6 @@ class constBitIterator
   typedef BitReference_*       pointer;
   typedef const BitReference_  reference;
   typedef constBitIterator     iterator;
-  // typedef random_access_iterator_tag iterator_category;
 
  private:
   BitReference_ ref_;
@@ -927,7 +916,6 @@ class constBitIterator
   constBitIterator(){};
   constBitIterator(Bit_type_* ptr, size_t index) : ref_(ptr, index){};
   constBitIterator(BitReference_& ref) : ref_(ref.ptr_, ref.index_){};
-  // constBitIterator(const BitReference_& ref) : ref_(){};
   constBitIterator(const bitIterator& x) : ref_(*x) {};
   constBitIterator(const constBitIterator& x) : ref_(x.ref_) {};
   ~constBitIterator(){};
@@ -1051,8 +1039,8 @@ class vector<bool, Allocator>
   typedef std::ptrdiff_t       difference_type;
   typedef BitReference_        reference;
   typedef bool                 const_reference;
-  typedef BitReference_*       pointer;       // 使わないのであればいい
-  typedef const BitReference_* const_pointer; // 使わないのであればいい
+  typedef BitReference_*       pointer;
+  typedef const BitReference_* const_pointer;
   typedef bitIterator          iterator;
   typedef constBitIterator     const_iterator;
   typedef reverseIterator<iterator>        reverse_iterator;

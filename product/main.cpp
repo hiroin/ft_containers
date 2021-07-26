@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <deque>
+#include <list>
 #if STD //CREATE A REAL STL EXAMPLE
 	#include <map>
 	#include <stack>
@@ -643,7 +644,8 @@ int main()
 	}
 
 	std::cout << std::endl;
-	std::cout << "vector test" << std::endl;
+	std::cout << "----------------------------------------------" << std::endl;  
+	std::cout << "map test" << std::endl;
 	std::cout << " constructor" << std::endl;
 	{
 		std::cout << "  default" << std::endl;
@@ -893,6 +895,69 @@ int main()
 		std::cout << "  (++itr)->first: " << (++itr)->first << std::endl;
 		std::cout << std::endl;
 	}
+	std::cout << "----------------------------------------------" << std::endl;
+	std::cout << "stack test" << std::endl;
+	{
+		std::cout << " constructor" << std::endl;
+		std::cout << " ft::stack<int> ft_sta" << std::endl;
+		ft::stack<int> ft_sta;
+		std::cout << "  empty(): " << ft_sta.empty() << std::endl;
+		std::cout << "  size(): " << ft_sta.size() << std::endl;
+		std::cout << std::endl;
+
+		std::cout << " operator= / push / top / pop" << std::endl;
+		std::cout << "  ft_sta.push(1)" << std::endl;
+		ft_sta.push(1);
+		std::cout << "  empty(): " << ft_sta.empty() << std::endl;
+		std::cout << "  size(): " << ft_sta.size() << std::endl;
+		std::cout << "  ft_sta.top(): " << ft_sta.top() << std::endl;
+		std::cout << std::endl;
+
+		std::cout << "  ft_sta.push(2)" << std::endl;
+		ft_sta.push(2);
+		std::cout << "  size(): " << ft_sta.size() << std::endl;
+		std::cout << "  ft_sta.top(): " << ft_sta.top() << std::endl;
+		std::cout << std::endl;
+
+		std::cout << "  ft_sta.pop()" << std::endl;
+		ft_sta.pop();
+		std::cout << "  size(): " << ft_sta.size() << std::endl;
+		std::cout << "  ft_sta.top(): " << ft_sta.top() << std::endl;
+		std::cout << std::endl;
+
+		std::cout << "  ft_sta2 = ft_sta" << std::endl;
+		ft::stack<int> ft_sta2;
+		ft_sta2 = ft_sta;
+		std::cout << "  size(): " << ft_sta2.size() << std::endl;
+		std::cout << "  ft_sta.top(): " << ft_sta2.top() << std::endl;
+		std::cout << std::endl;
+
+		std::cout << " Non-member functions" << std::endl;
+		std::cout << "  ft_sta == ft_sta2: " << (ft_sta == ft_sta2) << std::endl;
+		std::cout << "  ft_sta != ft_sta2: " << (ft_sta != ft_sta2) << std::endl;
+		std::cout << "  ft_sta <  ft_sta2: " << (ft_sta <  ft_sta2) << std::endl;
+		std::cout << "  ft_sta <= ft_sta2: " << (ft_sta <= ft_sta2) << std::endl;
+		std::cout << "  ft_sta >  ft_sta2: " << (ft_sta > ft_sta2) << std::endl;
+		std::cout << "  ft_sta >= ft_sta2: " << (ft_sta >= ft_sta2) << std::endl;
+		std::cout << std::endl;
+		std::cout << "  ft_sta.push(5)" << std::endl;
+		ft_sta.push(5);
+		std::cout << "  ft_sta == ft_sta2: " << (ft_sta == ft_sta2) << std::endl;
+		std::cout << "  ft_sta != ft_sta2: " << (ft_sta != ft_sta2) << std::endl;
+		std::cout << "  ft_sta <  ft_sta2: " << (ft_sta <  ft_sta2) << std::endl;
+		std::cout << "  ft_sta <= ft_sta2: " << (ft_sta <= ft_sta2) << std::endl;
+		std::cout << "  ft_sta >  ft_sta2: " << (ft_sta > ft_sta2) << std::endl;
+		std::cout << "  ft_sta >= ft_sta2: " << (ft_sta >= ft_sta2) << std::endl;
+		std::cout << std::endl;
+	}
+	{
+		std::cout << " The standard container classes vector, deque and list are compatible as underlying container." << std::endl;
+		std::cout << "  ft::stack<int, std::list> ft_sta" << std::endl;
+		ft::stack<int, std::list<int> > ft_sta_list;
+		std::cout << "  ft::stack<int, std::deque> ft_sta" << std::endl;
+		ft::stack<int, std::deque<int> > ft_sta_deque;
+	}
+	std::cout << "----------------------------------------------" << std::endl;
 #ifdef LEAK
 		std::system("leaks a.out");
 #endif
