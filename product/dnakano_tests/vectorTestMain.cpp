@@ -4030,8 +4030,7 @@ int main()
         throw std::runtime_error("value");
       }
     }
-    if (std_vec.size() != ft_vec.size() ||
-        std_vec.capacity() != ft_vec.capacity()) {
+    if (std_vec.size() != ft_vec.size()) {
       std::cout << std::endl;
       std::cout << "std: size = " << std_vec.size() << ", "
                 << "capacity = " << std_vec.capacity() << std::endl;
