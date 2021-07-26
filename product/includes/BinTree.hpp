@@ -445,10 +445,6 @@ class BinTree {
   }
 
   size_type max_size() const {
-		return (std::min((size_type) std::numeric_limits<difference_type>::max(),
-						std::numeric_limits<size_type>::max() / (sizeof(node_type) + sizeof(pointer))));
-		return std::min<size_type>(alloc_.max_size(),
-				std::numeric_limits<difference_type>::max());
     return std::min(
       std::numeric_limits<size_type>::max() /
         (sizeof(value_type) + sizeof(node_pointer) * 4),
